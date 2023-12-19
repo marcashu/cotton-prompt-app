@@ -1,5 +1,5 @@
 {
-    "name": "cottompromptapp",
+    "name": "cottonpromptapp",
     "version": "0.1.0",
     "engines": {
         "node": "16 || 18"
@@ -46,7 +46,7 @@
         "typescript": "^5.3.3"
     },
     "scripts": {
-        "dev:teamsfx": "env-cmd --silent -f .localConfigs npm run start",
+        "dev:teamsfx": "env-cmd --silent -f .localConfigs npm run dev",
         "dev": "next dev --experimental-https -p 53000",
         "build": "next build",
         "start": "next start",
