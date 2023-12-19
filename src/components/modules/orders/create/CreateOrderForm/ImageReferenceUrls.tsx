@@ -20,7 +20,7 @@ export default function ImageReferenceUrls({
   className?: string
 }) {
   const { fields, append, remove } = useFieldArray({
-    name: "urls",
+    name: "imageReferences",
     control: control,
   })
 
@@ -32,7 +32,7 @@ export default function ImageReferenceUrls({
         <FormField
           control={control}
           key={field.id}
-          name={`urls.${index}.value`}
+          name={`imageReferences.${index}.value`}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="sr-only">Image References</FormLabel>

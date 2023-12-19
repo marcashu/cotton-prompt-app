@@ -13,16 +13,17 @@ const createOrderFormSchema = z.object({
   printColor: z.string({
     required_error: "Please select a print color."
   }),
-  designBracket: z.string({
+  designBracketId: z.string({
     required_error: "Please select a design bracket."
   }),
-  urls: z
+  imageReferences: z
     .array(
       z.object({
         value: z.string().url({ message: "Please enter a valid image reference URL." }),
       })
     )
     .optional(),
+  createdBy: z.string()
 })
 
 export type CreateOrderFormValues = z.infer<typeof createOrderFormSchema>

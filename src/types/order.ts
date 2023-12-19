@@ -2,8 +2,8 @@ import DesignBracket from "./designBracket"
 
 type Order = {
   id: number
-  number: string
-  isPriority: boolean
+  orderNumber: string
+  priority: boolean
   concept: string
   printColor: string
   designBracket: DesignBracket

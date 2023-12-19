@@ -30,7 +30,7 @@ export default function DesignBracketSelect({
   return (
     <FormField
       control={control}
-      name="designBracket"
+      name="designBracketId"
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel>Design Bracket</FormLabel>

@@ -15,12 +15,12 @@ export default function OrdersPage() {
 
   const columns: ColumnDef<Order>[] = [
     {
-      accessorKey: "number",
+      accessorKey: "orderNumber",
       header: "Order Number",
     },
     {
       id: "priority",
-      accessorFn: (order) => (order.isPriority ? "Yes" : "No"),
+      accessorFn: (order) => (order.priority ? "Yes" : "No"),
       header: "Priority",
     },
     {
