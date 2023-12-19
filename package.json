@@ -1,0 +1,41 @@
+{
+    "name": "cottompromptapp",
+    "version": "0.1.0",
+    "engines": {
+        "node": "16 || 18"
+    },
+    "private": true,
+    "main": "server.js",
+    "dependencies": {
+        "next": "^14.0.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "restify": "^11.1.0",
+        "send": "^0.18.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.5",
+        "@types/react": "^18.2.45",
+        "@types/react-dom": "^18.2.18",
+        "@types/restify": "^8.5.6",
+        "@types/send": "^0.17.1",
+        "autoprefixer": "^10.4.16",
+        "env-cmd": "^10.1.0",
+        "eslint": "^8.56.0",
+        "eslint-config-next": "^14.0.4",
+        "nodemon": "^2.0.21",
+        "postcss": "^8.4.32",
+        "shx": "^0.3.3",
+        "tailwindcss": "^3.3.7",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.3.3"
+    },
+    "scripts": {
+        "dev:teamsfx": "env-cmd --silent -f .localConfigs npm run start",
+        "dev": "next dev --experimental-https -p 53000",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "homepage": "."
+}
