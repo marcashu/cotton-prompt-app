@@ -1,7 +1,7 @@
 "use client"
 
-import NormalOrdersDataTable from "@/components/modules/orders/NormalOrdersDataTable"
-import PriorityOrdersDataTable from "@/components/modules/orders/PriorityOrdersDataTable"
+import NormalOrdersDataTable from "@/components/modules/orders/list/NormalOrdersDataTable"
+import PriorityOrdersDataTable from "@/components/modules/orders/list/PriorityOrdersDataTable"
 import { Button } from "@/components/ui/button"
 import { TypographyH2 } from "@/components/ui/typography"
 import Link from "next/link"

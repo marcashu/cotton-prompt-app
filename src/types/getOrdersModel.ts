@@ -1,6 +1,7 @@
 type GetOrdersModel = {
   id: number
   orderNumber: string
+  priority: boolean
   createdOn: string
 }
 

@@ -1,7 +1,7 @@
 import { formatDateToYYYYMMDD } from "@/helpers/dateHelper"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { ColumnDef } from "@tanstack/react-table"
-import OrdersDataTableActions from "./OrdersDataTableActions"
+import OrdersDataTableActions from "./OrdersDataTableActions/OrdersDataTableActions"
 
 const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
   {
@@ -15,8 +15,15 @@ const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => OrdersDataTableActions({ row }),
+    cell: ({ row }) => OrdersDataTableActions({ row })
   },
 ]
 
-export default ordersColumnDef
+const priorityOrdersKey = "/api/orders?priority=true"
+const normalOrdersKey = "/api/orders?priority=false"
+
+export {
+  ordersColumnDef,
+  priorityOrdersKey,
+  normalOrdersKey,
+}

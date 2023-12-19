@@ -14,29 +14,9 @@ import PrintColorSelect from "./PrintColorSelect"
 import DesignBracketSelect from "./DesignBracketSelect"
 import ImageReferenceUrls from "./ImageReferenceUrls"
 import useTeamsContext from "@/hooks/useTeamsContext"
-import useSWRMutation from "swr/mutation"
 import CreateOrderDialog from "./CreateOrderDialog"
 import { useState } from "react"
-
-async function createOrder(
-  url: string,
-  { arg }: { arg: CreateOrderFormValues }
-) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      ...arg,
-      imageReferences: arg.imageReferences?.map((ir) => ir.value),
-    }),
-  })
-
-  if (!res.ok) {
-    throw new Error()
-  }
-}
+import { createOrder } from "../../orderService"
 
 export default function CreateOrderForm() {
   const teamsContext = useTeamsContext()
@@ -50,14 +30,13 @@ export default function CreateOrderForm() {
       createdBy: teamsContext?.user?.id,
     },
   })
-  const { trigger } = useSWRMutation("/api/Orders", createOrder)
   const [dialogProps, setDialogProps] = useState({
     open: false,
     message: "",
   })
 
   const onSubmit = (values: CreateOrderFormValues) => {
-    trigger(values)
+    createOrder(values)
       .then(() =>
         setDialogProps({
           open: true,

@@ -1,18 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/data-table"
-import ordersColumnDef from "./ordersColumnDef"
 import useSWR from "swr"
 import GetOrdersModel from "@/types/getOrdersModel"
+import { normalOrdersKey, ordersColumnDef } from "./ordersListConstants"
 
-export default function PriorityOrdersDataTable() {
-  const { data, isLoading } = useSWR<GetOrdersModel[]>(
-    `/api/orders?priority=true`
-  )
+export default function NormalOrdersDataTable() {
+  const { data, isLoading } = useSWR<GetOrdersModel[]>(normalOrdersKey)
 
   return (
     <Card className="shadow">
       <CardHeader>
-        <CardTitle>Priority Orders</CardTitle>
+        <CardTitle>Normal Orders</CardTitle>
       </CardHeader>
       <CardContent>
         <DataTable
