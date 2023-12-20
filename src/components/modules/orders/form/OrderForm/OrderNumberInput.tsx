@@ -7,13 +7,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Control } from "react-hook-form"
-import { CreateOrderFormValues } from "./createOrderFormSchema"
+import { OrderFormValues } from "./orderFormSchema"
 
 export default function OrderNumberInput({
   control,
   className,
 }: {
-  control: Control<CreateOrderFormValues>
+  control: Control<OrderFormValues>
   className?: string
 }) {
   return (

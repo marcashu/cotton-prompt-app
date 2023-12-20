@@ -1,5 +1,5 @@
 import { Control } from "react-hook-form"
-import { CreateOrderFormValues } from "./createOrderFormSchema"
+import { OrderFormValues } from "./orderFormSchema"
 import {
   FormControl,
   FormField,
@@ -13,7 +13,7 @@ export default function ConceptTextarea({
   control,
   className,
 }: {
-  control: Control<CreateOrderFormValues>
+  control: Control<OrderFormValues>
   className?: string
 }) {
   return (

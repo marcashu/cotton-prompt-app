@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-const createOrderFormSchema = z.object({
+const orderFormSchema = z.object({
   orderNumber: z
     .string()
     .min(1, "Please enter order number.")
@@ -23,9 +23,8 @@ const createOrderFormSchema = z.object({
       })
     )
     .optional(),
-  createdBy: z.string()
 })
 
-export type CreateOrderFormValues = z.infer<typeof createOrderFormSchema>
+export type OrderFormValues = z.infer<typeof orderFormSchema>
 
-export default createOrderFormSchema
+export default orderFormSchema

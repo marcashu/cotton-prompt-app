@@ -1,5 +1,5 @@
 import { Control, useFieldArray } from "react-hook-form"
-import { CreateOrderFormValues } from "./createOrderFormSchema"
+import { OrderFormValues } from "./orderFormSchema"
 import {
   FormControl,
   FormDescription,
@@ -16,7 +16,7 @@ export default function ImageReferenceUrls({
   control,
   className,
 }: {
-  control: Control<CreateOrderFormValues>
+  control: Control<OrderFormValues>
   className?: string
 }) {
   const { fields, append, remove } = useFieldArray({

@@ -3,8 +3,15 @@ import OrderForm from "@/components/modules/orders/form/OrderForm"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft } from "lucide-react"
 import Link from "next/link"
+import { getOrderById } from "@/components/modules/orders/orderService"
 
-export default function CreateOrderPage() {
+export default async function EditOrderPage({
+  params,
+}: {
+  params: { id: number }
+}) {
+  const order = await getOrderById(params.id)
+
   return (
     <div>
       <TypographyH2 className="mb-4">
@@ -15,14 +22,12 @@ export default function CreateOrderPage() {
             </Link>
           </Button>
           <div>
-            Create Order
-            <TypographyMuted>
-              Fill-in the form to create an order.
-            </TypographyMuted>
+            Edit Order
+            <TypographyMuted>View or edit this order.</TypographyMuted>
           </div>
         </div>
       </TypographyH2>
-      <OrderForm />
+      <OrderForm order={order} />
     </div>
   )
 }

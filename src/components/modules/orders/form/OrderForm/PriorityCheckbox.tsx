@@ -1,5 +1,5 @@
 import { Control } from "react-hook-form"
-import { CreateOrderFormValues } from "./createOrderFormSchema"
+import { OrderFormValues } from "./orderFormSchema"
 import {
   FormControl,
   FormField,
@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 export default function PriorityCheckbox({
   control,
 }: {
-  control: Control<CreateOrderFormValues>
+  control: Control<OrderFormValues>
 }) {
   return (
     <FormField

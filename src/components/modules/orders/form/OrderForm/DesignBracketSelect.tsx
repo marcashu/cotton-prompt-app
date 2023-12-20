@@ -1,5 +1,5 @@
 import { Control } from "react-hook-form"
-import { CreateOrderFormValues } from "./createOrderFormSchema"
+import { OrderFormValues } from "./orderFormSchema"
 import {
   FormControl,
   FormField,
@@ -22,7 +22,7 @@ export default function DesignBracketSelect({
   control,
   className,
 }: {
-  control: Control<CreateOrderFormValues>
+  control: Control<OrderFormValues>
   className?: string
 }) {
   const { data, isLoading } = useSWR<DesignBracket[]>("/api/DesignBrackets")

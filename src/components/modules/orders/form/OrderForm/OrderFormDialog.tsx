@@ -9,18 +9,20 @@ import {
 } from "@/components/ui/alert-dialog"
 import Link from "next/link"
 
-export default function CreateOrderDialog({
+export default function OrderFormDialog({
   open,
+  title,
   message,
 }: {
   open: boolean
+  title: string
   message: string
 }) {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Create Order</AlertDialogTitle>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{message}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
