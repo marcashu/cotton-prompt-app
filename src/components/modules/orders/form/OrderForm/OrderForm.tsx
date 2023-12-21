@@ -11,13 +11,13 @@ import ConceptTextarea from "./ConceptTextarea"
 import PrintColorSelect from "./PrintColorSelect"
 import DesignBracketSelect from "./DesignBracketSelect"
 import ImageReferenceUrls from "./ImageReferenceUrls"
-import useTeamsContext from "@/hooks/useTeamsContext"
+import useSession from "@/hooks/useSession"
 import OrderFormDialog from "./OrderFormDialog"
 import { useState } from "react"
 import { createOrder, updateOrder } from "../../orderService"
 
 export default function OrderForm({ order }: { order?: GetOrderModel }) {
-  const teamsContext = useTeamsContext()
+  const { session } = useSession()
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
@@ -37,7 +37,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
   })
 
   const onSubmit = (values: OrderFormValues) => {
-    const userId = teamsContext?.user?.id
+    const userId = session?.userId
 
     if (!userId) {
       return
