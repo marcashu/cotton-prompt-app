@@ -1,5 +1,3 @@
-"use client"
-
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -24,7 +22,7 @@ const navItems: NavItem[] = [
   },
 ]
 
-export default function Header() {
+export default function HeaderMenu() {
   const pathname = usePathname()
 
   return (

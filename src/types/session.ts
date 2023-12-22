@@ -1,6 +1,8 @@
+import Role from "./role"
+
 type Session = {
   userId: string,
-  userRole: "admin" | "checker" | "artist"
+  userRole: Role
 }
 
 export default Session
