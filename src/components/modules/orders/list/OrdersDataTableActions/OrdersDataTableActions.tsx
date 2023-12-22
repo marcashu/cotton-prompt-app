@@ -5,6 +5,7 @@ import { Edit } from "lucide-react"
 import DeleteOrderDialog from "./DeleteOrderDialog"
 import Link from "next/link"
 import useSession from "@/hooks/useSession"
+import ArtistClaimOrderDialog from "./ArtistClaimOrderDialog"
 
 export default function OrdersDataTableActions({
   row,
@@ -28,7 +29,7 @@ export default function OrdersDataTableActions({
           <DeleteOrderDialog id={order.id} priority={order.priority} />
         </>
       ) : (
-        <Button variant="outline">Claim</Button>
+        <ArtistClaimOrderDialog id={order.id} priority={order.priority} />
       )}
     </div>
   )

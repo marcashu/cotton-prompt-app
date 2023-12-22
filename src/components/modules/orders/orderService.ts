@@ -57,3 +57,19 @@ export const deleteOrder = async (id: number) => {
     throw new Error()
   }
 }
+
+export const assignArtistToOrder = async (id: number, artistId: string) => {
+  const res = await fetch(`${baseUrl}/${id}/artist`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      artistId
+    }),
+  })
+
+  if (!res.ok) {
+    throw new Error()
+  }
+}

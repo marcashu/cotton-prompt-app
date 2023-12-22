@@ -1,7 +1,6 @@
 "use client"
 
-import NormalOrdersDataTable from "@/components/modules/orders/list/NormalOrdersDataTable"
-import PriorityOrdersDataTable from "@/components/modules/orders/list/PriorityOrdersDataTable"
+import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import { Button } from "@/components/ui/button"
 import { TypographyH2 } from "@/components/ui/typography"
 import useSession from "@/hooks/useSession"
@@ -20,8 +19,8 @@ export default function OrdersPage() {
           </Button>
         </div>
       )}
-      <PriorityOrdersDataTable />
-      <NormalOrdersDataTable />
+      <OrdersDataTable priority={true} />
+      <OrdersDataTable priority={false} />
     </div>
   )
 }

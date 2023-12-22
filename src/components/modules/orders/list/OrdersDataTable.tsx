@@ -1,16 +1,20 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { DataTable } from "@/components/ui/data-table"
+import useSession from "@/hooks/useSession"
+import {
+  normalOrdersKey,
+  ordersColumnDef,
+  priorityOrdersKey,
+} from "./ordersListConstants"
 import useSWR from "swr"
 import GetOrdersModel from "@/types/getOrdersModel"
-import { ordersColumnDef, priorityOrdersKey } from "./ordersListConstants"
-import useSession from "@/hooks/useSession"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { DataTable } from "@/components/ui/data-table"
 
-export default function PriorityOrdersDataTable() {
+export default function OrdersDataTable({ priority }: { priority: boolean }) {
   const { session } = useSession()
 
-  let key = priorityOrdersKey
+  let key = priority ? priorityOrdersKey : normalOrdersKey
 
   if (session?.userRole === "artist") {
     key += "&hasArtistFilter=true"
@@ -21,7 +25,7 @@ export default function PriorityOrdersDataTable() {
   return (
     <Card className="shadow">
       <CardHeader>
-        <CardTitle>Priority Orders</CardTitle>
+        <CardTitle>{`${priority ? "Priority" : "Normal"} Orders`}</CardTitle>
       </CardHeader>
       <CardContent>
         <DataTable
