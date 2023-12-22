@@ -18,8 +18,8 @@ type NavItem = {
 
 const adminNavItems: NavItem[] = [
   {
-    name: "All Orders",
-    href: "/orders/all",
+    name: "Orders",
+    href: "/orders",
   },
 ]
 
@@ -37,6 +37,8 @@ const artistNavItems: NavItem[] = [
 export default function HeaderMenu() {
   const pathname = usePathname()
   const { session } = useSession()
+
+  if (!session) return <></>
 
   const navItems =
     session?.userRole === "admin" ? adminNavItems : artistNavItems

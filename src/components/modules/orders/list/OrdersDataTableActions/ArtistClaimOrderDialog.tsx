@@ -44,7 +44,7 @@ export default function ArtistClaimOrderDialog({
 
   return (
     <>
-      <Button type="button" variant="outline" onClick={handleClaim}>
+      <Button type="button" onClick={handleClaim}>
         Claim
       </Button>
       <AlertDialog open={open}>

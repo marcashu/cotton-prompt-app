@@ -2,11 +2,13 @@ import { formatDateToYYYYMMDD } from "@/helpers/dateHelper"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { ColumnDef } from "@tanstack/react-table"
 import OrdersDataTableActions from "./OrdersDataTableActions/OrdersDataTableActions"
+import OrdersDataTableOrderNumber from "./OrdersDataTableOrderNumber"
 
 const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
   {
     accessorKey: "orderNumber",
     header: "Order Number",
+    cell: (({ row }) => OrdersDataTableOrderNumber({ row }))
   },
   {
     id: "date",

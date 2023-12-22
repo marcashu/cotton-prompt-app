@@ -54,6 +54,34 @@ const TypographyH3 = ({
   )
 }
 
+const TypographyP = ({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) => {
+  return (
+    <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}>
+      {children}
+    </p>
+  )
+}
+
+const TypographySmall = ({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) => {
+  return (
+    <small className={cn("text-sm font-medium leading-none", className)}>
+      {children}
+    </small>
+  )
+}
+
 const TypographyMuted = ({
   className,
   children,
@@ -66,4 +94,11 @@ const TypographyMuted = ({
   )
 }
 
-export { TypographyH1, TypographyH2, TypographyH3, TypographyMuted }
+export {
+  TypographyH1,
+  TypographyH2,
+  TypographyH3,
+  TypographyP,
+  TypographySmall,
+  TypographyMuted,
+}

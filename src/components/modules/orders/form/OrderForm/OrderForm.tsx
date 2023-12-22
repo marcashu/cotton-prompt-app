@@ -15,6 +15,7 @@ import useSession from "@/hooks/useSession"
 import OrderFormDialog from "./OrderFormDialog"
 import { useState } from "react"
 import { createOrder, updateOrder } from "../../orderService"
+import GetOrderModel from "@/types/getOrderModel"
 
 export default function OrderForm({ order }: { order?: GetOrderModel }) {
   const { session } = useSession()
@@ -25,7 +26,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
       priority: order?.priority ?? false,
       concept: order?.concept ?? "",
       printColor: order?.printColor ?? "",
-      designBracketId: order?.designBracketId.toString() ?? "",
+      designBracketId: order?.designBracket.id.toString() ?? "",
       imageReferences:
         order?.imageReferences.map((ir) => ({ value: ir })) ?? [],
     },
