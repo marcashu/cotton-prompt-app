@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function OrderFormDialog({
   open,
@@ -18,6 +18,9 @@ export default function OrderFormDialog({
   title: string
   message: string
 }) {
+  const router = useRouter()
+  const handleOk = () => router.back()
+
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
@@ -26,9 +29,7 @@ export default function OrderFormDialog({
           <AlertDialogDescription>{message}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction asChild>
-            <Link href={"/orders"}>OK</Link>
-          </AlertDialogAction>
+          <AlertDialogAction onClick={handleOk}>OK</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

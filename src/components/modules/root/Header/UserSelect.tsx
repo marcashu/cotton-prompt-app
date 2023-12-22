@@ -8,7 +8,8 @@ import {
 import useSession from "@/hooks/useSession"
 import Role from "@/types/role"
 import Session from "@/types/session"
-import { useState } from "react"
+import { redirect, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 const users: Session[] = [
   {
@@ -26,13 +27,21 @@ const users: Session[] = [
 ]
 
 export default function UserSelect() {
-  const { setSession } = useSession()
-  const [value, setValue] = useState<Role>("admin")
+  const { session, setSession } = useSession()
+  const [value, setValue] = useState<Role>(session ? session.userRole : "admin")
+  const router = useRouter()
 
   const handleChange = (newValue: Role) => {
     setValue(newValue)
     setSession(users.find((u) => u.userRole === newValue)!)
+    router.push("/")
   }
+
+  useEffect(() => {
+    if (session) return
+    setSession(users.find((u) => u.userRole === "admin")!)
+    router.push("/")
+  }, [])
 
   return (
     <Select value={value} onValueChange={handleChange}>

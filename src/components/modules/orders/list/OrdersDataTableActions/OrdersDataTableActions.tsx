@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { Row } from "@tanstack/react-table"
@@ -6,6 +8,7 @@ import DeleteOrderDialog from "./DeleteOrderDialog"
 import Link from "next/link"
 import useSession from "@/hooks/useSession"
 import ArtistClaimOrderDialog from "./ArtistClaimOrderDialog"
+import { usePathname } from "next/navigation"
 
 export default function OrdersDataTableActions({
   row,
@@ -14,12 +17,13 @@ export default function OrdersDataTableActions({
 }) {
   const order = row.original
   const { session } = useSession()
+  const pathname = usePathname()
 
   if (!session) return <></>
 
-  return (
-    <div className="flex justify-end gap-2">
-      {session.userRole === "admin" ? (
+  const getActions = () => {
+    if (session.userRole === "admin") {
+      return (
         <>
           <Button variant="outline" size="icon" asChild>
             <Link href={`/orders/${order.id}/edit`}>
@@ -28,9 +32,15 @@ export default function OrdersDataTableActions({
           </Button>
           <DeleteOrderDialog id={order.id} priority={order.priority} />
         </>
-      ) : (
-        <ArtistClaimOrderDialog id={order.id} priority={order.priority} />
-      )}
-    </div>
-  )
+      )
+    }
+
+    if (session.userRole === "artist" && pathname === "/orders/available") {
+      return <ArtistClaimOrderDialog id={order.id} priority={order.priority} />
+    }
+
+    return <></>
+  }
+
+  return <div className="flex justify-end gap-2">{getActions()}</div>
 }

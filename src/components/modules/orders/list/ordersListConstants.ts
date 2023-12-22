@@ -21,9 +21,13 @@ const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
 
 const priorityOrdersKey = "/api/orders?priority=true"
 const normalOrdersKey = "/api/orders?priority=false"
+const priorityArtistAvailableOrdersKey = `${priorityOrdersKey}&hasArtistFilter=true`
+const normalArtistAvailableOrdersKey = `${normalOrdersKey}&hasArtistFilter=true`
 
 export {
   ordersColumnDef,
   priorityOrdersKey,
   normalOrdersKey,
+  priorityArtistAvailableOrdersKey,
+  normalArtistAvailableOrdersKey,
 }
