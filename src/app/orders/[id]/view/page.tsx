@@ -1,5 +1,6 @@
 import OrderPageHeader from "@/components/modules/orders/OrderPageHeader"
 import { getOrderById } from "@/components/modules/orders/orderService"
+import OrderViewImageReferences from "@/components/modules/orders/view/OrderViewImageReferences"
 import { Card } from "@/components/ui/card"
 import {
   TypographyH3,
@@ -41,9 +42,7 @@ export default async function ViewOrderPage({
           <TypographyMuted>{order.concept}</TypographyMuted>
         </div>
       </Card>
-      <Card className="py-6 container shadow">
-        <TypographyH3>Image References</TypographyH3>
-      </Card>
+      <OrderViewImageReferences urls={order.imageReferences} />
     </div>
   )
 }
