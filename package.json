@@ -1,11 +1,7 @@
 {
     "name": "cottonpromptapp",
     "version": "0.1.0",
-    "engines": {
-        "node": "16 || 18"
-    },
     "private": true,
-    "main": "server.js",
     "dependencies": {
         "@hookform/resolvers": "^3.3.2",
         "@microsoft/teams-js": "^2.18.0",
@@ -54,6 +50,5 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint"
-    },
-    "homepage": "."
+    }
 }
