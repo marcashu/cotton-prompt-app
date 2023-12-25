@@ -9,6 +9,9 @@ on:
       - dev
   workflow_dispatch:
 
+env:
+  NEXT_PUBLIC_API_URL: https://cottonpromptapi-dev.azurewebsites.net
+
 jobs:
   build:
     runs-on: ubuntu-latest
