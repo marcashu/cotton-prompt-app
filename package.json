@@ -48,7 +48,7 @@
         "dev:teamsfx": "env-cmd --silent -f .localConfigs npm run dev",
         "dev": "next dev --experimental-https -p 53000",
         "build": "next build",
-        "start": "next start",
+        "start": "node server.js",
         "lint": "next lint"
     }
 }
