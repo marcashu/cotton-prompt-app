@@ -17,7 +17,7 @@ export default function OrderPageHeader({
   const handleBack = () => router.back()
 
   return (
-    <TypographyH2 className="mb-4">
+    <TypographyH2 className="mb-4 col-span-2">
       <div className="flex gap-2">
         <Button
           variant="link"

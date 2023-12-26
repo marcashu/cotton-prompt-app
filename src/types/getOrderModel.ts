@@ -1,4 +1,5 @@
 import DesignBracket from "./designBracket"
+import DesignModel from "./designModel"
 
 type GetOrderModel = {
   id: number
@@ -8,6 +9,7 @@ type GetOrderModel = {
   printColor: string
   designBracket: DesignBracket
   imageReferences: string[]
+  designs: DesignModel[]
 }
 
 export default GetOrderModel
