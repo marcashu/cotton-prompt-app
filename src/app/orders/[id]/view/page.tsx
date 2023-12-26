@@ -19,7 +19,7 @@ export default async function ViewOrderPage({
       />
       <OrderViewDetails order={order} />
       <OrderViewImageReferences urls={order.imageReferences} />
-      <OrderViewDesignUpload />
+      <OrderViewDesignUpload id={order.id} />
     </div>
   )
 }

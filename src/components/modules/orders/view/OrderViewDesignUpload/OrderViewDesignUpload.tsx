@@ -6,10 +6,17 @@ import { TypographyH3, TypographyMuted } from "@/components/ui/typography"
 import { Image as ImageIcon } from "lucide-react"
 import Image from "next/image"
 import { ChangeEvent, DragEvent, createRef, useState } from "react"
+import { submitOrderDesign } from "../../orderService"
+import { useToast } from "@/components/ui/use-toast"
 
-export default function OrderViewDesignUpload() {
+export default function OrderViewDesignUpload({ id }: { id: number }) {
   const ref = createRef<HTMLInputElement>()
   const [previewImage, setPreviewImage] = useState<string>()
+  const [file, setFile] = useState<{
+    fileName: string
+    fileBase64: string
+  }>()
+  const { toast } = useToast()
 
   const handleClick = () => ref.current?.click()
 
@@ -22,6 +29,7 @@ export default function OrderViewDesignUpload() {
     const file = event.dataTransfer.files[0]
     if (file) {
       setPreviewImage(URL.createObjectURL(file))
+      getBase64(file)
     }
   }
 
@@ -31,6 +39,32 @@ export default function OrderViewDesignUpload() {
     const file = event.target.files[0]
     if (file) {
       setPreviewImage(URL.createObjectURL(file))
+      getBase64(file)
+    }
+  }
+
+  const handleSubmit = () => {
+    if (!file) return
+
+    submitOrderDesign(id, file.fileBase64, file.fileName).then(() => {
+      toast({
+        title: "Design has been uploaded successfully",
+        description: new Date().toLocaleString(),
+      })
+    })
+  }
+
+  const getBase64 = (file: File) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = function () {
+      setFile({
+        fileName: file.name,
+        fileBase64: reader.result as string,
+      })
+    }
+    reader.onerror = function (error) {
+      console.log("Error: ", error)
     }
   }
 
@@ -79,10 +113,17 @@ export default function OrderViewDesignUpload() {
         </div>
         {!!previewImage && (
           <div className="self-end">
-            <Button type="button" variant="outline" onClick={handleClick}>
+            <Button
+              type="button"
+              className="mr-4"
+              variant="outline"
+              onClick={handleClick}
+            >
               Re-upload
             </Button>
-            <Button type="button">Submit</Button>
+            <Button type="button" onClick={handleSubmit}>
+              Submit
+            </Button>
           </div>
         )}
       </div>
