@@ -75,6 +75,22 @@ export const assignArtistToOrder = async (id: number, artistId: string) => {
   }
 }
 
+export const assignCheckerToOrder = async (id: number, checkerId: string) => {
+  const res = await fetch(`${baseUrl}/${id}/checker`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      checkerId
+    }),
+  })
+
+  if (!res.ok) {
+    throw new Error()
+  }
+}
+
 export const submitOrderDesign = async (id: number, design: string, fileName: string) => {
   const res = await fetch(`${baseUrl}/${id}/designs`, {
     method: "POST",

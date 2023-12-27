@@ -7,7 +7,7 @@ import { Edit } from "lucide-react"
 import DeleteOrderDialog from "./DeleteOrderDialog"
 import Link from "next/link"
 import useSession from "@/hooks/useSession"
-import ArtistClaimOrderDialog from "./ArtistClaimOrderDialog"
+import ClaimOrderButton from "./ClaimOrderButton"
 import { usePathname } from "next/navigation"
 
 export default function OrdersDataTableActions({
@@ -35,8 +35,8 @@ export default function OrdersDataTableActions({
       )
     }
 
-    if (session.userRole === "artist" && pathname === "/orders/available") {
-      return <ArtistClaimOrderDialog id={order.id} priority={order.priority} />
+    if (pathname === "/orders/available") {
+      return <ClaimOrderButton id={order.id} priority={order.priority} />
     }
 
     return <></>

@@ -1,16 +1,23 @@
+"use client"
+
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
-import {
-  normalArtistAvailableOrdersKey,
-  priorityArtistAvailableOrdersKey,
-} from "@/components/modules/orders/list/ordersListConstants"
+import { getOrderListKey } from "@/components/modules/orders/list/ordersListHelper"
 import { TypographyH2 } from "@/components/ui/typography"
+import useSession from "@/hooks/useSession"
 
 export default function AvailableOrdersPage() {
+  const { session } = useSession()
+
+  if (!session || session.userRole === "admin") return <></>
+
+  const priorityKey = getOrderListKey(session.userRole, true)
+  const normalKey = getOrderListKey(session.userRole, false)
+
   return (
     <div className="flex flex-col gap-4">
       <TypographyH2>Available Orders</TypographyH2>
-      <OrdersDataTable priority={true} url={priorityArtistAvailableOrdersKey} />
-      <OrdersDataTable priority={false} url={normalArtistAvailableOrdersKey} />
+      <OrdersDataTable priority={true} url={priorityKey} />
+      <OrdersDataTable priority={false} url={normalKey} />
     </div>
   )
 }

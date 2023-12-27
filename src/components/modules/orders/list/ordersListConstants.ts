@@ -25,6 +25,8 @@ const priorityOrdersKey = "/api/orders?priority=true"
 const normalOrdersKey = "/api/orders?priority=false"
 const priorityArtistAvailableOrdersKey = `${priorityOrdersKey}&hasArtistFilter=true`
 const normalArtistAvailableOrdersKey = `${normalOrdersKey}&hasArtistFilter=true`
+const priorityCheckerAvailableOrdersKey = `${priorityOrdersKey}&hasCheckerFilter=true`
+const normalCheckerAvailableOrdersKey = `${normalOrdersKey}&hasCheckerFilter=true`
 
 export {
   ordersColumnDef,
@@ -32,4 +34,6 @@ export {
   normalOrdersKey,
   priorityArtistAvailableOrdersKey,
   normalArtistAvailableOrdersKey,
+  priorityCheckerAvailableOrdersKey,
+  normalCheckerAvailableOrdersKey,
 }
