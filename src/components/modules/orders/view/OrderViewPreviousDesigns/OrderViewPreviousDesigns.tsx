@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card"
 import { TypographyH3, TypographyMuted } from "@/components/ui/typography"
 import DesignModel from "@/types/designModel"
 import Image from "next/image"
+import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 
 export default function OrderViewPreviousDesigns({
   designs,
@@ -24,7 +25,7 @@ export default function OrderViewPreviousDesigns({
         {designs.map((d, i) => (
           <AccordionItem value={d.name} key={d.id}>
             <AccordionTrigger>{`#${i + 1}`}</AccordionTrigger>
-            <AccordionContent className="p-4">
+            <AccordionContent className="p-4 gap-2 flex flex-col">
               <div className="relative aspect-video w-full">
                 <Image
                   src={d.url}
@@ -33,6 +34,9 @@ export default function OrderViewPreviousDesigns({
                   className="object-contain"
                 />
               </div>
+              {d.comments.map((c, i) => (
+                <OrderViewDesignCommentPreview key={i} comment={c} />
+              ))}
             </AccordionContent>
           </AccordionItem>
         ))}
