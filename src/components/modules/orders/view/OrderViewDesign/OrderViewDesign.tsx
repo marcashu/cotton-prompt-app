@@ -6,6 +6,8 @@ import OrderViewDesignUpload from "./OrderViewDesignUpload"
 import GetOrderModel from "@/types/getOrderModel"
 import useSession from "@/hooks/useSession"
 import OrderViewDesignPreview from "./OrderViewDesignPreview"
+import OrderViewDesignComment from "./OrderViewDesignComment"
+import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 
 export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
   const { session } = useSession()
@@ -13,6 +15,8 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
   if (!session) return <></>
 
   const isArtist = session.userRole === "artist"
+
+  const currentDesign = order.design
 
   return (
     <Card className="py-6 container shadow flex flex-col gap-4">
@@ -25,10 +29,13 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
       {isArtist ? (
         <OrderViewDesignUpload order={order} />
       ) : (
-        <OrderViewDesignPreview
-          url={order.designs.at(order.designs.length - 1)?.url}
-        />
+        <OrderViewDesignPreview url={currentDesign?.url} />
       )}
+      {!!currentDesign &&
+        currentDesign.comments.map((c, i) => (
+          <OrderViewDesignCommentPreview key={i} comment={c} />
+        ))}
+      {!!currentDesign && <OrderViewDesignComment id={currentDesign.id} />}
     </Card>
   )
 }

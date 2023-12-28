@@ -54,6 +54,25 @@ const TypographyH3 = ({
   )
 }
 
+const TypographyH4 = ({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) => {
+  return (
+    <h4
+      className={cn(
+        "scroll-m-20 text-xl font-semibold tracking-tight",
+        className
+      )}
+    >
+      {children}
+    </h4>
+  )
+}
+
 const TypographyP = ({
   className,
   children,
@@ -65,6 +84,18 @@ const TypographyP = ({
     <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}>
       {children}
     </p>
+  )
+}
+
+const TypographyLarge = ({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) => {
+  return (
+    <div className={cn("text-lg font-semibold", className)}>{children}</div>
   )
 }
 
@@ -98,7 +129,9 @@ export {
   TypographyH1,
   TypographyH2,
   TypographyH3,
+  TypographyH4,
   TypographyP,
+  TypographyLarge,
   TypographySmall,
   TypographyMuted,
 }

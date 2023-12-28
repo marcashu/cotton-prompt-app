@@ -14,7 +14,6 @@ export default function OrderViewPreviousDesigns({
 }: {
   designs: DesignModel[]
 }) {
-  const prevDesigns = designs.slice(0, -1)
   return (
     <Card className="py-6 container shadow flex flex-col gap-4">
       <TypographyH3>
@@ -22,9 +21,9 @@ export default function OrderViewPreviousDesigns({
         <TypographyMuted>View previous designs</TypographyMuted>
       </TypographyH3>
       <Accordion type="single" collapsible className="w-full">
-        {prevDesigns.map((d) => (
-          <AccordionItem value={d.name} key={d.lineId}>
-            <AccordionTrigger>{`#${d.lineId}`}</AccordionTrigger>
+        {designs.map((d, i) => (
+          <AccordionItem value={d.name} key={d.id}>
+            <AccordionTrigger>{`#${i + 1}`}</AccordionTrigger>
             <AccordionContent className="p-4">
               <div className="relative aspect-video w-full">
                 <Image

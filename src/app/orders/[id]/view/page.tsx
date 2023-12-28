@@ -21,8 +21,8 @@ export default async function ViewOrderPage({
       <OrderViewDetails order={order} />
       <OrderViewImageReferences urls={order.imageReferences} />
       <OrderViewDesign order={order} />
-      {order.designs.length > 1 && (
-        <OrderViewPreviousDesigns designs={order.designs} />
+      {order.previousDesigns.length > 0 && (
+        <OrderViewPreviousDesigns designs={order.previousDesigns} />
       )}
     </div>
   )

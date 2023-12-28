@@ -9,7 +9,8 @@ type GetOrderModel = {
   printColor: string
   designBracket: DesignBracket
   imageReferences: string[]
-  designs: DesignModel[]
+  design?: DesignModel
+  previousDesigns: DesignModel[]
 }
 
 export default GetOrderModel

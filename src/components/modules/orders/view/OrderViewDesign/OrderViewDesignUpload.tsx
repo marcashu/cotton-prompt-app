@@ -14,7 +14,7 @@ export default function OrderViewDesignUpload({
 }) {
   const ref = createRef<HTMLInputElement>()
   const [previewImage, setPreviewImage] = useState<string>(
-    order.designs.at(order.designs.length - 1)?.url ?? ""
+    order.design?.url ?? ""
   )
   const [file, setFile] = useState<{
     fileName: string
@@ -100,9 +100,9 @@ export default function OrderViewDesignUpload({
             <div className="mt-4 flex text-sm leading-6 text-gray-600">
               <p className="pl-1">Upload a file or drag and drop</p>
             </div>
-            <p className="text-xs leading-5 text-gray-600">
+            {/* <p className="text-xs leading-5 text-gray-600">
               PNG, JPG, GIF up to 10MB
-            </p>
+            </p> */}
           </div>
         ) : (
           <Image

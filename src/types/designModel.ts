@@ -1,8 +1,9 @@
 type DesignModel = {
-  lineId: number
+  id: number
   name: string
   url: string
   createdOn: string
+  comments: CommentModel[]
 }
 
 export default DesignModel
