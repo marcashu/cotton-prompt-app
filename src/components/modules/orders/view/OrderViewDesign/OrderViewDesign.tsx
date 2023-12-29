@@ -1,13 +1,18 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { TypographyH3, TypographyMuted } from "@/components/ui/typography"
+import {
+  TypographyH3,
+  TypographyH4,
+  TypographyMuted,
+} from "@/components/ui/typography"
 import OrderViewDesignUpload from "./OrderViewDesignUpload"
 import GetOrderModel from "@/types/getOrderModel"
 import useSession from "@/hooks/useSession"
 import OrderViewDesignPreview from "./OrderViewDesignPreview"
 import OrderViewDesignComment from "./OrderViewDesignComment"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
+import OrderViewDesignApproveButton from "./OrderViewDesignApproveButton"
 
 export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
   const { session } = useSession()
@@ -15,6 +20,7 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
   if (!session) return <></>
 
   const isArtist = session.userRole === "artist"
+  const isChecker = session.userRole === "checker"
 
   const currentDesign = order.design
 
@@ -31,11 +37,16 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
       ) : (
         <OrderViewDesignPreview url={currentDesign?.url} />
       )}
-      {!!currentDesign &&
-        currentDesign.comments.map((c, i) => (
-          <OrderViewDesignCommentPreview key={i} comment={c} />
-        ))}
-      {!!currentDesign && <OrderViewDesignComment id={currentDesign.id} />}
+      {isChecker && <OrderViewDesignApproveButton id={order.id} />}
+      {!!currentDesign && (
+        <>
+          <TypographyH4>Comments</TypographyH4>
+          {currentDesign.comments.map((c, i) => (
+            <OrderViewDesignCommentPreview key={i} comment={c} />
+          ))}
+          <OrderViewDesignComment id={currentDesign.id} />
+        </>
+      )}
     </Card>
   )
 }

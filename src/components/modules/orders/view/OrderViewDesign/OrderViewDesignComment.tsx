@@ -41,7 +41,7 @@ export default function OrderViewDesignComment({ id }: { id: number }) {
         value={comment}
         onChange={handleChange}
       />
-      <Button type="submit" disabled={!comment}>
+      <Button type="submit" variant="outline" disabled={!comment}>
         Send
       </Button>
     </form>

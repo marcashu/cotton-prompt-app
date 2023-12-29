@@ -5,7 +5,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
-import { TypographyH3, TypographyMuted } from "@/components/ui/typography"
+import {
+  TypographyH3,
+  TypographyH4,
+  TypographyMuted,
+} from "@/components/ui/typography"
 import DesignModel from "@/types/designModel"
 import Image from "next/image"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
@@ -34,9 +38,14 @@ export default function OrderViewPreviousDesigns({
                   className="object-contain"
                 />
               </div>
-              {d.comments.map((c, i) => (
-                <OrderViewDesignCommentPreview key={i} comment={c} />
-              ))}
+              {d.comments.length > 0 && (
+                <>
+                  <TypographyH4>Comments</TypographyH4>
+                  {d.comments.map((c, i) => (
+                    <OrderViewDesignCommentPreview key={i} comment={c} />
+                  ))}
+                </>
+              )}
             </AccordionContent>
           </AccordionItem>
         ))}
