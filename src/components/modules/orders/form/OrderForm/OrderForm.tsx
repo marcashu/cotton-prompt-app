@@ -12,10 +12,10 @@ import PrintColorSelect from "./PrintColorSelect"
 import DesignBracketSelect from "./DesignBracketSelect"
 import ImageReferenceUrls from "./ImageReferenceUrls"
 import useSession from "@/hooks/useSession"
-import OrderFormDialog from "./OrderFormDialog"
-import { useState } from "react"
 import { createOrder, updateOrder } from "../../orderService"
 import GetOrderModel from "@/types/getOrderModel"
+import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from "next/navigation"
 
 export default function OrderForm({ order }: { order?: GetOrderModel }) {
   const { session } = useSession()
@@ -31,11 +31,8 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
         order?.imageReferences.map((ir) => ({ value: ir })) ?? [],
     },
   })
-  const [dialogProps, setDialogProps] = useState({
-    open: false,
-    title: "",
-    message: "",
-  })
+  const { toast } = useToast()
+  const router = useRouter()
 
   const onSubmit = (values: OrderFormValues) => {
     const userId = session?.userId
@@ -47,60 +44,51 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
     if (!order) {
       createOrder(values, userId)
         .then(() =>
-          setDialogProps({
-            open: true,
-            title: "Create Order",
-            message: "Order successfully created.",
+          toast({
+            title: "Order has been created successfully",
+            description: new Date().toLocaleString(),
           })
         )
         .catch((err) =>
-          setDialogProps({
-            open: true,
-            title: "Create Order",
-            message: `Something went wrong while creating the order: ${err}`,
+          toast({
+            title: `Something went wrong while creating the order: ${err}`,
+            description: new Date().toLocaleString(),
           })
         )
+        .finally(() => router.back())
     } else {
       updateOrder(values, userId, order.id)
         .then(() =>
-          setDialogProps({
-            open: true,
-            title: "Update Order",
-            message: "Order successfully updated.",
+          toast({
+            title: "Order has been updated successfully",
+            description: new Date().toLocaleString(),
           })
         )
         .catch((err) =>
-          setDialogProps({
-            open: true,
-            title: "Update Order",
-            message: `Something went wrong while updating the order: ${err}`,
+          toast({
+            title: `Something went wrong while updating the order: ${err}`,
+            description: new Date().toLocaleString(),
           })
         )
+        .finally(() => router.back())
     }
   }
 
   return (
-    <>
-      <Form {...form} key={order?.id ?? 0}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="max-w-3xl flex flex-col gap-4">
-            <OrderNumberInput control={form.control} />
-            <PriorityCheckbox control={form.control} />
-            <div className="flex gap-4">
-              <PrintColorSelect control={form.control} className="grow" />
-              <DesignBracketSelect control={form.control} className="grow" />
-            </div>
-            <ConceptTextarea control={form.control} />
-            <ImageReferenceUrls control={form.control} />
+    <Form {...form} key={order?.id ?? 0}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="max-w-3xl flex flex-col gap-4">
+          <OrderNumberInput control={form.control} />
+          <PriorityCheckbox control={form.control} />
+          <div className="flex gap-4">
+            <PrintColorSelect control={form.control} className="grow" />
+            <DesignBracketSelect control={form.control} className="grow" />
           </div>
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-      <OrderFormDialog
-        open={dialogProps.open}
-        title={dialogProps.title}
-        message={dialogProps.message}
-      />
-    </>
+          <ConceptTextarea control={form.control} />
+          <ImageReferenceUrls control={form.control} />
+        </div>
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   )
 }

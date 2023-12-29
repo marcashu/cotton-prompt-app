@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { Trash } from "lucide-react"
 import { useState } from "react"
 import { normalOrdersKey, priorityOrdersKey } from "../ordersListConstants"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function DeleteOrderDialog({
   id,
@@ -24,13 +25,20 @@ export default function DeleteOrderDialog({
 }) {
   const [open, setOpen] = useState(false)
   const { mutate } = useSWRConfig()
+  const { toast } = useToast()
 
   const handleContinue = () => {
     deleteOrder(id)
       .then(() => {
         mutate(priority ? priorityOrdersKey : normalOrdersKey)
       })
-      .finally(() => setOpen(false))
+      .finally(() => {
+        setOpen(false)
+        toast({
+          title: "Order has been deleted successfully",
+          description: new Date().toLocaleString(),
+        })
+      })
   }
 
   const handleOpen = () => setOpen(true)
