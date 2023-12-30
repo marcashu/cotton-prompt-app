@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { TypographySmall } from "@/components/ui/typography"
 import useSession from "@/hooks/useSession"
 import Role from "@/types/role"
 import Session from "@/types/session"
@@ -39,15 +40,18 @@ export default function UserSelect() {
   }
 
   return (
-    <Select value={value} onValueChange={handleChange}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Role" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="admin">Admin</SelectItem>
-        <SelectItem value="checker">Checker</SelectItem>
-        <SelectItem value="artist">Artist</SelectItem>
-      </SelectContent>
-    </Select>
+    <div className="flex gap-2 items-center">
+      <TypographySmall className="font-normal">Login as</TypographySmall>
+      <Select value={value} onValueChange={handleChange}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Role" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="admin">Admin</SelectItem>
+          <SelectItem value="checker">Checker</SelectItem>
+          <SelectItem value="artist">Artist</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
   )
 }

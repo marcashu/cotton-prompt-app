@@ -9,6 +9,7 @@ export default function Header() {
       <div className="grow">
         <HeaderMenu />
       </div>
+      {/* TODO Remove <UserSelect/> */}
       <UserSelect />
     </div>
   )
