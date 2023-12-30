@@ -37,7 +37,9 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
       ) : (
         <OrderViewDesignPreview url={currentDesign?.url} />
       )}
-      {isChecker && <OrderViewDesignApproveButton id={order.id} />}
+      {isChecker && !!currentDesign && (
+        <OrderViewDesignApproveButton id={order.id} />
+      )}
       {!!currentDesign && (
         <>
           <TypographyH4>Comments</TypographyH4>

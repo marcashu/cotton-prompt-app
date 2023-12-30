@@ -16,6 +16,16 @@ const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
     header: "Date",
   },
   {
+    id: "artistStatus",
+    accessorFn: (order) => order.artistStatus ?? '-',
+    header: "Artist Status",
+  },
+  {
+    id: "checkerStatus",
+    accessorFn: (order) => order.checkerStatus ?? '-',
+    header: "Checker Status",
+  },
+  {
     id: "actions",
     cell: ({ row }) => OrdersDataTableActions({ row })
   },
