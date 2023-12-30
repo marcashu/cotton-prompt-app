@@ -108,15 +108,19 @@ export const submitOrderDesign = async (id: number, design: string, fileName: st
   }
 }
 
-export const approveOrder = async (id: number, checkerId: string) => {
+export const approveOrder = async (id: number) => {
   const res = await fetch(`${baseUrl}/${id}/approve`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      checkerId
-    }),
+  })
+
+  if (!res.ok) {
+    throw new Error()
+  }
+}
+
+export const requestReuploadOrder = async (id: number) => {
+  const res = await fetch(`${baseUrl}/${id}/request-reupload`, {
+    method: "POST",
   })
 
   if (!res.ok) {

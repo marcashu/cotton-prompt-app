@@ -11,6 +11,9 @@ type GetOrderModel = {
   imageReferences: string[]
   design?: DesignModel
   previousDesigns: DesignModel[]
+  artistStatus?: string
+  checkerStatus?: string
+  checkerId?: string
 }
 
 export default GetOrderModel

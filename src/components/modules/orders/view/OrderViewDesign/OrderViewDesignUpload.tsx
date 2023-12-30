@@ -116,7 +116,7 @@ export default function OrderViewDesignUpload({
       {!!previewImage && (
         <div className="self-end">
           <Button type="button" variant="outline" onClick={handleClick}>
-            Re-upload
+            Reupload
           </Button>
           {!!file && (
             <Button type="button" className="ml-4" onClick={handleSubmit}>
