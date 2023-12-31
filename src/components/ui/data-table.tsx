@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Icons } from "./icons"
+import Spinner from "./spinner"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length}>
-                <Icons.spinner className="h-4 w-4 animate-spin m-auto" />
+                <Spinner />
               </TableCell>
             </TableRow>
           )}

@@ -22,6 +22,7 @@ export default function OrderViewDesignUpload({
   }>()
   const { toast } = useToast()
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const handleClick = () => ref.current?.click()
 
@@ -51,7 +52,10 @@ export default function OrderViewDesignUpload({
   const handleSubmit = () => {
     if (!file) return
 
+    setLoading(true)
+
     submitOrderDesign(order.id, file.fileBase64, file.fileName).then(() => {
+      setLoading(false)
       setFile(undefined)
       toast({
         title: "Design has been uploaded successfully",
@@ -119,7 +123,12 @@ export default function OrderViewDesignUpload({
             Reupload
           </Button>
           {!!file && (
-            <Button type="button" className="ml-4" onClick={handleSubmit}>
+            <Button
+              type="button"
+              className="ml-4"
+              onClick={handleSubmit}
+              loading={loading}
+            >
               Submit
             </Button>
           )}

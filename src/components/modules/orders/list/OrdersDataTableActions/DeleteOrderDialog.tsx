@@ -26,13 +26,16 @@ export default function DeleteOrderDialog({
   const [open, setOpen] = useState(false)
   const { mutate } = useSWRConfig()
   const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
 
   const handleContinue = () => {
+    setLoading(true)
     deleteOrder(id)
       .then(() => {
         mutate(priority ? priorityOrdersKey : normalOrdersKey)
       })
       .finally(() => {
+        setLoading(false)
         setOpen(false)
         toast({
           title: "Order has been deleted successfully",
@@ -63,8 +66,10 @@ export default function DeleteOrderDialog({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleClose}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleContinue}>
-              Continue
+            <AlertDialogAction asChild>
+              <Button type="button" onClick={handleContinue} loading={loading}>
+                Continue
+              </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

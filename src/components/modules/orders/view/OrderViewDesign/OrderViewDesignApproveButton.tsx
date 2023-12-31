@@ -5,12 +5,12 @@ import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 
 export default function OrderViewDesignApproveButton({ id }: { id: number }) {
-  const [disabled, setDisabled] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
 
   const handleApprove = () => {
-    setDisabled(true)
+    setLoading(true)
     approveOrder(id).then(() => {
       toast({
         title: "Order has been approved!",
@@ -21,7 +21,7 @@ export default function OrderViewDesignApproveButton({ id }: { id: number }) {
   }
 
   return (
-    <Button type="button" disabled={disabled} onClick={handleApprove}>
+    <Button type="button" loading={loading} onClick={handleApprove}>
       Approve
     </Button>
   )

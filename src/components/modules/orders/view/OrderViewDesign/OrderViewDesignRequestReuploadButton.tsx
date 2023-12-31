@@ -9,12 +9,12 @@ export default function OrderViewDesignRequestReuploadButton({
 }: {
   id: number
 }) {
-  const [disabled, setDisabled] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
 
   const handleRequestReupload = () => {
-    setDisabled(true)
+    setLoading(true)
     requestReuploadOrder(id).then(() => {
       toast({
         title: "Order has been requested for reupload!",
@@ -28,7 +28,7 @@ export default function OrderViewDesignRequestReuploadButton({
     <Button
       type="button"
       className="mr-2"
-      disabled={disabled}
+      loading={loading}
       onClick={handleRequestReupload}
       variant="outline"
     >

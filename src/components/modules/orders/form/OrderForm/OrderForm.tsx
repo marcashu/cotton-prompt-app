@@ -16,6 +16,7 @@ import { createOrder, updateOrder } from "../../orderService"
 import GetOrderModel from "@/types/getOrderModel"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function OrderForm({ order }: { order?: GetOrderModel }) {
   const { session } = useSession()
@@ -33,6 +34,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
   })
   const { toast } = useToast()
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const onSubmit = (values: OrderFormValues) => {
     const userId = session?.userId
@@ -40,6 +42,8 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
     if (!userId) {
       return
     }
+
+    setLoading(true)
 
     if (!order) {
       createOrder(values, userId)
@@ -87,7 +91,9 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
           <ConceptTextarea control={form.control} />
           <ImageReferenceUrls control={form.control} />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" loading={loading}>
+          Submit
+        </Button>
       </form>
     </Form>
   )

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/select"
 import useSWR from "swr"
 import DesignBracket from "@/types/designBracket"
-import { Icons } from "@/components/ui/icons"
+import Spinner from "@/components/ui/spinner"
 
 export default function DesignBracketSelect({
   control,
@@ -40,7 +40,7 @@ export default function DesignBracketSelect({
                 {!isLoading ? (
                   <SelectValue placeholder="Select a design bracket" />
                 ) : (
-                  <Icons.spinner className="h-4 w-4 animate-spin m-auto" />
+                  <Spinner />
                 )}
               </SelectTrigger>
             </FormControl>

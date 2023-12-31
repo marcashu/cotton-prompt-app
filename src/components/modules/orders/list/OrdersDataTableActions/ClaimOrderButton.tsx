@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import useSession from "@/hooks/useSession"
 import { useToast } from "@/components/ui/use-toast"
 import { getOrderListKey } from "../ordersListHelper"
+import { useState } from "react"
 
 export default function ClaimOrderButton({
   id,
@@ -15,16 +16,20 @@ export default function ClaimOrderButton({
   const { session } = useSession()
   const { mutate } = useSWRConfig()
   const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
 
   if (!session || session.userRole === "admin") return <></>
 
   const handleClaim = () => {
+    setLoading(true)
+
     const assignToOrder =
       session.userRole === "artist" ? assignArtistToOrder : assignCheckerToOrder
 
     const mutateKey = getOrderListKey(session.userRole, priority)
 
     assignToOrder(id, session.userId).then(() => {
+      setLoading(false)
       mutate(mutateKey)
       toast({
         title: "Order has been claimed successfully",
@@ -34,7 +39,7 @@ export default function ClaimOrderButton({
   }
 
   return (
-    <Button type="button" onClick={handleClaim}>
+    <Button type="button" onClick={handleClaim} loading={loading}>
       Claim
     </Button>
   )
