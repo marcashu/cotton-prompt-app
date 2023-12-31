@@ -1,4 +1,4 @@
-import { assignArtistToOrder, assignCheckerToOrder } from "../../orderService"
+import { assignArtistToOrder, assignCheckerToOrder } from "../../orderActions"
 import { useSWRConfig } from "swr"
 import { Button } from "@/components/ui/button"
 import useSession from "@/hooks/useSession"
