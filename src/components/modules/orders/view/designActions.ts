@@ -1,3 +1,7 @@
+'use server'
+
+import { revalidateTag } from "next/cache"
+
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Designs`
 
 export const postComment = async (id: number, comment: string, userId: string) => {
@@ -16,4 +20,6 @@ export const postComment = async (id: number, comment: string, userId: string) =
   if (!res.ok) {
     throw new Error()
   }
+
+  revalidateTag(`orderId:${id}`)
 }

@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { deleteOrder } from "../../orderService"
+import { deleteOrder } from "../../orderActions"
 import { useSWRConfig } from "swr"
 import { Button } from "@/components/ui/button"
 import { Trash } from "lucide-react"

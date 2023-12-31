@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { approveOrder } from "../../orderService"
+import { approveOrder } from "../../orderActions"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 

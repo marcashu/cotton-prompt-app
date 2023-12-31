@@ -2,15 +2,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useSession from "@/hooks/useSession"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { postComment } from "../designService"
+import { postComment } from "../designActions"
 import { useToast } from "@/components/ui/use-toast"
-import { useRouter } from "next/navigation"
 
 export default function OrderViewDesignComment({ id }: { id: number }) {
   const [comment, setComment] = useState<string>()
   const { session } = useSession()
   const { toast } = useToast()
-  const router = useRouter()
 
   if (!session) return <></>
 
@@ -28,7 +26,6 @@ export default function OrderViewDesignComment({ id }: { id: number }) {
         description: new Date().toLocaleString(),
       })
       setComment("")
-      router.refresh()
     })
   }
 

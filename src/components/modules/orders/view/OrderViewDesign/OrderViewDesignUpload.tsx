@@ -1,11 +1,10 @@
 import { useToast } from "@/components/ui/use-toast"
 import { Image as ImageIcon } from "lucide-react"
 import { ChangeEvent, DragEvent, createRef, useState } from "react"
-import { submitOrderDesign } from "../../orderService"
+import { submitOrderDesign } from "../../orderActions"
 import GetOrderModel from "@/types/getOrderModel"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
 
 export default function OrderViewDesignUpload({
   order,
@@ -21,7 +20,6 @@ export default function OrderViewDesignUpload({
     fileBase64: string
   }>()
   const { toast } = useToast()
-  const router = useRouter()
   const [loading, setLoading] = useState(false)
 
   const handleClick = () => ref.current?.click()
@@ -61,7 +59,6 @@ export default function OrderViewDesignUpload({
         title: "Design has been uploaded successfully",
         description: new Date().toLocaleString(),
       })
-      router.refresh()
     })
   }
 
