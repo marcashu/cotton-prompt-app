@@ -5,6 +5,7 @@ import { submitOrderDesign } from "../../orderActions"
 import GetOrderModel from "@/types/getOrderModel"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { bytesToMegaBytes } from "@/helpers/fileHelper"
 
 export default function OrderViewDesignUpload({
   order,
@@ -22,6 +23,10 @@ export default function OrderViewDesignUpload({
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
 
+  const maxImageSize = Number(
+    process.env.NEXT_PUBLIC_IMAGE_UPLOAD_MAX_SIZE_IN_MB ?? 10
+  )
+
   const handleClick = () => ref.current?.click()
 
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
@@ -31,20 +36,14 @@ export default function OrderViewDesignUpload({
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault()
     const file = event.dataTransfer.files[0]
-    if (file) {
-      setPreviewImage(URL.createObjectURL(file))
-      getBase64(file)
-    }
+    processFile(file)
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || !event.target.files.length) return
 
     const file = event.target.files[0]
-    if (file) {
-      setPreviewImage(URL.createObjectURL(file))
-      getBase64(file)
-    }
+    processFile(file)
   }
 
   const handleSubmit = () => {
@@ -52,14 +51,42 @@ export default function OrderViewDesignUpload({
 
     setLoading(true)
 
-    submitOrderDesign(order.id, file.fileBase64, file.fileName).then(() => {
-      setLoading(false)
-      setFile(undefined)
-      toast({
-        title: "Design has been uploaded successfully",
-        description: new Date().toLocaleString(),
+    submitOrderDesign(order.id, file.fileBase64, file.fileName)
+      .then(() => {
+        setFile(undefined)
+        toast({
+          title: "Design has been uploaded successfully",
+          description: new Date().toLocaleString(),
+        })
       })
-    })
+      .catch(({ message }: { message: string }) => {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: message,
+        })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  const processFile = (file: File) => {
+    if (!file) return
+
+    if (bytesToMegaBytes(file.size) > maxImageSize) {
+      setFile(undefined)
+      setPreviewImage(order.design?.url ?? "")
+      toast({
+        variant: "warning",
+        title: "Please upload a smaller image",
+        description: `The selected image has exceeded the max size limit of ${maxImageSize}MB.`,
+      })
+      return
+    }
+
+    setPreviewImage(URL.createObjectURL(file))
+    getBase64(file)
   }
 
   const getBase64 = (file: File) => {
@@ -104,6 +131,9 @@ export default function OrderViewDesignUpload({
             {/* <p className="text-xs leading-5 text-gray-600">
               PNG, JPG, GIF up to 10MB
             </p> */}
+            <p className="text-xs leading-5 text-gray-600">
+              Up to {maxImageSize}MB
+            </p>
           </div>
         ) : (
           <Image

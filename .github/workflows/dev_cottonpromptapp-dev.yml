@@ -11,6 +11,7 @@ on:
 
 env:
   NEXT_PUBLIC_API_URL: https://cottonpromptapi-dev.azurewebsites.net
+  NEXT_PUBLIC_IMAGE_UPLOAD_MAX_SIZE_IN_MB: 50
 
 jobs:
   build:
