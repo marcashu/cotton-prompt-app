@@ -39,6 +39,7 @@ export default function DesignBracketItemEdit({
   const [ordersCount, setOrdersCount] = useState(0)
   const { toast } = useToast()
   const { session } = useSession()
+  const [loading, setLoading] = useState(false)
 
   if (!session) return <></>
 
@@ -50,6 +51,7 @@ export default function DesignBracketItemEdit({
     setDisableAll(true)
 
     try {
+      setLoading(true)
       const { count } = await getDesignBracketOrdersCount(id)
 
       if (count > 0) {
@@ -59,6 +61,7 @@ export default function DesignBracketItemEdit({
         await proceedUpdate()
       }
     } catch (error) {
+      setLoading(false)
     } finally {
       setDisableAll(false)
     }
@@ -72,6 +75,7 @@ export default function DesignBracketItemEdit({
       title: "Design bracket has been updated successfully",
       description: new Date().toLocaleString(),
     })
+    setLoading(false)
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
@@ -111,6 +115,7 @@ export default function DesignBracketItemEdit({
           type="submit"
           className={readOnly ? "hidden" : ""}
           disabled={readOnly || disableAll}
+          loading={loading}
         >
           Save
         </Button>

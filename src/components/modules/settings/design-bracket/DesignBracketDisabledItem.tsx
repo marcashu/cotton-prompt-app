@@ -14,13 +14,13 @@ export default function DesignBracketDisabledItem({
   data: DesignBracket
 }) {
   const { toast } = useToast()
-  const [disable, setDisable] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { session } = useSession()
 
   if (!session) return <></>
 
   const handleEnable = () => {
-    setDisable(true)
+    setLoading(true)
     enableDesignBracket(data.id, session.userId)
       .then(() =>
         toast({
@@ -28,7 +28,7 @@ export default function DesignBracketDisabledItem({
           description: new Date().toLocaleString(),
         })
       )
-      .finally(() => setDisable(false))
+      .finally(() => setLoading(false))
   }
 
   return (
@@ -39,7 +39,7 @@ export default function DesignBracketDisabledItem({
       <Button
         type="button"
         variant="outline"
-        disabled={disable}
+        loading={loading}
         onClick={handleEnable}
       >
         Enable
