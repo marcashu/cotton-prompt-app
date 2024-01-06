@@ -4,7 +4,7 @@ import DesignBracketItem from "@/components/modules/settings/design-bracket/Desi
 import DesignBracketDisabledItem from "@/components/modules/settings/design-bracket/DesignBracketDisabledItem"
 import DesignBracketCreate from "@/components/modules/settings/design-bracket/DesignBracketCreate"
 
-export default async function DesignBrackets() {
+export default async function DesignBracketsPage() {
   const activeBracketsData = getDesignBrackets(true, true)
   const inactiveBracketsData = getDesignBrackets(true, false)
   const [activeBrackets, inactiveBrackets] = await Promise.all([
@@ -20,12 +20,12 @@ export default async function DesignBrackets() {
           <DesignBracketItem
             key={db.id}
             data={db}
-            leftId={i > 0 ? activeBrackets.at(i - 1)?.id : undefined}
-            rightId={
-              i < activeBrackets.length - 1
-                ? activeBrackets.at(i + 1)?.id
-                : undefined
-            }
+            {...(i > 0 && {
+              leftId: activeBrackets[i - 1].id,
+            })}
+            {...(i < activeBrackets.length - 1 && {
+              rightId: activeBrackets[i + 1].id,
+            })}
           />
         ))}
       </ul>
