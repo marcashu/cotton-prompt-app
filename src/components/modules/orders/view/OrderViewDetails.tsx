@@ -17,7 +17,7 @@ export default function OrderViewDetails({ order }: { order: GetOrderModel }) {
         </div>
         <div>
           <TypographySmall>Print Color</TypographySmall>
-          <TypographyMuted>{order.printColor}</TypographyMuted>
+          <TypographyMuted>{order.printColor.value}</TypographyMuted>
         </div>
         <div>
           <TypographySmall>Design Bracket</TypographySmall>

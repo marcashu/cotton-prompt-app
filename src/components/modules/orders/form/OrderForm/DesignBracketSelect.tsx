@@ -49,12 +49,9 @@ export default function DesignBracketSelect({
             <SelectContent>
               {!!data &&
                 data?.length > 0 &&
-                data.map((designBracket) => (
-                  <SelectItem
-                    key={designBracket.id}
-                    value={designBracket.id.toString()}
-                  >
-                    {designBracket.value}
+                data.map((item) => (
+                  <SelectItem key={item.id} value={item.id.toString()}>
+                    {item.value}
                   </SelectItem>
                 ))}
             </SelectContent>

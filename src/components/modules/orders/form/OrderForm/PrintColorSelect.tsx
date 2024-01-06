@@ -14,6 +14,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import useSWR from "swr"
+import PrintColor from "@/types/printColor"
+import Spinner from "@/components/ui/spinner"
 
 export default function PrintColorSelect({
   control,
@@ -22,23 +25,35 @@ export default function PrintColorSelect({
   control: Control<OrderFormValues>
   className?: string
 }) {
+  const { data, isLoading } = useSWR<PrintColor[]>(
+    "/api/PrintColors?hasActiveFilter=true&active=true"
+  )
+
   return (
     <FormField
       control={control}
-      name="printColor"
+      name="printColorId"
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel>Print Color</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder="Select a print color" />
+                {!isLoading ? (
+                  <SelectValue placeholder="Select a print color" />
+                ) : (
+                  <Spinner />
+                )}
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              <SelectItem value="Color1">Color 1</SelectItem>
-              <SelectItem value="Color2">Color 2</SelectItem>
-              <SelectItem value="Color3">Color 3</SelectItem>
+              {!!data &&
+                data?.length > 0 &&
+                data.map((item) => (
+                  <SelectItem key={item.id} value={item.id.toString()}>
+                    {item.value}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
           <FormMessage />

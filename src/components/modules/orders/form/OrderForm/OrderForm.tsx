@@ -26,7 +26,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
       orderNumber: order?.orderNumber ?? "",
       priority: order?.priority ?? false,
       concept: order?.concept ?? "",
-      printColor: order?.printColor ?? "",
+      printColorId: order?.printColor.id.toString() ?? "",
       designBracketId: order?.designBracket.id.toString() ?? "",
       imageReferences:
         order?.imageReferences.map((ir) => ({ value: ir })) ?? [],
