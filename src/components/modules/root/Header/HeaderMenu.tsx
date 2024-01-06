@@ -8,18 +8,18 @@ import {
 import { TypographyH3 } from "@/components/ui/typography"
 import useSession from "@/hooks/useSession"
 import { cn } from "@/lib/utils"
+import NavItem from "@/types/navItem"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
-type NavItem = {
-  name: string
-  href: string
-}
 
 const adminNavItems: NavItem[] = [
   {
     name: "Orders",
     href: "/orders",
+  },
+  {
+    name: "Settings",
+    href: "/settings",
   },
 ]
 

@@ -21,7 +21,7 @@ export default function OrderViewDetails({ order }: { order: GetOrderModel }) {
         </div>
         <div>
           <TypographySmall>Design Bracket</TypographySmall>
-          <TypographyMuted>${order.designBracket.value}</TypographyMuted>
+          <TypographyMuted>{order.designBracket.value}</TypographyMuted>
         </div>
       </div>
       <div>

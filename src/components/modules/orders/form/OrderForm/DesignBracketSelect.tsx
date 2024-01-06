@@ -25,7 +25,9 @@ export default function DesignBracketSelect({
   control: Control<OrderFormValues>
   className?: string
 }) {
-  const { data, isLoading } = useSWR<DesignBracket[]>("/api/DesignBrackets")
+  const { data, isLoading } = useSWR<DesignBracket[]>(
+    "/api/DesignBrackets?hasActiveFilter=true&active=true"
+  )
 
   return (
     <FormField
@@ -52,7 +54,7 @@ export default function DesignBracketSelect({
                     key={designBracket.id}
                     value={designBracket.id.toString()}
                   >
-                    {`$${designBracket.value}`}
+                    {designBracket.value}
                   </SelectItem>
                 ))}
             </SelectContent>
