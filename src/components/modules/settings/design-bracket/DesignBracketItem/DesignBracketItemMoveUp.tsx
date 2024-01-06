@@ -3,6 +3,7 @@ import { swapDesignBrackets } from "../designBracketActions"
 import useSession from "@/hooks/useSession"
 import { MoveUp } from "lucide-react"
 import { useState } from "react"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function DesignBracketItemMoveUp({
   id,
@@ -19,6 +20,7 @@ export default function DesignBracketItemMoveUp({
 }) {
   const [loading, setLoading] = useState(false)
   const { session } = useSession()
+  const { toast } = useToast()
 
   if (!session) return <></>
 
@@ -27,10 +29,17 @@ export default function DesignBracketItemMoveUp({
 
     setDisableAll(true)
     setLoading(true)
-    swapDesignBrackets(id, leftId, session.userId).finally(() => {
-      setDisableAll(false)
-      setLoading(false)
-    })
+    swapDesignBrackets(id, leftId, session.userId)
+      .then(() =>
+        toast({
+          title: "Design bracket has been moved up successfully",
+          description: new Date().toLocaleString(),
+        })
+      )
+      .finally(() => {
+        setDisableAll(false)
+        setLoading(false)
+      })
   }
 
   return (
