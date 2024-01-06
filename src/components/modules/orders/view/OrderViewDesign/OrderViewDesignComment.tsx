@@ -6,7 +6,8 @@ import { postComment } from "../designActions"
 import { useToast } from "@/components/ui/use-toast"
 
 export default function OrderViewDesignComment({ id }: { id: number }) {
-  const [comment, setComment] = useState<string>()
+  const [comment, setComment] = useState("")
+  const [loading, setLoading] = useState(false)
   const { session } = useSession()
   const { toast } = useToast()
 
@@ -20,13 +21,16 @@ export default function OrderViewDesignComment({ id }: { id: number }) {
 
     if (!comment) return
 
-    postComment(id, comment, session.userId).then(() => {
-      toast({
-        title: "Comment has been posted successfully",
-        description: new Date().toLocaleString(),
+    setLoading(true)
+    postComment(id, comment, session.userId)
+      .then(() => {
+        toast({
+          title: "Comment has been posted successfully",
+          description: new Date().toLocaleString(),
+        })
+        setComment("")
       })
-      setComment("")
-    })
+      .finally(() => setLoading(false))
   }
 
   return (
@@ -38,7 +42,12 @@ export default function OrderViewDesignComment({ id }: { id: number }) {
         value={comment}
         onChange={handleChange}
       />
-      <Button type="submit" variant="outline" disabled={!comment}>
+      <Button
+        type="submit"
+        variant="outline"
+        disabled={!comment}
+        loading={loading}
+      >
         Send
       </Button>
     </form>
