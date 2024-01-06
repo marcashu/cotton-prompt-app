@@ -90,3 +90,22 @@ export const enableDesignBracket = async (id: number, userId: string) => {
 
   revalidatePath('/settings/design-brackets')
 }
+
+export const createDesignBracket = async (value: string, userId: string) => {
+  const res = await fetch(baseUrl, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      value,
+      userId,
+    }),
+  })
+
+  if (!res.ok) {
+    throw new Error()
+  }
+
+  revalidatePath('/settings/design-brackets')
+}

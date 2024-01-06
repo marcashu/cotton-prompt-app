@@ -1,11 +1,8 @@
 import { getDesignBrackets } from "@/components/modules/settings/design-bracket/designBracketService"
-import {
-  TypographyH3,
-  TypographyH4,
-  TypographySmall,
-} from "@/components/ui/typography"
+import { TypographyH3, TypographyH4 } from "@/components/ui/typography"
 import DesignBracketItem from "@/components/modules/settings/design-bracket/DesignBracketItem"
 import DesignBracketDisabledItem from "@/components/modules/settings/design-bracket/DesignBracketDisabledItem"
+import DesignBracketCreate from "@/components/modules/settings/design-bracket/DesignBracketCreate"
 
 export default async function DesignBrackets() {
   const activeBracketsData = getDesignBrackets(true, true)
@@ -32,6 +29,7 @@ export default async function DesignBrackets() {
           />
         ))}
       </ul>
+      <DesignBracketCreate />
       {inactiveBrackets.length > 0 && (
         <>
           <TypographyH4 className="mt-4">Disabled</TypographyH4>

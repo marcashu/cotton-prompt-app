@@ -99,14 +99,14 @@ export default function DesignBracketItemDelete({
               Unable to delete this design bracket
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Cannot delete this design bracket because it is currently used by{" "}
-              {ordersCount} order/s. Disable this design bracket instead?
+              Cannot delete this design bracket because it is used by{" "}
+              {ordersCount} order/s.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleClose}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleDisable}>
-              Continune
+              Disable Instead?
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -131,8 +131,8 @@ export default function DesignBracketItemEdit({
               Are you sure you want to edit this Design Bracket?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This design bracket is currently used by {ordersCount} orders.
-              Updating this will also affect those order/s.
+              This design bracket is used by {ordersCount} orders. Updating this
+              will also affect those order/s.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
