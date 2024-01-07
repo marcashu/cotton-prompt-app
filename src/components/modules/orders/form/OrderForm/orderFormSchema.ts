@@ -16,6 +16,9 @@ const orderFormSchema = z.object({
   designBracketId: z.string({
     required_error: "Please select a design bracket."
   }),
+  outputSizeId: z.string({
+    required_error: "Please select an output size."
+  }),
   imageReferences: z
     .array(
       z.object({

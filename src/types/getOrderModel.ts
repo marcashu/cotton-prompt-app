@@ -1,5 +1,6 @@
 import DesignBracket from "./designBracket"
 import DesignModel from "./designModel"
+import OutputSize from "./outputSize"
 import PrintColor from "./printColor"
 
 type GetOrderModel = {
@@ -9,6 +10,7 @@ type GetOrderModel = {
   concept: string
   printColor: PrintColor
   designBracket: DesignBracket
+  outputSize: OutputSize
   imageReferences: string[]
   design?: DesignModel
   previousDesigns: DesignModel[]

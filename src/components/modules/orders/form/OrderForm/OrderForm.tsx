@@ -17,6 +17,7 @@ import GetOrderModel from "@/types/getOrderModel"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import OutputSizeSelect from "./OutputSizeSelect"
 
 export default function OrderForm({ order }: { order?: GetOrderModel }) {
   const { session } = useSession()
@@ -28,6 +29,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
       concept: order?.concept ?? "",
       printColorId: order?.printColor.id.toString() ?? "",
       designBracketId: order?.designBracket.id.toString() ?? "",
+      outputSizeId: order?.outputSize.id.toString() ?? "",
       imageReferences:
         order?.imageReferences.map((ir) => ({ value: ir })) ?? [],
     },
@@ -84,9 +86,10 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
         <div className="max-w-3xl flex flex-col gap-4">
           <OrderNumberInput control={form.control} />
           <PriorityCheckbox control={form.control} />
-          <div className="flex gap-4">
-            <PrintColorSelect control={form.control} className="grow" />
-            <DesignBracketSelect control={form.control} className="grow" />
+          <div className="flex gap-2">
+            <PrintColorSelect control={form.control} className="flex-1" />
+            <DesignBracketSelect control={form.control} className="flex-1" />
+            <OutputSizeSelect control={form.control} className="flex-1" />
           </div>
           <ConceptTextarea control={form.control} />
           <ImageReferenceUrls control={form.control} />

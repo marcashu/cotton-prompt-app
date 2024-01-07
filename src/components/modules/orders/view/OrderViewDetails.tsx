@@ -23,6 +23,10 @@ export default function OrderViewDetails({ order }: { order: GetOrderModel }) {
           <TypographySmall>Design Bracket</TypographySmall>
           <TypographyMuted>{order.designBracket.value}</TypographyMuted>
         </div>
+        <div>
+          <TypographySmall>Output Size</TypographySmall>
+          <TypographyMuted>{order.outputSize.value}</TypographyMuted>
+        </div>
       </div>
       <div>
         <TypographySmall>Concept</TypographySmall>
