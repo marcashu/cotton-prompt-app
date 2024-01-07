@@ -11,7 +11,7 @@ import {
   TypographyMuted,
 } from "@/components/ui/typography"
 import DesignModel from "@/types/designModel"
-import Image from "next/image"
+import FullscreenableImage from "@/components/ui/fullscreenable-image"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 
 export default function OrderViewPreviousDesigns({
@@ -31,12 +31,7 @@ export default function OrderViewPreviousDesigns({
             <AccordionTrigger>{`#${i + 1}`}</AccordionTrigger>
             <AccordionContent className="p-4 gap-2 flex flex-col">
               <div className="relative aspect-video w-full">
-                <Image
-                  src={d.url}
-                  alt="design preview"
-                  fill
-                  className="object-contain"
-                />
+                <FullscreenableImage src={d.url} alt="design preview" />
               </div>
               {d.comments.length > 0 && (
                 <>

@@ -11,7 +11,7 @@ export const formatDateToYYYYMMDD = (dateString: string) => {
 }
 
 export const timeAgo = (dateString: string) => {
-  TimeAgo.addDefaultLocale(en)
+  TimeAgo.addLocale(en)
   const date = new Date(`${dateString}z`)
   const timeAgo = new TimeAgo('en-US')
   const result = timeAgo.format(date)

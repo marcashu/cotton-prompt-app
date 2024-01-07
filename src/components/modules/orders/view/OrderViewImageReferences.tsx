@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { TypographyH3, TypographyMuted } from "@/components/ui/typography"
-import Image from "next/image"
+import FullscreenableImage from "@/components/ui/fullscreenable-image"
 
 export default function OrderViewImageReferences({ urls }: { urls: string[] }) {
   return (
@@ -22,12 +22,7 @@ export default function OrderViewImageReferences({ urls }: { urls: string[] }) {
               <CarouselItem key={i}>
                 <Card className="shadow p-2">
                   <CardContent className="flex aspect-video items-center justify-center relative">
-                    <Image
-                      src={url}
-                      alt={`image ref ${i + 1}`}
-                      fill
-                      className="object-contain"
-                    />
+                    <FullscreenableImage src={url} alt={`image ref ${i + 1}`} />
                   </CardContent>
                 </Card>
               </CarouselItem>

@@ -3,7 +3,7 @@ import { Image as ImageIcon } from "lucide-react"
 import { ChangeEvent, DragEvent, createRef, useState } from "react"
 import { submitOrderDesign } from "../../orderActions"
 import GetOrderModel from "@/types/getOrderModel"
-import Image from "next/image"
+import FullscreenableImage from "@/components/ui/fullscreenable-image"
 import { Button } from "@/components/ui/button"
 import { bytesToMegaBytes } from "@/helpers/fileHelper"
 
@@ -105,12 +105,7 @@ export default function OrderViewDesignUpload({
 
   return (
     <div className="flex flex-col gap-4 self-center max-w-lg w-full">
-      <div
-        className="flex justify-center items-center rounded-lg border border-dashed border-gray-900/25 relative aspect-video w-full"
-        onClick={handleClick}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-      >
+      <div className="rounded-lg border border-dashed border-gray-900/25 relative aspect-video w-full">
         <input
           ref={ref}
           id="file-upload"
@@ -120,28 +115,30 @@ export default function OrderViewDesignUpload({
           onChange={handleChange}
         />
         {!previewImage ? (
-          <div className="text-center px-6 py-10">
-            <ImageIcon
-              className="mx-auto h-12 w-12 text-gray-300"
-              aria-hidden="true"
-            />
-            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-              <p className="pl-1">Upload a file or drag and drop</p>
-            </div>
-            {/* <p className="text-xs leading-5 text-gray-600">
+          <div
+            className="w-full h-full flex justify-center items-center "
+            onClick={handleClick}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+          >
+            <div className="text-center px-6 py-10">
+              <ImageIcon
+                className="mx-auto h-12 w-12 text-gray-300"
+                aria-hidden="true"
+              />
+              <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                <p className="pl-1">Upload a file or drag and drop</p>
+              </div>
+              {/* <p className="text-xs leading-5 text-gray-600">
               PNG, JPG, GIF up to 10MB
             </p> */}
-            <p className="text-xs leading-5 text-gray-600">
-              Up to {maxImageSize}MB
-            </p>
+              <p className="text-xs leading-5 text-gray-600">
+                Up to {maxImageSize}MB
+              </p>
+            </div>
           </div>
         ) : (
-          <Image
-            src={previewImage}
-            alt="design preview"
-            fill
-            className="object-contain"
-          />
+          <FullscreenableImage src={previewImage} alt="design preview" />
         )}
       </div>
       {!!previewImage && (

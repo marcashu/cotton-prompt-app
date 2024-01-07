@@ -1,4 +1,4 @@
-import Image from "next/image"
+import FullscreenableImage from "@/components/ui/fullscreenable-image"
 import { Image as ImageIcon } from "lucide-react"
 
 export default function OrderViewDesignPreview({ url }: { url?: string }) {
@@ -6,12 +6,7 @@ export default function OrderViewDesignPreview({ url }: { url?: string }) {
     <div className="flex flex-col gap-4 self-center w-full">
       <div className="flex justify-center items-center rounded-lg border border-dashed border-gray-900/25 relative aspect-video w-full">
         {!!url ? (
-          <Image
-            src={url}
-            alt="design preview"
-            fill
-            className="object-contain"
-          />
+          <FullscreenableImage src={url} alt="design preview" />
         ) : (
           <div className="text-center px-6 py-10">
             <ImageIcon
