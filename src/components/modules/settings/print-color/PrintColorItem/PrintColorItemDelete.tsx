@@ -2,18 +2,9 @@ import { Button } from "@/components/ui/button"
 import { getPrintColorOrdersCount } from "../printColorService"
 import { deletePrintColor, disablePrintColor } from "../printColorActions"
 import { useToast } from "@/components/ui/use-toast"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { useState } from "react"
 import useSession from "@/hooks/useSession"
+import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
 
 export default function PrintColorItemDelete({
   id,
@@ -65,17 +56,18 @@ export default function PrintColorItemDelete({
     setLoadingDisable(false)
   }
 
-  const handleDisable = () => {
-    setDisableAll(true)
-    setLoadingDisable(true)
-    disablePrintColor(id, session.userId)
-      .then(() =>
-        toast({
-          title: "Print color has been disabled successfully",
-          description: new Date().toLocaleString(),
-        })
-      )
-      .finally(() => handleClose())
+  const handleDisable = async () => {
+    try {
+      setDisableAll(true)
+      setLoadingDisable(true)
+      await disablePrintColor(id, session.userId)
+      toast({
+        title: "Print color has been disabled successfully",
+        description: new Date().toLocaleString(),
+      })
+    } finally {
+      handleClose()
+    }
   }
 
   return (
@@ -100,25 +92,15 @@ export default function PrintColorItemDelete({
       >
         Disable
       </Button>
-      <AlertDialog open={open}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Unable to delete this print color
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              Cannot delete this print color because it is used by {ordersCount}{" "}
-              order/s.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleClose}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDisable}>
-              Disable Instead?
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ConfirmAlertDialog
+        open={open}
+        title="Unable to delete this print color"
+        description={`Cannot delete this print color because it is used by ${ordersCount}
+        order/s.`}
+        confirmButtonCaption="Disable Instead?"
+        onConfirm={handleDisable}
+        onCancel={handleClose}
+      />
     </>
   )
 }

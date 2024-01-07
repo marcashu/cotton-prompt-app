@@ -1,13 +1,3 @@
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { ChangeEvent, FormEvent, createRef, useState } from "react"
 import { updatePrintColors } from "../printColorActions"
@@ -16,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { getPrintColorOrdersCount } from "../printColorService"
 import { cn } from "@/lib/utils"
 import useSession from "@/hooks/useSession"
+import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
 
 export default function PrintColorItemEdit({
   id,
@@ -128,25 +119,15 @@ export default function PrintColorItemEdit({
           Cancel
         </Button>
       </form>
-      <AlertDialog open={open}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Are you sure you want to edit this Print Color?
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              This print color is used by {ordersCount} orders. Updating this
-              will also affect those order/s.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={disableEdit}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={proceedUpdate}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ConfirmAlertDialog
+        open={open}
+        title="Are you sure you want to edit this Print Color?"
+        description={`This print color is used by ${ordersCount} orders. Updating this
+        will also affect those order/s.`}
+        confirmButtonCaption="Continue"
+        onConfirm={proceedUpdate}
+        onCancel={disableEdit}
+      />
     </>
   )
 }
