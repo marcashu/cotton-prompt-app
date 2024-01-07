@@ -17,6 +17,10 @@ export default function SettingsSideNav() {
       name: "Print Colors",
       href: "/settings/print-colors",
     },
+    {
+      name: "Output Sizes",
+      href: "/settings/output-sizes",
+    },
   ]
 
   return (
