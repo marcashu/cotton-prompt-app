@@ -39,6 +39,14 @@ export default function OrdersDataTableActions({
       return <ClaimOrderButton id={order.id} priority={order.priority} />
     }
 
+    if (pathname === "/orders/your") {
+      return (
+        <Button asChild>
+          <Link href={`/orders/${order.id}/view`}>View</Link>
+        </Button>
+      )
+    }
+
     return <></>
   }
 
