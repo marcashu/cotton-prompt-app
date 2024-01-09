@@ -53,7 +53,9 @@ export default function HeaderMenu() {
                 className={cn(
                   navigationMenuTriggerStyle(),
                   "rounded-none",
-                  item.href.includes(pathname) ? "border-b-2 border-black" : ""
+                  pathname.startsWith(item.href)
+                    ? "border-b-2 border-black"
+                    : ""
                 )}
               >
                 <TypographyH3>{item.name}</TypographyH3>

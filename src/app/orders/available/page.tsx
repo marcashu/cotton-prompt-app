@@ -4,11 +4,12 @@ import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import { getOrderListKey } from "@/components/modules/orders/list/ordersListHelper"
 import { TypographyH2 } from "@/components/ui/typography"
 import useSession from "@/hooks/useSession"
+import { redirect } from "next/navigation"
 
 export default function AvailableOrdersPage() {
   const { session } = useSession()
 
-  if (!session || session.userRole === "admin") return <></>
+  if (!session || session.userRole === "admin") redirect("/")
 
   const priorityKey = getOrderListKey(session.userRole, true)
   const normalKey = getOrderListKey(session.userRole, false)

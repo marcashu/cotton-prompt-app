@@ -36,7 +36,6 @@ export default function UserSelect() {
   const handleChange = (newValue: Role) => {
     setValue(newValue)
     setSession(users.find((u) => u.userRole === newValue)!)
-    if (pathname !== "/") router.push("/")
   }
 
   return (
