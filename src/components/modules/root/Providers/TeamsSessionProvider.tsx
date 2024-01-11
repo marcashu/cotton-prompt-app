@@ -1,5 +1,4 @@
 import useSession from "@/hooks/useSession"
-import { app } from "@microsoft/teams-js"
 import { useEffect } from "react"
 
 export default function TeamsSessionProvider({
@@ -10,25 +9,29 @@ export default function TeamsSessionProvider({
   const { setSession } = useSession()
 
   useEffect(() => {
-    app
-      .initialize()
-      .then(() => {
-        app.getContext().then((context) =>
-          setSession({
-            userId: context.user?.id ?? "",
-            userRole: "admin",
-          })
-        )
-        app.notifySuccess()
-      })
-      .catch((err) => {
-        console.log(err)
-        // TODO remove setsession here
-        setSession({
-          userId: "de8db725-bd5c-4e7a-be95-d2f91ab88000",
-          userRole: "admin",
-        })
-      })
+    // app
+    //   .initialize()
+    //   .then(() => {
+    //     app.getContext().then((context) =>
+    //       setSession({
+    //         userId: context.user?.id ?? "",
+    //         userRole: "admin",
+    //       })
+    //     )
+    //     authentication.getAuthToken().then((token) => {
+    //       loginUser(token).finally(() => app.notifySuccess())
+    //     })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+
+    // TODO remove setsession here
+    setSession({
+      userId: "2291182b-0a61-4e6d-a5f1-8f57c71c2989",
+      userRole: "admin",
+      name: "Adele Vance - Admin",
+    })
   }, [setSession])
 
   return children

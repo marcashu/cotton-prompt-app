@@ -6,6 +6,7 @@ import GetOrderModel from "@/types/getOrderModel"
 import FullscreenableImage from "@/components/ui/fullscreenable-image"
 import { Button } from "@/components/ui/button"
 import { bytesToMegaBytes } from "@/helpers/fileHelper"
+import useSession from "@/hooks/useSession"
 
 export default function OrderViewDesignUpload({
   order,
@@ -22,6 +23,9 @@ export default function OrderViewDesignUpload({
   }>()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
+  const { session } = useSession()
+
+  if (!session) return <></>
 
   const maxImageSize = Number(
     process.env.NEXT_PUBLIC_IMAGE_UPLOAD_MAX_SIZE_IN_MB ?? 10
@@ -51,7 +55,7 @@ export default function OrderViewDesignUpload({
 
     setLoading(true)
 
-    submitOrderDesign(order.id, file.fileBase64, file.fileName)
+    submitOrderDesign(order.id, file.fileBase64, file.fileName, session.userId)
       .then(() => {
         setFile(undefined)
         toast({

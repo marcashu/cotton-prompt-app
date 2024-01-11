@@ -1,10 +1,9 @@
 import { formatDateToYYYYMMDD } from "@/helpers/dateHelper"
 import GetOrdersModel from "@/types/getOrdersModel"
-import { ColumnDef } from "@tanstack/react-table"
-import OrdersDataTableActions from "./OrdersDataTableActions/OrdersDataTableActions"
+import { CellContext, ColumnDef } from "@tanstack/react-table"
 import OrdersDataTableOrderNumber from "./OrdersDataTableOrderNumber"
 
-const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
+const getOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element): ColumnDef<GetOrdersModel>[] => [
   {
     accessorKey: "orderNumber",
     header: "Order Number",
@@ -27,7 +26,7 @@ const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => OrdersDataTableActions({ row })
+    cell: actionCell
   },
 ]
 
@@ -39,7 +38,7 @@ const priorityCheckerAvailableOrdersKey = `${priorityOrdersKey}&availableForChec
 const normalCheckerAvailableOrdersKey = `${normalOrdersKey}&availableForCheckers=true`
 
 export {
-  ordersColumnDef,
+  getOrdersColumnDef,
   priorityOrdersKey,
   normalOrdersKey,
   priorityArtistAvailableOrdersKey,

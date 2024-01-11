@@ -5,7 +5,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { TypographyH3 } from "@/components/ui/typography"
+import { TypographyLarge } from "@/components/ui/typography"
 import useSession from "@/hooks/useSession"
 import { cn } from "@/lib/utils"
 import NavItem from "@/types/navItem"
@@ -23,14 +23,33 @@ const adminNavItems: NavItem[] = [
   },
 ]
 
-const artistNavItems: NavItem[] = [
+const artistNavItems = (userId: string): NavItem[] => [
   {
-    name: "Available Orders",
-    href: "/orders/available",
+    name: "Available Orders for Artists",
+    href: `/orders/available-for-artists/${userId}`,
   },
   {
-    name: "Your Orders",
-    href: "/orders/your",
+    name: "Your Orders as Artist",
+    href: "/orders/your-as-artist",
+  },
+]
+
+const checkerNavItems = (userId: string): NavItem[] => [
+  {
+    name: "Available Orders for Artists",
+    href: `/orders/available-for-artists/${userId}`,
+  },
+  {
+    name: "Available Orders for Checkers",
+    href: "/orders/available-for-checkers",
+  },
+  {
+    name: "Your Orders as Artist",
+    href: "/orders/your-as-artist",
+  },
+  {
+    name: "Your Orders as Checker",
+    href: "/orders/your-as-checker",
   },
 ]
 
@@ -41,7 +60,11 @@ export default function HeaderMenu() {
   if (!session) return <></>
 
   const navItems =
-    session?.userRole === "admin" ? adminNavItems : artistNavItems
+    session?.userRole === "admin"
+      ? adminNavItems
+      : session.userRole === "checker"
+      ? checkerNavItems(session.userId)
+      : artistNavItems(session.userId)
 
   return (
     <NavigationMenu className="container p-4">
@@ -52,13 +75,13 @@ export default function HeaderMenu() {
               <NavigationMenuLink
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  "rounded-none",
+                  "rounded-none max-w-[200px] text-center h-auto",
                   pathname.startsWith(item.href)
                     ? "border-b-2 border-black"
                     : ""
                 )}
               >
-                <TypographyH3>{item.name}</TypographyH3>
+                <TypographyLarge>{item.name}</TypographyLarge>
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>

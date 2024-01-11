@@ -1,17 +1,20 @@
 "use client"
 
-import { ordersColumnDef } from "./ordersListConstants"
+import { getOrdersColumnDef } from "./ordersListConstants"
 import useSWR from "swr"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/data-table"
+import { CellContext } from "@tanstack/react-table"
 
 export default function OrdersDataTable({
   priority,
   url,
+  actionCell,
 }: {
   priority: boolean
   url: string
+  actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element
 }) {
   const { data, isLoading } = useSWR<GetOrdersModel[]>(url)
 
@@ -22,7 +25,7 @@ export default function OrdersDataTable({
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={ordersColumnDef}
+          columns={getOrdersColumnDef(actionCell)}
           data={data ?? []}
           isLoading={isLoading}
         />

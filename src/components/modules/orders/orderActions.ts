@@ -19,6 +19,8 @@ export const assignArtistToOrder = async (id: number, artistId: string) => {
   if (!res.ok) {
     throw new Error()
   }
+
+  revalidateTag(`canClaim:${artistId}`)
 }
 
 export const assignCheckerToOrder = async (id: number, checkerId: string) => {
@@ -39,7 +41,7 @@ export const assignCheckerToOrder = async (id: number, checkerId: string) => {
   revalidateTag(`orderId:${id}`)
 }
 
-export const submitOrderDesign = async (id: number, design: string, fileName: string) => {
+export const submitOrderDesign = async (id: number, design: string, fileName: string, artistId: string) => {
   const res = await fetch(`${baseUrl}/${id}/designs`, {
     method: "POST",
     headers: {
@@ -56,6 +58,7 @@ export const submitOrderDesign = async (id: number, design: string, fileName: st
   }
 
   revalidateTag(`orderId:${id}`)
+  revalidateTag(`canClaim:${artistId}`)
 }
 
 export const approveOrder = async (id: number) => {
