@@ -18,8 +18,8 @@ export default function SessionProvider({
       session.userRole === "admin"
         ? "/orders"
         : session.userRole === "checker"
-        ? "/orders/available-for-checkers"
-        : `/orders/available-for-artists/${session.userId}`
+        ? "/orders/available-as-checker"
+        : `/orders/available-as-artist/${session.userId}`
     router.replace(redirectPath)
   }, [session, router])
 

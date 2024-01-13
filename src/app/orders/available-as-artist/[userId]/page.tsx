@@ -15,7 +15,7 @@ async function getCanClaim(userId: string) {
   return result
 }
 
-export default async function AvailableOrdersForArtistsPage({
+export default async function AvailableOrdersAsArtistPage({
   params,
 }: {
   params: { userId: string }
@@ -24,7 +24,7 @@ export default async function AvailableOrdersForArtistsPage({
 
   return (
     <div className="flex flex-col gap-4">
-      <TypographyH2>Available Orders for Artists</TypographyH2>
+      <TypographyH2>Available Orders as Artist</TypographyH2>
       <AvailableOrderDataTables canClaim={canClaim} role="artist" />
     </div>
   )
