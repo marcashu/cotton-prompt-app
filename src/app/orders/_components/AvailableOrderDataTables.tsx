@@ -25,6 +25,7 @@ export default function AvailableOrderDataTables({
         id={order.id}
         priority={order.priority}
         canClaim={canClaim}
+        role={role}
       />
     )
   }

@@ -20,8 +20,8 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
 
   if (!session) return <></>
 
-  const isArtist = session.userRole === "artist"
-  const isChecker = session.userRole === "checker"
+  const isArtist = session.userId === order.artistId
+  const isChecker = session.userId === order.checkerId
   const isApproved = order.checkerStatus === "Approved"
   const forUpload = isArtist && !isApproved
 
@@ -40,15 +40,15 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
       ) : (
         <OrderViewDesignPreview url={currentDesign?.url} />
       )}
-      {isChecker &&
-        !!currentDesign &&
-        !isApproved &&
-        order.checkerId === session.userId && (
-          <div className="self-end">
-            <OrderViewDesignRequestReuploadButton id={order.id} />
-            <OrderViewDesignApproveButton id={order.id} />
-          </div>
-        )}
+      {isChecker && !!currentDesign && !isApproved && order.artistId && (
+        <div className="self-end">
+          <OrderViewDesignRequestReuploadButton
+            id={order.id}
+            artistId={order.artistId}
+          />
+          <OrderViewDesignApproveButton id={order.id} />
+        </div>
+      )}
       {!!currentDesign && (
         <>
           <TypographyH4>Comments</TypographyH4>

@@ -8,15 +8,18 @@ import { useToast } from "@/components/ui/use-toast"
 import { getOrderListKey } from "../ordersListHelper"
 import { useState } from "react"
 import CanArtistClaimModel from "@/types/canArtistClaimModel"
+import Role from "@/types/role"
 
 export default function ClaimOrderButton({
   id,
   priority,
   canClaim,
+  role,
 }: {
   id: number
   priority: boolean
   canClaim: CanArtistClaimModel
+  role: Role
 }) {
   const { session } = useSession()
   const { mutate } = useSWRConfig()
@@ -30,11 +33,9 @@ export default function ClaimOrderButton({
       setLoading(true)
 
       const assignToOrder =
-        session.userRole === "artist"
-          ? assignArtistToOrder
-          : assignCheckerToOrder
+        role === "artist" ? assignArtistToOrder : assignCheckerToOrder
 
-      const mutateKey = getOrderListKey(session.userRole, priority)
+      const mutateKey = getOrderListKey(role, priority)
 
       assignToOrder(id, session.userId).then(() => {
         setLoading(false)
