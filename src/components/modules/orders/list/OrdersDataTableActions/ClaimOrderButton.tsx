@@ -7,7 +7,7 @@ import useSession from "@/hooks/useSession"
 import { useToast } from "@/components/ui/use-toast"
 import { getOrderListKey } from "../ordersListHelper"
 import { useState } from "react"
-import CanArtistClaimModel from "@/types/canArtistClaimModel"
+import CanClaimModel from "@/types/canClaimModel"
 import Role from "@/types/role"
 
 export default function ClaimOrderButton({
@@ -18,7 +18,7 @@ export default function ClaimOrderButton({
 }: {
   id: number
   priority: boolean
-  canClaim: CanArtistClaimModel
+  canClaim: CanClaimModel
   role: Role
 }) {
   const { session } = useSession()

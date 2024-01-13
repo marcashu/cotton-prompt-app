@@ -5,6 +5,7 @@ type GetOrdersModel = {
   createdOn: string
   artistStatus?: string
   checkerStatus?: string
+  artistId?: string
 }
 
 export default GetOrdersModel

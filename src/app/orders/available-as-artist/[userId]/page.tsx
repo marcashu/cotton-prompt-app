@@ -1,6 +1,6 @@
 import { TypographyH2 } from "@/components/ui/typography"
-import CanArtistClaimModel from "@/types/canArtistClaimModel"
-import AvailableOrderDataTables from "../../_components/AvailableOrderDataTables"
+import CanClaimModel from "@/types/canClaimModel"
+import AvailableOrderAsArtistDataTables from "./_components/AvailableOrderAsArtistDataTables"
 
 async function getCanClaim(userId: string) {
   const res = await fetch(
@@ -11,7 +11,7 @@ async function getCanClaim(userId: string) {
       },
     }
   )
-  const result = (await res.json()) as CanArtistClaimModel
+  const result = (await res.json()) as CanClaimModel
   return result
 }
 
@@ -25,7 +25,7 @@ export default async function AvailableOrdersAsArtistPage({
   return (
     <div className="flex flex-col gap-4">
       <TypographyH2>Available Orders as Artist</TypographyH2>
-      <AvailableOrderDataTables canClaim={canClaim} role="artist" />
+      <AvailableOrderAsArtistDataTables canClaim={canClaim} />
     </div>
   )
 }
