@@ -1,7 +1,6 @@
 import { deleteOrder } from "../../orderActions"
 import { useSWRConfig } from "swr"
 import { Button } from "@/components/ui/button"
-import { Trash } from "lucide-react"
 import { useState } from "react"
 import { normalOrdersKey, priorityOrdersKey } from "../ordersListConstants"
 import { useToast } from "@/components/ui/use-toast"
@@ -37,8 +36,8 @@ export default function DeleteOrderDialog({
 
   return (
     <>
-      <Button variant="outline" size="icon" onClick={handleOpen}>
-        <Trash className="h-4 w-4" />
+      <Button variant="outline" onClick={handleOpen}>
+        Delete
       </Button>
       <ConfirmAlertDialog
         open={open}
