@@ -13,7 +13,6 @@ import OrderViewDesignPreview from "./OrderViewDesignPreview"
 import OrderViewDesignComment from "./OrderViewDesignComment"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 import OrderViewDesignApproveButton from "./OrderViewDesignApproveButton"
-import OrderViewDesignRequestReuploadButton from "./OrderViewDesignRequestReuploadButton"
 
 export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
   const { session } = useSession()
@@ -42,20 +41,25 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
       )}
       {isChecker && !!currentDesign && !isApproved && order.artistId && (
         <div className="self-end">
-          <OrderViewDesignRequestReuploadButton
-            id={order.id}
-            artistId={order.artistId}
-          />
           <OrderViewDesignApproveButton id={order.id} />
         </div>
       )}
       {!!currentDesign && (
         <>
-          <TypographyH4>Comments</TypographyH4>
+          {isChecker ||
+            (currentDesign.comments.length > 0 && (
+              <TypographyH4>Comments</TypographyH4>
+            ))}
           {currentDesign.comments.map((c, i) => (
             <OrderViewDesignCommentPreview key={i} comment={c} />
           ))}
-          <OrderViewDesignComment id={currentDesign.id} />
+          {isChecker && !!order.checkerStatus && (
+            <OrderViewDesignComment
+              id={currentDesign.id}
+              orderId={order.id}
+              checkerStatus={order.checkerStatus}
+            />
+          )}
         </>
       )}
     </Card>

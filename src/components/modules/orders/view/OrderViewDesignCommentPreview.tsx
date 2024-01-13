@@ -22,7 +22,7 @@ export default function OrderViewDesignCommentPreview({
   return (
     <Card className="shadow p-4">
       <div className="flex justify-between items-start">
-        <TypographyLarge>User</TypographyLarge>
+        <TypographyLarge>Checker</TypographyLarge>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>

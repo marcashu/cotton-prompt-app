@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache"
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Designs`
 
-export const postComment = async (id: number, comment: string, userId: string) => {
+export const postComment = async (id: number, comment: string, userId: string, orderId: number) => {
   const res = await fetch(`${baseUrl}/${id}/Comments`, {
     method: "POST",
     headers: {
@@ -21,5 +21,5 @@ export const postComment = async (id: number, comment: string, userId: string) =
     throw new Error()
   }
 
-  revalidateTag(`orderId:${id}`)
+  revalidateTag(`orderId:${orderId}`)
 }

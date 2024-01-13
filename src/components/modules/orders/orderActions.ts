@@ -122,15 +122,3 @@ export const deleteOrder = async (id: number) => {
     throw new Error()
   }
 }
-
-export const requestReuploadOrder = async (id: number, artistId: string) => {
-  const res = await fetch(`${baseUrl}/${id}/request-reupload`, {
-    method: "POST",
-  })
-
-  if (!res.ok) {
-    throw new Error()
-  }
-
-  revalidateTag(`canClaim:${artistId}`)
-}
