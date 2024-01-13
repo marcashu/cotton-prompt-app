@@ -6,22 +6,8 @@ import NavItem from "@/types/navItem"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-export default function SettingsSideNav() {
+export default function SideNav({ navItems }: { navItems: NavItem[] }) {
   const pathname = usePathname()
-  const navItems: NavItem[] = [
-    {
-      name: "Design Brackets",
-      href: "/settings/design-brackets",
-    },
-    {
-      name: "Print Colors",
-      href: "/settings/print-colors",
-    },
-    {
-      name: "Output Sizes",
-      href: "/settings/output-sizes",
-    },
-  ]
 
   return (
     <nav className={"flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1"}>

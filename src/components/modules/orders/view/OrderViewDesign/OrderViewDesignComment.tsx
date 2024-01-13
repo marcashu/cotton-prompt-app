@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { postComment } from "../designActions"
 import { useToast } from "@/components/ui/use-toast"
 import { TypographySmall } from "@/components/ui/typography"
+import { CheckerStatus } from "@/app/(orders)/_lib/constants"
 
 export default function OrderViewDesignComment({
   id,
@@ -33,7 +34,7 @@ export default function OrderViewDesignComment({
     setLoading(true)
     postComment(id, comment, session.userId, orderId)
       .then(() => {
-        if (checkerStatus !== "Requested Reupload") {
+        if (checkerStatus !== CheckerStatus.RequestedReupload) {
           toast({
             title: "Order has been requested for reupload!",
             description: new Date().toLocaleString(),

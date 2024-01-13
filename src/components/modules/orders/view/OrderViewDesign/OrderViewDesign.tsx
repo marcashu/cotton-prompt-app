@@ -13,6 +13,7 @@ import OrderViewDesignPreview from "./OrderViewDesignPreview"
 import OrderViewDesignComment from "./OrderViewDesignComment"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 import OrderViewDesignApproveButton from "./OrderViewDesignApproveButton"
+import { CheckerStatus } from "@/app/(orders)/_lib/constants"
 
 export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
   const { session } = useSession()
@@ -21,7 +22,7 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
 
   const isArtist = session.userId === order.artistId
   const isChecker = session.userId === order.checkerId
-  const isApproved = order.checkerStatus === "Approved"
+  const isApproved = order.checkerStatus === CheckerStatus.Approved
   const forUpload = isArtist && !isApproved
 
   const currentDesign = order.design

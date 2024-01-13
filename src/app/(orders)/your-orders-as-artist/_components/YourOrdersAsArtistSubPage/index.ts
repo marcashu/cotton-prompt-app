@@ -1,0 +1,3 @@
+import YourOrdersAsArtistSubPage from "./YourOrdersAsArtistSubPage"
+
+export default YourOrdersAsArtistSubPage

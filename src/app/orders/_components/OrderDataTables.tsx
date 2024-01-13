@@ -1,5 +1,6 @@
 "use client"
 
+import ViewOrderButton from "@/app/(orders)/_components/ViewOrderButton"
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import DeleteOrderDialog from "@/components/modules/orders/list/OrdersDataTableActions/DeleteOrderDialog"
 import {
@@ -16,9 +17,7 @@ export default function OrderDataTables() {
     const order = row.original
     return (
       <div className="flex gap-2 justify-end">
-        <Button variant="outline" asChild>
-          <Link href={`/orders/${order.id}/view`}>View</Link>
-        </Button>
+        <ViewOrderButton id={order.id} variant="outline" />
         <Button variant="outline" asChild>
           <Link href={`/orders/${order.id}/edit`}>Edit</Link>
         </Button>
