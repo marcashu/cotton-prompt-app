@@ -1,5 +1,6 @@
 "use client"
 
+import ViewOrderButton from "@/app/(orders)/_components/ViewOrderButton"
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import ClaimOrderButton from "@/components/modules/orders/list/OrdersDataTableActions/ClaimOrderButton"
 import { getOrderListKey } from "@/components/modules/orders/list/ordersListHelper"
@@ -29,12 +30,15 @@ export default function AvailableOrderAsCheckerDataTables() {
           }
 
     return (
-      <ClaimOrderButton
-        id={order.id}
-        priority={order.priority}
-        canClaim={canClaim}
-        role={role}
-      />
+      <div className="flex gap-2 justify-end">
+        <ClaimOrderButton
+          id={order.id}
+          priority={order.priority}
+          canClaim={canClaim}
+          role={role}
+        />
+        <ViewOrderButton id={order.id} variant="outline" />
+      </div>
     )
   }
 
