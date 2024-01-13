@@ -6,7 +6,7 @@ import YourOrdersPage from "../../_components/YourOrdersPage"
 
 export default function YourOrdersAsArtistForReviewPage() {
   const { session } = useSession()
-  const url = `/api/orders?artistId=${session?.userId}&checkerStatus=${CheckerStatus.ForReview}`
+  const url = `/api/orders?checkerId=${session?.userId}&checkerStatus=${CheckerStatus.ForReview}`
 
-  return <YourOrdersPage title="Waiting for Checker Review" url={url} />
+  return <YourOrdersPage title="For your Review" url={url} />
 }

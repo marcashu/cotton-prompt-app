@@ -1,7 +1,7 @@
 import { TypographyH3 } from "@/components/ui/typography"
-import YourOrdersAsArtistDataTable from "./YourOrdersAsArtistDataTable"
+import YourOrdersDataTable from "./YourOrdersDataTable"
 
-export default function YourOrdersAsArtistSubPage({
+export default function YourOrdersPage({
   title,
   url,
 }: {
@@ -11,7 +11,7 @@ export default function YourOrdersAsArtistSubPage({
   return (
     <div className="flex flex-col gap-4">
       <TypographyH3 withSeparator>{title}</TypographyH3>
-      <YourOrdersAsArtistDataTable url={url} />
+      <YourOrdersDataTable url={url} />
     </div>
   )
 }

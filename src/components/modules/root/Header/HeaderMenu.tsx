@@ -49,7 +49,7 @@ const checkerNavItems = (userId: string): NavItem[] => [
   },
   {
     name: "Your Orders as Checker",
-    href: "/orders/your-as-checker",
+    href: "/your-orders-as-checker",
   },
 ]
 
