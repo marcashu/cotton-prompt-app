@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { swapDesignBrackets } from "../designBracketActions"
+import { swapDesignBrackets } from "../../_lib/designBracketActions"
 import useSession from "@/hooks/useSession"
 import { MoveDown } from "lucide-react"
 import { useState } from "react"

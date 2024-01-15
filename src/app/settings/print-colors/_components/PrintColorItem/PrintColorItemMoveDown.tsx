@@ -1,19 +1,19 @@
 import { Button } from "@/components/ui/button"
-import { swapDesignBrackets } from "../designBracketActions"
+import { swapPrintColors } from "../../_lib/printColorActions"
 import useSession from "@/hooks/useSession"
-import { MoveUp } from "lucide-react"
+import { MoveDown } from "lucide-react"
 import { useState } from "react"
 import { useToast } from "@/components/ui/use-toast"
 
-export default function DesignBracketItemMoveUp({
+export default function PrintColorItemMoveDown({
   id,
-  leftId,
+  rightId,
   readOnly,
   disableAll,
   setDisableAll,
 }: {
   id: number
-  leftId?: number
+  rightId?: number
   readOnly: boolean
   disableAll: boolean
   setDisableAll: (value: boolean) => void
@@ -24,15 +24,15 @@ export default function DesignBracketItemMoveUp({
 
   if (!session) return <></>
 
-  const handleMoveUp = () => {
-    if (!leftId) return
+  const handleMoveDown = () => {
+    if (!rightId) return
 
     setDisableAll(true)
     setLoading(true)
-    swapDesignBrackets(id, leftId, session.userId)
+    swapPrintColors(id, rightId, session.userId)
       .then(() =>
         toast({
-          title: "Design bracket has been moved up successfully",
+          title: "Print color has been moved down successfully",
           description: new Date().toLocaleString(),
         })
       )
@@ -48,11 +48,11 @@ export default function DesignBracketItemMoveUp({
       variant="outline"
       size="icon"
       className={!readOnly ? "hidden" : ""}
-      disabled={!leftId || disableAll}
-      onClick={handleMoveUp}
+      disabled={!rightId || disableAll}
+      onClick={handleMoveDown}
       loading={loading}
     >
-      <MoveUp className="h-4 w-4" />
+      <MoveDown className="h-4 w-4" />
     </Button>
   )
 }

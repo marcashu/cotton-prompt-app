@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button"
-import { getPrintColorOrdersCount } from "../printColorService"
-import { deletePrintColor, disablePrintColor } from "../printColorActions"
+import { getPrintColorOrdersCount } from "../../_lib/printColorService"
+import {
+  deletePrintColor,
+  disablePrintColor,
+} from "../../_lib/printColorActions"
 import { useToast } from "@/components/ui/use-toast"
 import { useState } from "react"
 import useSession from "@/hooks/useSession"

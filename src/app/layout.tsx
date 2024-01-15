@@ -2,9 +2,9 @@ import type { Metadata } from "next"
 import { Inter as FontSans } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
-import Providers from "@/components/modules/root/Providers"
-import Header from "@/components/modules/root/Header"
-import Main from "@/components/modules/root/Main"
+import Providers from "@/app/_components/Providers"
+import Header from "@/app/_components/Header"
+import Main from "@/app/_components/Main"
 import { Toaster } from "@/components/ui/toaster"
 
 const fontSans = FontSans({

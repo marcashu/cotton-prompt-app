@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button"
 import { ChangeEvent, FormEvent, createRef, useState } from "react"
-import { updateOutputSizes } from "../outputSizeActions"
+import { updateDesignBrackets } from "../../_lib/designBracketActions"
 import { useToast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
-import { getOutputSizeOrdersCount } from "../outputSizeService"
+import { getDesignBracketOrdersCount } from "../../_lib/designBracketService"
 import { cn } from "@/lib/utils"
 import useSession from "@/hooks/useSession"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
 
-export default function OutputSizeItemEdit({
+export default function DesignBracketItemEdit({
   id,
   initialValue,
   readOnly,
@@ -42,7 +42,7 @@ export default function OutputSizeItemEdit({
 
     try {
       setLoading(true)
-      const { count } = await getOutputSizeOrdersCount(id)
+      const { count } = await getDesignBracketOrdersCount(id)
 
       if (count > 0) {
         setOrdersCount(count)
@@ -58,11 +58,11 @@ export default function OutputSizeItemEdit({
   }
 
   const proceedUpdate = async () => {
-    await updateOutputSizes(id, value, session.userId)
+    await updateDesignBrackets(id, value, session.userId)
     setReadOnly(true)
     setOpen(false)
     toast({
-      title: "Print color has been updated successfully",
+      title: "Design bracket has been updated successfully",
       description: new Date().toLocaleString(),
     })
     setLoading(false)
@@ -121,8 +121,8 @@ export default function OutputSizeItemEdit({
       </form>
       <ConfirmAlertDialog
         open={open}
-        title="Are you sure you want to edit this Print Color?"
-        description={`This print color is used by ${ordersCount} orders. Updating this
+        title="Are you sure you want to edit this Design Bracket?"
+        description={`This design bracket is used by ${ordersCount} orders. Updating this
         will also affect those order/s.`}
         confirmButtonCaption="Continue"
         onConfirm={proceedUpdate}

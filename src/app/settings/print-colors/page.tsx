@@ -1,8 +1,8 @@
-import { getPrintColors } from "@/components/modules/settings/print-color/printColorService"
+import { getPrintColors } from "@/app/settings/print-colors/_lib/printColorService"
 import { TypographyH3, TypographyH4 } from "@/components/ui/typography"
-import PrintColorItem from "@/components/modules/settings/print-color/PrintColorItem"
-import PrintColorDisabledItem from "@/components/modules/settings/print-color/PrintColorDisabledItem"
-import PrintColorCreate from "@/components/modules/settings/print-color/PrintColorCreate"
+import PrintColorItem from "@/app/settings/print-colors/_components/PrintColorItem"
+import PrintColorDisabledItem from "@/app/settings/print-colors/_components/PrintColorDisabledItem"
+import PrintColorCreate from "@/app/settings/print-colors/_components/PrintColorCreate"
 
 export default async function PrintColorsPage() {
   const activePrintColorsData = getPrintColors(true, true)

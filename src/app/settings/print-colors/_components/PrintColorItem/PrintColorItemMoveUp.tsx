@@ -1,19 +1,19 @@
 import { Button } from "@/components/ui/button"
-import { swapPrintColors } from "../printColorActions"
+import { swapPrintColors } from "../../_lib/printColorActions"
 import useSession from "@/hooks/useSession"
-import { MoveDown } from "lucide-react"
+import { MoveUp } from "lucide-react"
 import { useState } from "react"
 import { useToast } from "@/components/ui/use-toast"
 
-export default function PrintColorItemMoveDown({
+export default function PrintColorItemMoveUp({
   id,
-  rightId,
+  leftId,
   readOnly,
   disableAll,
   setDisableAll,
 }: {
   id: number
-  rightId?: number
+  leftId?: number
   readOnly: boolean
   disableAll: boolean
   setDisableAll: (value: boolean) => void
@@ -24,15 +24,15 @@ export default function PrintColorItemMoveDown({
 
   if (!session) return <></>
 
-  const handleMoveDown = () => {
-    if (!rightId) return
+  const handleMoveUp = () => {
+    if (!leftId) return
 
     setDisableAll(true)
     setLoading(true)
-    swapPrintColors(id, rightId, session.userId)
+    swapPrintColors(id, leftId, session.userId)
       .then(() =>
         toast({
-          title: "Print color has been moved down successfully",
+          title: "Print color has been moved up successfully",
           description: new Date().toLocaleString(),
         })
       )
@@ -48,11 +48,11 @@ export default function PrintColorItemMoveDown({
       variant="outline"
       size="icon"
       className={!readOnly ? "hidden" : ""}
-      disabled={!rightId || disableAll}
-      onClick={handleMoveDown}
+      disabled={!leftId || disableAll}
+      onClick={handleMoveUp}
       loading={loading}
     >
-      <MoveDown className="h-4 w-4" />
+      <MoveUp className="h-4 w-4" />
     </Button>
   )
 }

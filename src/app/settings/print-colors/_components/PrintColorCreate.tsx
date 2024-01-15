@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { createDesignBracket } from "./designBracketActions"
+import { createPrintColor } from "../_lib/printColorActions"
 import useSession from "@/hooks/useSession"
 import { useToast } from "@/components/ui/use-toast"
 
-export default function DesignBracketCreate() {
+export default function PrintColorCreate() {
   const [value, setValue] = useState("")
   const [loading, setLoading] = useState(false)
   const { session } = useSession()
@@ -18,10 +18,10 @@ export default function DesignBracketCreate() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setLoading(true)
-    createDesignBracket(value, session.userId)
+    createPrintColor(value, session.userId)
       .then(() => {
         toast({
-          title: "Design bracket has been created successfully",
+          title: "Print color has been created successfully",
           description: new Date().toLocaleString(),
         })
         setValue("")

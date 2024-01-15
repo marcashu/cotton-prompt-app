@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button"
-import { swapOutputSizes } from "../outputSizeActions"
+import { swapDesignBrackets } from "../../_lib/designBracketActions"
 import useSession from "@/hooks/useSession"
 import { MoveUp } from "lucide-react"
 import { useState } from "react"
 import { useToast } from "@/components/ui/use-toast"
 
-export default function OutputSizeItemMoveUp({
+export default function DesignBracketItemMoveUp({
   id,
   leftId,
   readOnly,
@@ -29,10 +29,10 @@ export default function OutputSizeItemMoveUp({
 
     setDisableAll(true)
     setLoading(true)
-    swapOutputSizes(id, leftId, session.userId)
+    swapDesignBrackets(id, leftId, session.userId)
       .then(() =>
         toast({
-          title: "Print color has been moved up successfully",
+          title: "Design bracket has been moved up successfully",
           description: new Date().toLocaleString(),
         })
       )

@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button"
-import { getDesignBracketOrdersCount } from "../designBracketService"
+import { getOutputSizeOrdersCount } from "../../_lib/outputSizeService"
 import {
-  deleteDesignBracket,
-  disableDesignBracket,
-} from "../designBracketActions"
+  deleteOutputSize,
+  disableOutputSize,
+} from "../../_lib/outputSizeActions"
 import { useToast } from "@/components/ui/use-toast"
 import { useState } from "react"
 import useSession from "@/hooks/useSession"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
 
-export default function DesignBracketItemDelete({
+export default function OutputSizeItemDelete({
   id,
   readOnly,
   disableAll,
@@ -32,15 +32,15 @@ export default function DesignBracketItemDelete({
   const handleDelete = () => {
     setDisableAll(true)
     setLoadingDelete(true)
-    getDesignBracketOrdersCount(id).then(({ count }) => {
+    getOutputSizeOrdersCount(id).then(({ count }) => {
       if (count > 0) {
         setOrdersCount(count)
         setOpen(true)
       } else {
-        deleteDesignBracket(id)
+        deleteOutputSize(id)
           .then(() =>
             toast({
-              title: "Design bracket has been deleted successfully",
+              title: "Print color has been deleted successfully",
               description: new Date().toLocaleString(),
             })
           )
@@ -63,9 +63,9 @@ export default function DesignBracketItemDelete({
     try {
       setDisableAll(true)
       setLoadingDisable(true)
-      await disableDesignBracket(id, session.userId)
+      await disableOutputSize(id, session.userId)
       toast({
-        title: "Design bracket has been disabled successfully",
+        title: "Print color has been disabled successfully",
         description: new Date().toLocaleString(),
       })
     } finally {
@@ -97,8 +97,8 @@ export default function DesignBracketItemDelete({
       </Button>
       <ConfirmAlertDialog
         open={open}
-        title="Unable to delete this design bracket"
-        description={`Cannot delete this design bracket because it is used by${ordersCount}
+        title="Unable to delete this print color"
+        description={`Cannot delete this print color because it is used by ${ordersCount}
         order/s.`}
         confirmButtonCaption="Disable Instead?"
         onConfirm={handleDisable}

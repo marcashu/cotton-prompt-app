@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { TypographySmall } from "@/components/ui/typography"
 import { useToast } from "@/components/ui/use-toast"
 import PrintColor from "@/types/printColor"
-import { enablePrintColor } from "./printColorActions"
+import { enablePrintColor } from "../_lib/printColorActions"
 import { useState } from "react"
 import useSession from "@/hooks/useSession"
 

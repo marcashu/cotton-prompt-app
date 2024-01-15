@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { createOutputSize } from "./outputSizeActions"
+import { createOutputSize } from "../_lib/outputSizeActions"
 import useSession from "@/hooks/useSession"
 import { useToast } from "@/components/ui/use-toast"
 

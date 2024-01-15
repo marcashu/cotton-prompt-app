@@ -3,12 +3,16 @@
 import { Button } from "@/components/ui/button"
 import { TypographySmall } from "@/components/ui/typography"
 import { useToast } from "@/components/ui/use-toast"
-import OutputSize from "@/types/outputSize"
-import { enableOutputSize } from "./outputSizeActions"
+import DesignBracket from "@/types/designBracket"
+import { enableDesignBracket } from "../_lib/designBracketActions"
 import { useState } from "react"
 import useSession from "@/hooks/useSession"
 
-export default function OutputSizeDisabledItem({ data }: { data: OutputSize }) {
+export default function DesignBracketDisabledItem({
+  data,
+}: {
+  data: DesignBracket
+}) {
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const { session } = useSession()
@@ -17,10 +21,10 @@ export default function OutputSizeDisabledItem({ data }: { data: OutputSize }) {
 
   const handleEnable = () => {
     setLoading(true)
-    enableOutputSize(data.id, session.userId)
+    enableDesignBracket(data.id, session.userId)
       .then(() =>
         toast({
-          title: "Print color has been enabled successfully",
+          title: "Design bracket has been enabled successfully",
           description: new Date().toLocaleString(),
         })
       )
