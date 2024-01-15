@@ -26,7 +26,7 @@ const adminNavItems: NavItem[] = [
 const artistNavItems = (userId: string): NavItem[] => [
   {
     name: "Available Orders as Artist",
-    href: `/orders/available-as-artist/${userId}`,
+    href: `/available-orders-as-artist/${userId}`,
   },
   {
     name: "Your Orders as Artist",
@@ -37,11 +37,11 @@ const artistNavItems = (userId: string): NavItem[] => [
 const checkerNavItems = (userId: string): NavItem[] => [
   {
     name: "Available Orders as Artist",
-    href: `/orders/available-as-artist/${userId}`,
+    href: `/available-orders-as-artist/${userId}`,
   },
   {
     name: "Available Orders as Checker",
-    href: "/orders/available-as-checker",
+    href: "/available-orders-as-checker",
   },
   {
     name: "Your Orders as Artist",

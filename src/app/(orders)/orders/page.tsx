@@ -1,6 +1,6 @@
 import { TypographyH2 } from "@/components/ui/typography"
 import Link from "next/link"
-import OrderDataTables from "./_components/OrderDataTables"
+import OrderDataTables from "../_components/OrderDataTables"
 import { Button } from "@/components/ui/button"
 
 export default function OrdersPage() {
@@ -9,7 +9,7 @@ export default function OrdersPage() {
       <TypographyH2>Orders</TypographyH2>
       <div className="self-end">
         <Button asChild>
-          <Link href="/orders/create">Create Order</Link>
+          <Link href="/create-order">Create Order</Link>
         </Button>
       </div>
       <OrderDataTables />
