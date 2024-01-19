@@ -10,7 +10,7 @@ import GetOrdersModel from "@/types/getOrdersModel"
 import { CellContext } from "@tanstack/react-table"
 
 export default function AvailableOrderAsCheckerDataTables() {
-  const role = "checker"
+  const role = "Checker"
   const priorityKey = getOrderListKey(role, true)
   const normalKey = getOrderListKey(role, false)
   const { session } = useSession()

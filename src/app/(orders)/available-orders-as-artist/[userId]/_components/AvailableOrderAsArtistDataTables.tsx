@@ -12,7 +12,7 @@ export default function AvailableOrderAsArtistDataTables({
 }: {
   canClaim: CanClaimModel
 }) {
-  const role = "artist"
+  const role = "Artist"
   const priorityKey = getOrderListKey(role, true)
   const normalKey = getOrderListKey(role, false)
 

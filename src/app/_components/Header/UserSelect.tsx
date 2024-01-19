@@ -13,27 +13,27 @@ import { useState } from "react"
 const users: Session[] = [
   {
     userId: "2291182b-0a61-4e6d-a5f1-8f57c71c2989",
-    userRole: "admin",
+    userRole: "Admin",
     name: "Adele Vance - Admin",
   },
   {
     userId: "303be778-c405-4465-8a0e-87e3ada5357e",
-    userRole: "checker",
+    userRole: "Checker",
     name: "Diego Siciliani - Checker",
   },
   {
     userId: "e18a7bca-08af-4aa4-8fd0-ba85e7d535eb",
-    userRole: "checker",
+    userRole: "Checker",
     name: "Grady Archie - Checker",
   },
   {
     userId: "7704ced6-0b21-4e7a-89a1-44f159903cd5",
-    userRole: "artist",
+    userRole: "Artist",
     name: "Isaiah Langer - Artist",
   },
   {
     userId: "15bf3e96-c4b1-49ce-8a72-7e7ce37e47e7",
-    userRole: "artist",
+    userRole: "Artist",
     name: "Johanna Lorenz - Artist",
   },
 ]

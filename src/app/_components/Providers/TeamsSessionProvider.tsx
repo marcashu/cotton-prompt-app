@@ -1,5 +1,7 @@
 import useSession from "@/hooks/useSession"
 import { useEffect } from "react"
+import { app, authentication } from "@microsoft/teams-js"
+import { getUsers, loginUser } from "./userService"
 
 export default function TeamsSessionProvider({
   children,
@@ -12,14 +14,15 @@ export default function TeamsSessionProvider({
     // app
     //   .initialize()
     //   .then(() => {
-    //     app.getContext().then((context) =>
-    //       setSession({
-    //         userId: context.user?.id ?? "",
-    //         userRole: "admin",
-    //       })
-    //     )
+    //     // app.getContext().then((context) =>
+    //     //   setSession({
+    //     //     userId: context.user?.id ?? "",
+    //     //     userRole: "Admin",
+    //     //   })
+    //     // )
     //     authentication.getAuthToken().then((token) => {
-    //       loginUser(token).finally(() => app.notifySuccess())
+    //       getUsers(token).finally(() => app.notifySuccess())
+    //       // loginUser(token).finally(() => app.notifySuccess())
     //     })
     //   })
     //   .catch((err) => {
@@ -29,7 +32,7 @@ export default function TeamsSessionProvider({
     // TODO remove setsession here
     setSession({
       userId: "2291182b-0a61-4e6d-a5f1-8f57c71c2989",
-      userRole: "admin",
+      userRole: "Admin",
       name: "Adele Vance - Admin",
     })
   }, [setSession])

@@ -60,9 +60,9 @@ export default function HeaderMenu() {
   if (!session) return <></>
 
   const navItems =
-    session?.userRole === "admin"
+    session?.userRole === "Admin"
       ? adminNavItems
-      : session.userRole === "checker"
+      : session.userRole === "Checker"
       ? checkerNavItems(session.userId)
       : artistNavItems(session.userId)
 

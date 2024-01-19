@@ -33,7 +33,7 @@ export default function ClaimOrderButton({
       setLoading(true)
 
       const assignToOrder =
-        role === "artist" ? assignArtistToOrder : assignCheckerToOrder
+        role === "Artist" ? assignArtistToOrder : assignCheckerToOrder
 
       const mutateKey = getOrderListKey(role, priority)
 
