@@ -34,18 +34,10 @@ const artistNavItems = (userId: string): NavItem[] => [
   },
 ]
 
-const checkerNavItems = (userId: string): NavItem[] => [
-  {
-    name: "Available Orders as Artist",
-    href: `/available-orders-as-artist/${userId}`,
-  },
+const checkerNavItems: NavItem[] = [
   {
     name: "Available Orders as Checker",
     href: "/available-orders-as-checker",
-  },
-  {
-    name: "Your Orders as Artist",
-    href: "/your-orders-as-artist",
   },
   {
     name: "Your Orders as Checker",
@@ -60,10 +52,10 @@ export default function HeaderMenu() {
   if (!session) return <></>
 
   const navItems =
-    session?.userRole === "Admin"
+    session?.selectedRole === "Admin"
       ? adminNavItems
-      : session.userRole === "Checker"
-      ? checkerNavItems(session.userId)
+      : session.selectedRole === "Checker"
+      ? checkerNavItems
       : artistNavItems(session.userId)
 
   return (
@@ -75,7 +67,7 @@ export default function HeaderMenu() {
               <NavigationMenuLink
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  "rounded-none max-w-[200px] text-center h-auto",
+                  "rounded-none max-w-[260px] text-center h-auto",
                   pathname.startsWith(item.href)
                     ? "border-b-2 border-black"
                     : ""

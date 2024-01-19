@@ -1,6 +1,6 @@
 "use client"
 
-import ViewOrderButton from "@/app/(orders)/_components/ViewOrderButton"
+import ViewOrderButton from "../../_components/ViewOrderButton"
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import ClaimOrderButton from "@/components/modules/orders/list/OrdersDataTableActions/ClaimOrderButton"
 import { getOrderListKey } from "@/components/modules/orders/list/ordersListHelper"

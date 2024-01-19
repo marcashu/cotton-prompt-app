@@ -1,6 +1,6 @@
 "use client"
 
-import ViewOrderButton from "@/app/(orders)/_components/ViewOrderButton"
+import ViewOrderButton from "./ViewOrderButton"
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import DeleteOrderDialog from "@/components/modules/orders/list/OrdersDataTableActions/DeleteOrderDialog"
 import {

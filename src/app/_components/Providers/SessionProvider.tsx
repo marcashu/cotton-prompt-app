@@ -15,11 +15,13 @@ export default function SessionProvider({
     if (!session) return
 
     const redirectPath =
-      session.userRole === "Admin"
+      session.selectedRole === "Admin"
         ? "/orders"
-        : session.userRole === "Checker"
+        : session.selectedRole === "Checker"
         ? "/available-orders-as-checker"
-        : `/available-orders-as-artist/${session.userId}`
+        : session.selectedRole === "Artist"
+        ? `/available-orders-as-artist/${session.userId}`
+        : "/no-role"
     router.replace(redirectPath)
   }, [session, router])
 

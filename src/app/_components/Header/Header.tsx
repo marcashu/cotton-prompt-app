@@ -1,16 +1,20 @@
 "use client"
 
+import useSession from "@/hooks/useSession"
 import HeaderMenu from "./HeaderMenu"
-import UserSelect from "./UserSelect"
+import RoleSelect from "./RoleSelect"
 
 export default function Header() {
+  const { session } = useSession()
+
+  if (!session) return <></>
+
   return (
     <div className="flex items-center px-6">
       <div className="grow">
         <HeaderMenu />
       </div>
-      {/* TODO Remove <UserSelect/> */}
-      <UserSelect />
+      {session.userRole !== "Artist" && <RoleSelect />}
     </div>
   )
 }

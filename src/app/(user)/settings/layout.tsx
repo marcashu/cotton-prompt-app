@@ -1,5 +1,5 @@
 import NavItem from "@/types/navItem"
-import SideNavLayout from "../_components/SideNavLayout"
+import SideNavLayout from "@/app/_components/SideNavLayout"
 
 const navItems: NavItem[] = [
   {

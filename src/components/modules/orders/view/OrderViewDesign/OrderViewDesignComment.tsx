@@ -5,7 +5,7 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { postComment } from "../designActions"
 import { useToast } from "@/components/ui/use-toast"
 import { TypographySmall } from "@/components/ui/typography"
-import { CheckerStatus } from "@/app/(orders)/_lib/constants"
+import { CheckerStatus } from "@/app/(user)/(orders)/_lib/constants"
 
 export default function OrderViewDesignComment({
   id,

@@ -1,8 +1,8 @@
-import { getDesignBrackets } from "@/app/settings/design-brackets/_lib/designBracketService"
+import { getDesignBrackets } from "./_lib/designBracketService"
 import { TypographyH3, TypographyH4 } from "@/components/ui/typography"
-import DesignBracketItem from "@/app/settings/design-brackets/_components/DesignBracketItem"
-import DesignBracketDisabledItem from "@/app/settings/design-brackets/_components/DesignBracketDisabledItem"
-import DesignBracketCreate from "@/app/settings/design-brackets/_components/DesignBracketCreate"
+import DesignBracketItem from "./_components/DesignBracketItem"
+import DesignBracketDisabledItem from "./_components/DesignBracketDisabledItem"
+import DesignBracketCreate from "./_components/DesignBracketCreate"
 
 export default async function DesignBracketsPage() {
   const activeBracketsData = getDesignBrackets(true, true)

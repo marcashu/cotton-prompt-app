@@ -1,8 +1,8 @@
-import { getOutputSizes } from "@/app/settings/output-sizes/_lib/outputSizeService"
+import { getOutputSizes } from "./_lib/outputSizeService"
 import { TypographyH3, TypographyH4 } from "@/components/ui/typography"
-import OutputSizeItem from "@/app/settings/output-sizes/_components/OutputSizeItem"
-import OutputSizeDisabledItem from "@/app/settings/output-sizes/_components/OutputSizeDisabledItem"
-import OutputSizeCreate from "@/app/settings/output-sizes/_components/OutputSizeCreate"
+import OutputSizeItem from "./_components/OutputSizeItem"
+import OutputSizeDisabledItem from "./_components/OutputSizeDisabledItem"
+import OutputSizeCreate from "./_components/OutputSizeCreate"
 
 export default async function OutputSizesPage() {
   const activeOutputSizesData = getOutputSizes(true, true)
