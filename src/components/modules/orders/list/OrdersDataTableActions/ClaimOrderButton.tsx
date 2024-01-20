@@ -7,7 +7,7 @@ import useSession from "@/hooks/useSession"
 import { useToast } from "@/components/ui/use-toast"
 import { getOrderListKey } from "../ordersListHelper"
 import { useState } from "react"
-import CanClaimModel from "@/types/canClaimModel"
+import CanDoModel from "@/types/canDoModel"
 import { Role } from "@/app/_lib/userConstants"
 
 export default function ClaimOrderButton({
@@ -18,7 +18,7 @@ export default function ClaimOrderButton({
 }: {
   id: number
   priority: boolean
-  canClaim: CanClaimModel
+  canClaim: CanDoModel
   role: Role
 }) {
   const { session } = useSession()
@@ -29,7 +29,7 @@ export default function ClaimOrderButton({
   if (!session) return <></>
 
   const handleClaim = () => {
-    if (canClaim.canClaim) {
+    if (canClaim.canDo) {
       setLoading(true)
 
       const assignToOrder =

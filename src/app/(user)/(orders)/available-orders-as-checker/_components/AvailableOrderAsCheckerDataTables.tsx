@@ -6,7 +6,7 @@ import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import ClaimOrderButton from "@/components/modules/orders/list/OrdersDataTableActions/ClaimOrderButton"
 import { getOrderListKey } from "@/components/modules/orders/list/ordersListHelper"
 import useSession from "@/hooks/useSession"
-import CanClaimModel from "@/types/canClaimModel"
+import CanDoModel from "@/types/canDoModel"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { CellContext } from "@tanstack/react-table"
 
@@ -19,14 +19,14 @@ export default function AvailableOrderAsCheckerDataTables() {
   const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
     const order = row.original
 
-    const canClaim: CanClaimModel =
+    const canClaim: CanDoModel =
       session?.userId === order.artistId
         ? {
-            canClaim: false,
+            canDo: false,
             message: "You can't claim an order if you are the artist",
           }
         : {
-            canClaim: true,
+            canDo: true,
             message: "",
           }
 

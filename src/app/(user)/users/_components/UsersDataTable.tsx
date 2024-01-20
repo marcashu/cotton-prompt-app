@@ -5,6 +5,7 @@ import { DataTable } from "@/components/ui/data-table"
 import GetUsersModel from "@/types/getUsersModel"
 import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
+import ChangeRoleDialog from "./ChangeRoleDialog"
 
 const columnDef: ColumnDef<GetUsersModel>[] = [
   {
@@ -29,11 +30,17 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => (
-      <Button variant="outline" asChild className="float-right">
-        <Link href={`/users/${row.original.id}`}>View</Link>
-      </Button>
-    ),
+    cell: ({ row }) => {
+      const user = row.original
+      return (
+        <div className="flex gap-2 justify-end">
+          <Button variant="outline" asChild>
+            <Link href={`/users/${user.id}`}>View</Link>
+          </Button>
+          <ChangeRoleDialog id={user.id} role={user.role} />
+        </div>
+      )
+    },
   },
 ]
 

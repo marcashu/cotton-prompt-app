@@ -1,5 +1,5 @@
 import { TypographyH2 } from "@/components/ui/typography"
-import CanClaimModel from "@/types/canClaimModel"
+import CanDoModel from "@/types/canDoModel"
 import AvailableOrderAsArtistDataTables from "./_components/AvailableOrderAsArtistDataTables"
 
 async function getCanClaim(userId: string) {
@@ -11,7 +11,7 @@ async function getCanClaim(userId: string) {
       },
     }
   )
-  const result = (await res.json()) as CanClaimModel
+  const result = (await res.json()) as CanDoModel
   return result
 }
 

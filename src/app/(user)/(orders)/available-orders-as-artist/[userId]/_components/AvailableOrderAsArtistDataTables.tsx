@@ -4,14 +4,14 @@ import { Role } from "@/app/_lib/userConstants"
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import ClaimOrderButton from "@/components/modules/orders/list/OrdersDataTableActions/ClaimOrderButton"
 import { getOrderListKey } from "@/components/modules/orders/list/ordersListHelper"
-import CanClaimModel from "@/types/canClaimModel"
+import CanDoModel from "@/types/canDoModel"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { CellContext } from "@tanstack/react-table"
 
 export default function AvailableOrderAsArtistDataTables({
   canClaim,
 }: {
-  canClaim: CanClaimModel
+  canClaim: CanDoModel
 }) {
   const role = Role.Artist
   const priorityKey = getOrderListKey(role, true)
