@@ -1,6 +1,6 @@
 import { Toaster } from "@/components/ui/toaster"
-import Header from "../_components/Header"
-import Main from "../_components/Main"
+import Header from "./_components/Header"
+import Main from "./_components/Main"
 
 export default function UserLayout({
   children,

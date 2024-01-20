@@ -2,8 +2,8 @@ import Role from "./role"
 
 type Session = {
   userId: string,
-  userRole: Role,
-  selectedRole: Role,
+  userRole?: Role,
+  selectedRole?: Role,
   name: string,
 }
 

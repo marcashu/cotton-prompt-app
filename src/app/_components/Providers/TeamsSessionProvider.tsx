@@ -29,6 +29,10 @@ export default function TeamsSessionProvider({
       })
       .catch((err) => {
         console.log(err)
+        setSession({
+          userId: "",
+          name: "",
+        })
       })
   }, [setSession])
 

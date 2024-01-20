@@ -1,4 +1,4 @@
-import SideNavLayout from "@/app/_components/SideNavLayout"
+import SideNavLayout from "@/app/(user)/_components/SideNavLayout"
 import { navItems } from "./_lib/constants"
 
 export default function YourOrdersAsCheckerLayout({
