@@ -6,8 +6,9 @@ import { revalidateTag } from "next/cache"
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Users`
 
-export const canUserUpdateRole = async (id: string, role: Role) => {
-  const res = await fetch(`${baseUrl}/${id}/can-update-role?role=${role}`, {
+export const canUserUpdateRole = async (id: string, role?: Role) => {
+  const queryParam = !!role ? `?role=${role}` : ''
+  const res = await fetch(`${baseUrl}/${id}/can-update-role${queryParam}`, {
     cache: 'no-store'
   })
 
@@ -15,7 +16,7 @@ export const canUserUpdateRole = async (id: string, role: Role) => {
   return result
 }
 
-export const updateUserRole = async (id: string, role: Role, updatedBy: string) => {
+export const updateUserRole = async (id: string, updatedBy: string, role?: Role) => {
   const res = await fetch(`${baseUrl}/${id}/role`, {
     method: 'PUT',
     headers: {

@@ -6,6 +6,7 @@ import GetUsersModel from "@/types/getUsersModel"
 import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 import ChangeRoleDialog from "./ChangeRoleDialog"
+import { Role } from "@/app/_lib/userConstants"
 
 const columnDef: ColumnDef<GetUsersModel>[] = [
   {
@@ -26,6 +27,7 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
   },
   {
     accessorKey: "role",
+    accessorFn: (user) => user.role ?? "-",
     header: "Role",
   },
   {
@@ -37,7 +39,7 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
           <Button variant="outline" asChild>
             <Link href={`/users/${user.id}`}>View</Link>
           </Button>
-          <ChangeRoleDialog id={user.id} role={user.role} />
+          <ChangeRoleDialog id={user.id} role={user.role ?? Role.NoRole} />
         </div>
       )
     },

@@ -45,10 +45,11 @@ export default function ChangeRoleDialog({
   }
 
   const handleSave = () => {
+    const selectedRole = value !== Role.NoRole ? value : undefined
     setLoading(true)
-    canUserUpdateRole(id, value).then((canDo) => {
+    canUserUpdateRole(id, selectedRole).then((canDo) => {
       if (canDo.canDo) {
-        updateUserRole(id, value, session?.userId)
+        updateUserRole(id, session.userId, selectedRole)
           .then(() => {
             toast({
               title: "User role has been updated successfully",
@@ -85,6 +86,7 @@ export default function ChangeRoleDialog({
                 <SelectValue placeholder="Select Role" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value={Role.NoRole}>No Role</SelectItem>
                 <SelectItem value={Role.Admin}>{Role.Admin}</SelectItem>
                 <SelectItem value={Role.Checker}>{Role.Checker}</SelectItem>
                 <SelectItem value={Role.Artist}>{Role.Artist}</SelectItem>

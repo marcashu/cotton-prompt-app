@@ -81,7 +81,13 @@ export default function AddUserDialog() {
     if (!user) return
 
     setLoadingSave(true)
-    addUser(user.id, user.name, user.email, session.userId, selectedRole)
+    addUser(
+      user.id,
+      user.name,
+      user.email,
+      session.userId,
+      selectedRole !== Role.NoRole ? selectedRole : undefined
+    )
       .then(() =>
         toast({
           title: "User has been added successfully",
