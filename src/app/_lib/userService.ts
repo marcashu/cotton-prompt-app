@@ -13,11 +13,8 @@ export const loginUser = async (token: string) => {
   return result as GetUsersModel
 }
 
-export const getUsers = async (token: string) => {
-  const res = await fetch(baseUrl, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    },
+export const getRegisteredUsers = async () => {
+  const res = await fetch(`${baseUrl}/registered`, {
     next: { tags: [`users`] }
   })
 

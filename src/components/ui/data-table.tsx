@@ -20,13 +20,13 @@ import Spinner from "./spinner"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  isLoading,
+  isLoading = false,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,

@@ -19,6 +19,10 @@ const adminNavItems: NavItem[] = [
     href: "/orders",
   },
   {
+    name: "Users",
+    href: "/users",
+  },
+  {
     name: "Settings",
     href: "/settings",
   },
