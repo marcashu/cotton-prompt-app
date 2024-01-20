@@ -4,12 +4,10 @@ import { Role } from "@/app/_lib/userConstants"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   Select,
@@ -81,7 +79,7 @@ export default function ChangeRoleDialog({
           <DialogHeader>
             <DialogTitle>Change Role</DialogTitle>
           </DialogHeader>
-          <div>
+          <div className="py-2">
             <Select value={value} onValueChange={handleChange}>
               <SelectTrigger>
                 <SelectValue placeholder="Select Role" />
@@ -98,7 +96,7 @@ export default function ChangeRoleDialog({
               type="button"
               variant="outline"
               onClick={handleClose}
-              loading={loading}
+              disabled={loading}
             >
               Cancel
             </Button>

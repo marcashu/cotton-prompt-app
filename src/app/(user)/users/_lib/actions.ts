@@ -33,3 +33,25 @@ export const updateUserRole = async (id: string, role: Role, updatedBy: string) 
 
   revalidateTag('users')
 }
+
+export const addUser = async (id: string, name: string, email: string, createdBy: string, role?: Role) => {
+  const res = await fetch(baseUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      id,
+      name,
+      email,
+      role,
+      createdBy,
+    })
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+
+  revalidateTag('users')
+}

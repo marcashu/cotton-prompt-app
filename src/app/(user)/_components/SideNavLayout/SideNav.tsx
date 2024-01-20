@@ -10,7 +10,7 @@ export default function SideNav({ navItems }: { navItems: NavItem[] }) {
   const pathname = usePathname()
 
   return (
-    <nav className={"flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1"}>
+    <nav className={"flex space-x-2 flex-col lg:space-x-0 lg:space-y-1"}>
       {navItems.map((item) => (
         <Link
           key={item.href}
