@@ -1,4 +1,4 @@
-import Role from "./role"
+import { Role } from "@/app/_lib/userConstants"
 
 type GetUsersModel = {
   id: string

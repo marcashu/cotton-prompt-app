@@ -1,3 +1,4 @@
+import { Role } from "@/app/_lib/userConstants"
 import {
   Select,
   SelectContent,
@@ -7,7 +8,6 @@ import {
 } from "@/components/ui/select"
 import { TypographySmall } from "@/components/ui/typography"
 import useSession from "@/hooks/useSession"
-import Role from "@/types/role"
 import Session from "@/types/session"
 import { useState } from "react"
 
@@ -16,9 +16,9 @@ export default function RoleSelect() {
   const [value, setValue] = useState(session?.selectedRole)
 
   const options =
-    session?.userRole === "Admin"
-      ? ["Admin", "Checker", "Artist"]
-      : ["Checker", "Artist"]
+    session?.userRole === Role.Admin
+      ? [Role.Admin, Role.Checker, Role.Artist]
+      : [Role.Checker, Role.Artist]
 
   const handleChange = (newValue: Role) => {
     setValue(newValue)

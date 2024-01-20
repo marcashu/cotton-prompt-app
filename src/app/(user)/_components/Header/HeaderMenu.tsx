@@ -1,3 +1,4 @@
+import { Role } from "@/app/_lib/userConstants"
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -52,9 +53,9 @@ export default function HeaderMenu() {
   if (!session) return <></>
 
   const navItems =
-    session?.selectedRole === "Admin"
+    session?.selectedRole === Role.Admin
       ? adminNavItems
-      : session.selectedRole === "Checker"
+      : session.selectedRole === Role.Checker
       ? checkerNavItems
       : artistNavItems(session.userId)
 

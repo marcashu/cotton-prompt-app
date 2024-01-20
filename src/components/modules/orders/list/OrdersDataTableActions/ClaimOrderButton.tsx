@@ -8,7 +8,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { getOrderListKey } from "../ordersListHelper"
 import { useState } from "react"
 import CanClaimModel from "@/types/canClaimModel"
-import Role from "@/types/role"
+import { Role } from "@/app/_lib/userConstants"
 
 export default function ClaimOrderButton({
   id,
@@ -33,7 +33,7 @@ export default function ClaimOrderButton({
       setLoading(true)
 
       const assignToOrder =
-        role === "Artist" ? assignArtistToOrder : assignCheckerToOrder
+        role === Role.Artist ? assignArtistToOrder : assignCheckerToOrder
 
       const mutateKey = getOrderListKey(role, priority)
 

@@ -1,7 +1,7 @@
 import useSession from "@/hooks/useSession"
 import { useEffect } from "react"
 import { app, authentication } from "@microsoft/teams-js"
-import { loginUser } from "./userService"
+import { loginUser } from "../../_lib/userService"
 
 export default function TeamsSessionProvider({
   children,

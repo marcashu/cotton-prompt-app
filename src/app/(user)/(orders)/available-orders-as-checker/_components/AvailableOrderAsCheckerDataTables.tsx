@@ -1,5 +1,6 @@
 "use client"
 
+import { Role } from "@/app/_lib/userConstants"
 import ViewOrderButton from "../../_components/ViewOrderButton"
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import ClaimOrderButton from "@/components/modules/orders/list/OrdersDataTableActions/ClaimOrderButton"
@@ -10,7 +11,7 @@ import GetOrdersModel from "@/types/getOrdersModel"
 import { CellContext } from "@tanstack/react-table"
 
 export default function AvailableOrderAsCheckerDataTables() {
-  const role = "Checker"
+  const role = Role.Checker
   const priorityKey = getOrderListKey(role, true)
   const normalKey = getOrderListKey(role, false)
   const { session } = useSession()

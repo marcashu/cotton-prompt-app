@@ -1,5 +1,6 @@
 "use client"
 
+import { Role } from "@/app/_lib/userConstants"
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import ClaimOrderButton from "@/components/modules/orders/list/OrdersDataTableActions/ClaimOrderButton"
 import { getOrderListKey } from "@/components/modules/orders/list/ordersListHelper"
@@ -12,7 +13,7 @@ export default function AvailableOrderAsArtistDataTables({
 }: {
   canClaim: CanClaimModel
 }) {
-  const role = "Artist"
+  const role = Role.Artist
   const priorityKey = getOrderListKey(role, true)
   const normalKey = getOrderListKey(role, false)
 

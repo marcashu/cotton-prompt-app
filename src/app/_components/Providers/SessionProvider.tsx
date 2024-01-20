@@ -1,3 +1,4 @@
+import { Role } from "@/app/_lib/userConstants"
 import SessionContext from "@/contexts/SessionContext"
 import Session from "@/types/session"
 import { useRouter } from "next/navigation"
@@ -15,11 +16,11 @@ export default function SessionProvider({
     if (!session) return
 
     const redirectPath =
-      session.selectedRole === "Admin"
+      session.selectedRole === Role.Admin
         ? "/orders"
-        : session.selectedRole === "Checker"
+        : session.selectedRole === Role.Checker
         ? "/available-orders-as-checker"
-        : session.selectedRole === "Artist"
+        : session.selectedRole === Role.Artist
         ? `/available-orders-as-artist/${session.userId}`
         : "/no-role"
     router.replace(redirectPath)
