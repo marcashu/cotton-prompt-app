@@ -61,7 +61,12 @@ export function UsersComboBox({
         <Command
           filter={(value, search) => {
             const user = data.find((u) => u.id === value)
-            if (user?.name.startsWith(search)) return 1
+            if (
+              user?.name
+                .toLocaleLowerCase()
+                .includes(search.toLocaleLowerCase())
+            )
+              return 1
             return 0
           }}
         >
