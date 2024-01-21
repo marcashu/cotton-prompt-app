@@ -7,6 +7,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 import ChangeRoleDialog from "./ChangeRoleDialog"
 import { Role } from "@/app/_lib/userConstants"
+import { TypographySmall } from "@/components/ui/typography"
 
 const columnDef: ColumnDef<GetUsersModel>[] = [
   {
@@ -15,9 +16,10 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
     cell: ({ row }) => {
       const user = row.original
       return (
-        <Link href={`/users/${user.id}`} className="font-medium">
-          {user.name}
-        </Link>
+        // <Link href={`/users/${user.id}`} className="font-medium">
+        //   {user.name}
+        // </Link>
+        <TypographySmall>{user.name}</TypographySmall>
       )
     },
   },
@@ -36,9 +38,9 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
       const user = row.original
       return (
         <div className="flex gap-2 justify-end">
-          <Button variant="outline" asChild>
+          {/* <Button variant="outline" asChild>
             <Link href={`/users/${user.id}`}>View</Link>
-          </Button>
+          </Button> */}
           <ChangeRoleDialog id={user.id} role={user.role ?? Role.NoRole} />
         </div>
       )
