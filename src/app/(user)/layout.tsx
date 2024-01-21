@@ -1,4 +1,3 @@
-import { Toaster } from "@/components/ui/toaster"
 import Header from "./_components/Header"
 import Main from "./_components/Main"
 
@@ -11,7 +10,6 @@ export default function UserLayout({
     <>
       <Header />
       <Main>{children}</Main>
-      <Toaster />
     </>
   )
 }
