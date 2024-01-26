@@ -94,7 +94,11 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
           <ConceptTextarea control={form.control} />
           <ImageReferenceUrls control={form.control} />
         </div>
-        <Button type="submit" loading={loading}>
+        <Button
+          type="submit"
+          loading={loading}
+          disabled={!form.formState.isValid}
+        >
           Submit
         </Button>
       </form>

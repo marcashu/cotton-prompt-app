@@ -10,15 +10,9 @@ const orderFormSchema = z.object({
     .string()
     .min(1, "Please enter concept.")
     .max(800, "Concept must not be longer thatn 800 characters."),
-  printColorId: z.string({
-    required_error: "Please select a print color."
-  }),
-  designBracketId: z.string({
-    required_error: "Please select a design bracket."
-  }),
-  outputSizeId: z.string({
-    required_error: "Please select an output size."
-  }),
+  printColorId: z.string().min(1, "Please select a print color."),
+  designBracketId: z.string().min(1, "Please select a design bracket."),
+  outputSizeId: z.string().min(1, "Please select an output size."),
   imageReferences: z
     .array(
       z.object({
