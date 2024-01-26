@@ -18,6 +18,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import OutputSizeSelect from "./OutputSizeSelect"
+import CustomerEmailInput from "./CustomerEmailInput"
 
 export default function OrderForm({ order }: { order?: GetOrderModel }) {
   const { session } = useSession()
@@ -30,6 +31,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
       printColorId: order?.printColor.id.toString() ?? "",
       designBracketId: order?.designBracket.id.toString() ?? "",
       outputSizeId: order?.outputSize.id.toString() ?? "",
+      customerEmail: order?.customerEmail ?? "",
       imageReferences:
         order?.imageReferences.map((ir) => ({ value: ir })) ?? [],
     },
@@ -91,6 +93,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
             <DesignBracketSelect control={form.control} className="flex-1" />
             <OutputSizeSelect control={form.control} className="flex-1" />
           </div>
+          <CustomerEmailInput control={form.control} />
           <ConceptTextarea control={form.control} />
           <ImageReferenceUrls control={form.control} />
         </div>

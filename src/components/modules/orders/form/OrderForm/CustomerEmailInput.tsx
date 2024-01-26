@@ -2,7 +2,7 @@ import { Control } from "react-hook-form"
 import { OrderFormValues } from "./orderFormSchema"
 import Input from "@/components/custom/Input"
 
-export default function OrderNumberInput({
+export default function CustomerEmailInput({
   control,
   className,
 }: {
@@ -11,11 +11,11 @@ export default function OrderNumberInput({
 }) {
   return (
     <Input
-      label="Order Number"
+      label="Customer Email"
       control={control}
-      name="orderNumber"
+      name="customerEmail"
       className={className}
-      placeholder="Enter order number"
+      placeholder="Enter customer email"
     />
   )
 }

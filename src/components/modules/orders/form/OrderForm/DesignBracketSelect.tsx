@@ -1,22 +1,9 @@
 import { Control } from "react-hook-form"
 import { OrderFormValues } from "./orderFormSchema"
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import useSWR from "swr"
 import DesignBracket from "@/types/designBracket"
-import Spinner from "@/components/ui/spinner"
+import Select from "@/components/custom/Select"
+import { SelectItem } from "@/components/ui/select"
 
 export default function DesignBracketSelect({
   control,
@@ -30,35 +17,21 @@ export default function DesignBracketSelect({
   )
 
   return (
-    <FormField
+    <Select
+      label="Design Bracket"
       control={control}
       name="designBracketId"
-      render={({ field }) => (
-        <FormItem className={className}>
-          <FormLabel>Design Bracket</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl>
-              <SelectTrigger>
-                {!isLoading ? (
-                  <SelectValue placeholder="Select a design bracket" />
-                ) : (
-                  <Spinner />
-                )}
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              {!!data &&
-                data?.length > 0 &&
-                data.map((item) => (
-                  <SelectItem key={item.id} value={item.id.toString()}>
-                    {item.value}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+      className={className}
+      placeholder="Select a design bracket"
+      loading={isLoading}
+    >
+      {!!data &&
+        data?.length > 0 &&
+        data.map((item) => (
+          <SelectItem key={item.id} value={item.id.toString()}>
+            {item.value}
+          </SelectItem>
+        ))}
+    </Select>
   )
 }

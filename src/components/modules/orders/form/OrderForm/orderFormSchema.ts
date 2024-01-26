@@ -13,6 +13,7 @@ const orderFormSchema = z.object({
   printColorId: z.string().min(1, "Please select a print color."),
   designBracketId: z.string().min(1, "Please select a design bracket."),
   outputSizeId: z.string().min(1, "Please select an output size."),
+  customerEmail: z.string().email("Please enter a valid email.").nullish().or(z.literal('')),
   imageReferences: z
     .array(
       z.object({
