@@ -11,7 +11,7 @@ type GetOrderModel = {
   printColor: PrintColor
   designBracket: DesignBracket
   outputSize: OutputSize
-  customerEmail?: string
+  customerEmail: string
   imageReferences: string[]
   design?: DesignModel
   previousDesigns: DesignModel[]
