@@ -21,8 +21,8 @@ export default function TeamsSessionProvider({
             .then((user) =>
               setSession({
                 userId: user.id,
-                userRole: user.role,
-                selectedRole: user.role,
+                userRoles: user.roles,
+                selectedRole: user.roles[0],
                 name: user.name,
               })
             )

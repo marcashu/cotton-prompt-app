@@ -29,8 +29,8 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
   },
   {
     accessorKey: "role",
-    accessorFn: (user) => user.role ?? "-",
-    header: "Role",
+    accessorFn: (user) => (user.roles.length > 0 ? user.roles.join(", ") : "-"),
+    header: "Roles",
   },
   {
     id: "actions",
@@ -41,7 +41,7 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
           {/* <Button variant="outline" asChild>
             <Link href={`/users/${user.id}`}>View</Link>
           </Button> */}
-          <ChangeRoleDialog id={user.id} role={user.role ?? Role.NoRole} />
+          <ChangeRoleDialog id={user.id} roles={user.roles} />
         </div>
       )
     },

@@ -2,7 +2,7 @@ import { Role } from "@/app/_lib/userConstants"
 
 type Session = {
   userId: string,
-  userRole?: Role,
+  userRoles: Role[],
   selectedRole?: Role,
   name: string,
 }

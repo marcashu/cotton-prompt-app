@@ -9,26 +9,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { useState } from "react"
 import { canUserUpdateRole, updateUserRole } from "../_lib/actions"
 import { useToast } from "@/components/ui/use-toast"
 import useSession from "@/hooks/useSession"
+import RoleCheckboxList from "./RoleCheckboxList"
 
 export default function ChangeRoleDialog({
   id,
-  role,
+  roles,
 }: {
   id: string
-  role: Role
+  roles: Role[]
 }) {
-  const [value, setValue] = useState<Role>(role)
+  const [value, setValue] = useState<Role[]>(roles)
   const { toast } = useToast()
   const { session } = useSession()
   const [open, setOpen] = useState(false)
@@ -40,16 +34,15 @@ export default function ChangeRoleDialog({
 
   const handleClose = () => setOpen(false)
 
-  const handleChange = (newValue: Role) => {
+  const handleChange = (newValue: Role[]) => {
     setValue(newValue)
   }
 
   const handleSave = () => {
-    const selectedRole = value !== Role.NoRole ? value : undefined
     setLoading(true)
-    canUserUpdateRole(id, selectedRole).then((canDo) => {
+    canUserUpdateRole(id, value).then((canDo) => {
       if (canDo.canDo) {
-        updateUserRole(id, session.userId, selectedRole)
+        updateUserRole(id, session.userId, value)
           .then(() => {
             toast({
               title: "User role has been updated successfully",
@@ -73,25 +66,15 @@ export default function ChangeRoleDialog({
   return (
     <>
       <Button type="button" variant="outline" onClick={handleOpen}>
-        Change Role
+        Change Roles
       </Button>
       <Dialog open={open}>
         <DialogContent className="w-96">
           <DialogHeader>
-            <DialogTitle>Change Role</DialogTitle>
+            <DialogTitle>Change Roles</DialogTitle>
           </DialogHeader>
           <div className="py-2">
-            <Select value={value} onValueChange={handleChange}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select Role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={Role.NoRole}>No Role</SelectItem>
-                <SelectItem value={Role.Admin}>{Role.Admin}</SelectItem>
-                <SelectItem value={Role.Checker}>{Role.Checker}</SelectItem>
-                <SelectItem value={Role.Artist}>{Role.Artist}</SelectItem>
-              </SelectContent>
-            </Select>
+            <RoleCheckboxList defaultRoles={roles} onChange={handleChange} />
           </div>
           <DialogFooter>
             <Button

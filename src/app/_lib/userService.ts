@@ -15,7 +15,7 @@ export const loginUser = async (token: string) => {
 
 export const getRegisteredUsers = async () => {
   const res = await fetch(`${baseUrl}/registered`, {
-    next: { tags: [`users`] }
+    next: { tags: [`users`] },
   })
 
   const result = await res.json()

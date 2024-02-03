@@ -3,7 +3,6 @@
 import useSession from "@/hooks/useSession"
 import HeaderMenu from "./HeaderMenu"
 import RoleSelect from "./RoleSelect"
-import { Role } from "@/app/_lib/userConstants"
 
 export default function Header() {
   const { session } = useSession()
@@ -15,7 +14,7 @@ export default function Header() {
       <div className="grow">
         <HeaderMenu />
       </div>
-      {session.userRole !== Role.Artist && <RoleSelect />}
+      {session.userRoles.length > 1 && <RoleSelect />}
     </div>
   )
 }

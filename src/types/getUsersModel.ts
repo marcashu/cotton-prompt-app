@@ -4,7 +4,7 @@ type GetUsersModel = {
   id: string
   name: string
   email: string
-  role: Role
+  roles: Role[]
 }
 
 export default GetUsersModel

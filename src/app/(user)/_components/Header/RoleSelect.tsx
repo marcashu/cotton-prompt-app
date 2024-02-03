@@ -15,10 +15,7 @@ export default function RoleSelect() {
   const { session, setSession } = useSession()
   const [value, setValue] = useState(session?.selectedRole)
 
-  const options =
-    session?.userRole === Role.Admin
-      ? [Role.Admin, Role.Checker, Role.Artist]
-      : [Role.Checker, Role.Artist]
+  const options = session?.userRoles ?? []
 
   const handleChange = (newValue: Role) => {
     setValue(newValue)

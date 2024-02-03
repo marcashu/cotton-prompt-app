@@ -6,8 +6,8 @@ import { revalidateTag } from "next/cache"
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Users`
 
-export const canUserUpdateRole = async (id: string, role?: Role) => {
-  const queryParam = !!role ? `?role=${role}` : ''
+export const canUserUpdateRole = async (id: string, roles: Role[]) => {
+  const queryParam = !!roles.length ? `?roles=${roles.join(',')}` : ''
   const res = await fetch(`${baseUrl}/${id}/can-update-role${queryParam}`, {
     cache: 'no-store'
   })
@@ -16,14 +16,14 @@ export const canUserUpdateRole = async (id: string, role?: Role) => {
   return result
 }
 
-export const updateUserRole = async (id: string, updatedBy: string, role?: Role) => {
+export const updateUserRole = async (id: string, updatedBy: string, roles: Role[]) => {
   const res = await fetch(`${baseUrl}/${id}/role`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      role,
+      roles,
       updatedBy,
     })
   })
@@ -35,7 +35,7 @@ export const updateUserRole = async (id: string, updatedBy: string, role?: Role)
   revalidateTag('users')
 }
 
-export const addUser = async (id: string, name: string, email: string, createdBy: string, role?: Role) => {
+export const addUser = async (id: string, name: string, email: string, createdBy: string, roles: Role[]) => {
   const res = await fetch(baseUrl, {
     method: 'POST',
     headers: {
@@ -45,7 +45,7 @@ export const addUser = async (id: string, name: string, email: string, createdBy
       id,
       name,
       email,
-      role,
+      roles,
       createdBy,
     })
   })
