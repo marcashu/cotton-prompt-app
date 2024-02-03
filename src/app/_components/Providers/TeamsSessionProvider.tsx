@@ -37,11 +37,11 @@ export default function TeamsSessionProvider({
         })
       })
       .catch(({ message }: { message: string }) => {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong while initiating the app",
-          description: `${message}. Please try again later.`,
-        })
+        // toast({
+        //   variant: "destructive",
+        //   title: "Something went wrong while initiating the app",
+        //   description: `${message}. Please try again later.`,
+        // })
       })
   }, [setSession, toast])
 

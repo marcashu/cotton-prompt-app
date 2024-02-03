@@ -1,8 +1,15 @@
 import { Card } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 
-export default function Main({ children }: { children: React.ReactNode }) {
+export default function Main({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) {
   return (
-    <div className="pb-4">
+    <div className={cn("pb-4", className)}>
       <Card className="container py-6 shadow">{children}</Card>
     </div>
   )
