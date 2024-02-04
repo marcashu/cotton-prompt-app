@@ -1,6 +1,6 @@
 import { TypographyH2 } from "@/components/ui/typography"
 import UserGroupsDataTable from "./_components/UserGroupsDataTable"
-import AddUserGroupDialog from "./_components/AddUserGroupDialog"
+import AddEditUserGroupDialog from "./_components/AddEditUserGroupDialog"
 import { getUserGroups } from "./_lib/userGroupQueries"
 
 export default async function UserGroupsPage() {
@@ -10,7 +10,7 @@ export default async function UserGroupsPage() {
     <div className="flex flex-col gap-4">
       <TypographyH2>User Groups</TypographyH2>
       <div className="self-end">
-        <AddUserGroupDialog />
+        <AddEditUserGroupDialog />
       </div>
       <UserGroupsDataTable data={userGroups} />
     </div>

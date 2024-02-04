@@ -18,12 +18,14 @@ export default function MultiSelect<T extends FieldValues>({
   label,
   control,
   name,
+  defaultValue,
   loading,
 }: {
   options: Option[]
   label: string
   control: Control<T>
   name: Path<T>
+  defaultValue?: Option[]
   loading?: boolean
 }) {
   return (
@@ -35,7 +37,7 @@ export default function MultiSelect<T extends FieldValues>({
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <Select
-              // defaultValue={[colourOptions[2], colourOptions[3]]}
+              defaultValue={defaultValue}
               isMulti
               options={options}
               onChange={(newValue) =>

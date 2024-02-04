@@ -1,7 +1,7 @@
-import { revalidateTag } from "next/cache"
 import { getUserGroupById } from "../_lib/userGroupQueries"
 import UserGroupUsersDataTable from "./_components/UserGroupUsersDataTable"
 import PageHeaderWithBack from "@/app/(user)/_components/PageHeaderWithBack"
+import AddEditUserGroupDialog from "../_components/AddEditUserGroupDialog"
 
 export default async function UserGroupDetailsPage({
   params,
@@ -9,13 +9,13 @@ export default async function UserGroupDetailsPage({
   params: { id: number }
 }) {
   const userGroup = await getUserGroupById(params.id)
-  revalidateTag(`userGroup:${params.id}`)
+
   return (
     <div className="flex flex-col gap-4">
       <PageHeaderWithBack title={userGroup.name} />
-      {/* <div className="self-end">
-        <AddUserGroupDialog />
-      </div> */}
+      <div className="self-end">
+        <AddEditUserGroupDialog userGroup={userGroup} />
+      </div>
       <UserGroupUsersDataTable data={userGroup.users} />
     </div>
   )

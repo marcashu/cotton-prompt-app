@@ -9,7 +9,7 @@ import Link from "next/link"
 const columnDef: ColumnDef<GetUserGroupsModel>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Group Name",
     cell: ({ row }) => {
       const userGroup = row.original
       return (

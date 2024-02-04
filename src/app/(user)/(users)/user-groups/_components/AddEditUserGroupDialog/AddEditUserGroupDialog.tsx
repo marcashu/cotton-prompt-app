@@ -20,9 +20,10 @@ import { useForm } from "react-hook-form"
 import { useSWRConfig } from "swr"
 import useSWRMutation from "swr/mutation"
 import * as z from "zod"
-import { createUserGroup } from "../../_lib/userGroupActions"
+import { createUserGroup, updateUserGroup } from "../../_lib/userGroupActions"
 import useSession from "@/hooks/useSession"
 import { useToast } from "@/components/ui/use-toast"
+import GetUserGroupModel from "@/types/getUserGroupModel"
 
 const formSchema = z.object({
   name: z
@@ -38,7 +39,11 @@ const formSchema = z.object({
 
 type AddUserGroupFormType = z.infer<typeof formSchema>
 
-export default function AddUserGroupDialog() {
+export default function AddEditUserGroupDialog({
+  userGroup,
+}: {
+  userGroup?: GetUserGroupModel
+}) {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const { fetcher } = useSWRConfig()
@@ -48,6 +53,10 @@ export default function AddUserGroupDialog() {
   )
   const form = useForm<AddUserGroupFormType>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: userGroup?.name,
+      userIds: userGroup?.users.map((u) => u.id),
+    },
   })
   const { session } = useSession()
   const { toast } = useToast()
@@ -65,27 +74,49 @@ export default function AddUserGroupDialog() {
 
   const handleSubmit = (formData: AddUserGroupFormType) => {
     setLoading(true)
-    createUserGroup(formData.name, formData.userIds, session.userId)
-      .then(() =>
-        toast({
-          title: "User group has been created successfully",
-          description: new Date().toLocaleString(),
+
+    if (!userGroup) {
+      createUserGroup(formData.name, formData.userIds, session.userId)
+        .then(() =>
+          toast({
+            title: "User group has been created successfully",
+            description: new Date().toLocaleString(),
+          })
+        )
+        .finally(() => {
+          setLoading(false)
+          handleOpenChange(false)
         })
+    } else {
+      updateUserGroup(
+        userGroup.id,
+        formData.name,
+        formData.userIds,
+        session.userId
       )
-      .finally(() => {
-        setLoading(false)
-        handleOpenChange(false)
-      })
+        .then(() =>
+          toast({
+            title: "User group has been updated successfully",
+            description: new Date().toLocaleString(),
+          })
+        )
+        .finally(() => {
+          setLoading(false)
+          handleOpenChange(false)
+        })
+    }
   }
+
+  const title = `${!userGroup ? "Add" : "Edit"} User Group`
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="mr-4">Add User Group</Button>
+        <Button className="mr-4">{title}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add User Group</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -100,6 +131,10 @@ export default function AddUserGroupDialog() {
                   label: u.name,
                 })) ?? []
               }
+              defaultValue={userGroup?.users.map((u) => ({
+                value: u.id,
+                label: u.name,
+              }))}
               name="userIds"
               control={form.control}
               label="Users"
@@ -112,7 +147,7 @@ export default function AddUserGroupDialog() {
                 </Button>
               </DialogClose>
               <Button type="submit" className="ml-2" loading={loading}>
-                Submit
+                {!userGroup ? "Submit" : "Save"}
               </Button>
             </DialogFooter>
           </form>
