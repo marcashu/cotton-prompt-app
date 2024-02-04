@@ -1,4 +1,4 @@
-import OrderPageHeader from "@/components/modules/orders/OrderPageHeader"
+import PageHeaderWithBack from "@/app/(user)/_components/PageHeaderWithBack"
 import { getOrderById } from "@/components/modules/orders/orderService"
 import OrderViewDesign from "@/components/modules/orders/view/OrderViewDesign"
 import OrderViewDetails from "@/components/modules/orders/view/OrderViewDetails"
@@ -14,7 +14,7 @@ export default async function ViewOrderPage({
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <OrderPageHeader
+      <PageHeaderWithBack
         title={`Order ${order.orderNumber}`}
         description="Viewing order details."
       />

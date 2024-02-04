@@ -1,6 +1,6 @@
 import OrderForm from "@/components/modules/orders/form/OrderForm"
 import { getOrderById } from "@/components/modules/orders/orderService"
-import OrderPageHeader from "@/components/modules/orders/OrderPageHeader"
+import PageHeaderWithBack from "@/app/(user)/_components/PageHeaderWithBack"
 
 export default async function EditOrderPage({
   params,
@@ -11,7 +11,7 @@ export default async function EditOrderPage({
 
   return (
     <div>
-      <OrderPageHeader title="Edit Order" description="Edit this order." />
+      <PageHeaderWithBack title="Edit Order" description="Edit this order." />
       <OrderForm order={order} />
     </div>
   )

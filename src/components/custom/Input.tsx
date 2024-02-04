@@ -19,7 +19,7 @@ export default function Input<T extends FieldValues>({
   control: Control<T>
   name: Path<T>
   className?: string
-  placeholder: string
+  placeholder?: string
 }) {
   return (
     <FormField

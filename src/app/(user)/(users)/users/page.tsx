@@ -5,6 +5,7 @@ import AddUserDialog from "./_components/AddUserDialog"
 
 export default async function UsersPage() {
   const users = await getRegisteredUsers()
+
   return (
     <div className="flex flex-col gap-4">
       <TypographyH2>Users</TypographyH2>

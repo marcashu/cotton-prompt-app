@@ -5,7 +5,7 @@ import { TypographyH2, TypographyMuted } from "@/components/ui/typography"
 import { ChevronLeft } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-export default function OrderPageHeader({
+export default function PageHeaderWithBack({
   title,
   description,
 }: {
