@@ -7,6 +7,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 import { Role } from "@/app/_lib/userConstants"
 import { TypographySmall } from "@/components/ui/typography"
+import { Badge } from "@/components/ui/badge"
 
 const columnDef: ColumnDef<GetUsersModel>[] = [
   {
@@ -27,9 +28,31 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
     header: "Email",
   },
   {
-    accessorKey: "role",
-    accessorFn: (user) => (user.roles.length > 0 ? user.roles.join(", ") : "-"),
     header: "Roles",
+    cell: ({ row }) => {
+      const user = row.original
+
+      if (!user.roles.length) return "-"
+
+      return (
+        <div className="flex gap-2">
+          {user.roles.map((ur) => (
+            <Badge
+              variant={
+                ur === Role.Admin
+                  ? "default"
+                  : ur === Role.Checker
+                  ? "secondary"
+                  : "outline"
+              }
+              key={ur}
+            >
+              {ur}
+            </Badge>
+          ))}
+        </div>
+      )
+    },
   },
 ]
 
