@@ -14,8 +14,15 @@ import OrderViewDesignComment from "./OrderViewDesignComment"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 import OrderViewDesignApproveButton from "./OrderViewDesignApproveButton"
 import { CheckerStatus } from "@/app/(user)/(orders)/_lib/constants"
+import { KeyedMutator } from "swr"
 
-export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
+export default function OrderViewDesign({
+  order,
+  mutate,
+}: {
+  order: GetOrderModel
+  mutate: KeyedMutator<GetOrderModel>
+}) {
   const { session } = useSession()
 
   if (!session) return <></>
@@ -36,13 +43,13 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
         </TypographyMuted>
       </TypographyH3>
       {forUpload ? (
-        <OrderViewDesignUpload order={order} />
+        <OrderViewDesignUpload order={order} mutate={mutate} />
       ) : (
         <OrderViewDesignPreview url={currentDesign?.url} />
       )}
       {isChecker && !!currentDesign && !isApproved && order.artistId && (
         <div className="self-end">
-          <OrderViewDesignApproveButton id={order.id} />
+          <OrderViewDesignApproveButton id={order.id} mutate={mutate} />
         </div>
       )}
       {!!currentDesign && (
@@ -59,6 +66,7 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
               id={currentDesign.id}
               orderId={order.id}
               checkerStatus={order.checkerStatus}
+              mutate={mutate}
             />
           )}
         </>

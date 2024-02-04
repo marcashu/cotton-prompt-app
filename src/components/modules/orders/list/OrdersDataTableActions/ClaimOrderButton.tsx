@@ -35,7 +35,7 @@ export default function ClaimOrderButton({
       const assignToOrder =
         role === Role.Artist ? assignArtistToOrder : assignCheckerToOrder
 
-      const mutateKey = getOrderListKey(role, priority)
+      const mutateKey = getOrderListKey(role, priority, session.userId)
 
       assignToOrder(id, session.userId).then(() => {
         setLoading(false)

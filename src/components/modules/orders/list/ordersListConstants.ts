@@ -33,8 +33,6 @@ const getOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersModel, un
 
 const priorityOrdersKey = "/api/orders?priority=true"
 const normalOrdersKey = "/api/orders?priority=false"
-const priorityArtistAvailableOrdersKey = `${priorityOrdersKey}&noArtist=true`
-const normalArtistAvailableOrdersKey = `${normalOrdersKey}&noArtist=true`
 const priorityCheckerAvailableOrdersKey = `${priorityOrdersKey}&noChecker=true&artistStatus=${ArtistStatus.DesignSubmitted}`
 const normalCheckerAvailableOrdersKey = `${normalOrdersKey}&noChecker=true&artistStatus=${ArtistStatus.DesignSubmitted}`
 
@@ -42,8 +40,6 @@ export {
   getOrdersColumnDef,
   priorityOrdersKey,
   normalOrdersKey,
-  priorityArtistAvailableOrdersKey,
-  normalArtistAvailableOrdersKey,
   priorityCheckerAvailableOrdersKey,
   normalCheckerAvailableOrdersKey,
 }

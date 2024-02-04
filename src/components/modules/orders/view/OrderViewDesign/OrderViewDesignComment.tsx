@@ -6,15 +6,19 @@ import { postComment } from "../designActions"
 import { useToast } from "@/components/ui/use-toast"
 import { TypographySmall } from "@/components/ui/typography"
 import { CheckerStatus } from "@/app/(user)/(orders)/_lib/constants"
+import { KeyedMutator } from "swr"
+import GetOrderModel from "@/types/getOrderModel"
 
 export default function OrderViewDesignComment({
   id,
   orderId,
   checkerStatus,
+  mutate,
 }: {
   id: number
   orderId: number
   checkerStatus: string
+  mutate: KeyedMutator<GetOrderModel>
 }) {
   const [comment, setComment] = useState("")
   const [loading, setLoading] = useState(false)
@@ -34,6 +38,7 @@ export default function OrderViewDesignComment({
     setLoading(true)
     postComment(id, comment, session.userId, orderId)
       .then(() => {
+        mutate()
         if (checkerStatus !== CheckerStatus.ReuploadRequested) {
           toast({
             title: "Order has been requested for reupload!",

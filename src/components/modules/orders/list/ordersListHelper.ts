@@ -1,11 +1,9 @@
-import { normalArtistAvailableOrdersKey, normalCheckerAvailableOrdersKey, priorityArtistAvailableOrdersKey, priorityCheckerAvailableOrdersKey } from "./ordersListConstants"
+import { normalCheckerAvailableOrdersKey, priorityCheckerAvailableOrdersKey } from "./ordersListConstants"
 import { Role } from "@/app/_lib/userConstants"
 
-export const getOrderListKey = (userRole: Role, priority: boolean) => {
+export const getOrderListKey = (userRole: Role, priority: boolean, userId?: string) => {
   const result = userRole === Role.Artist
-    ? priority
-      ? priorityArtistAvailableOrdersKey
-      : normalArtistAvailableOrdersKey
+    ? `/api/orders/available-as-artist?artistId=${userId}&priority=${priority}`
     : priority
       ? priorityCheckerAvailableOrdersKey
       : normalCheckerAvailableOrdersKey

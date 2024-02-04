@@ -7,11 +7,14 @@ import FullscreenableImage from "@/components/ui/fullscreenable-image"
 import { Button } from "@/components/ui/button"
 import { bytesToMegaBytes } from "@/helpers/fileHelper"
 import useSession from "@/hooks/useSession"
+import { KeyedMutator } from "swr"
 
 export default function OrderViewDesignUpload({
   order,
+  mutate,
 }: {
   order: GetOrderModel
+  mutate: KeyedMutator<GetOrderModel>
 }) {
   const ref = createRef<HTMLInputElement>()
   const [previewImage, setPreviewImage] = useState<string>(
@@ -58,6 +61,7 @@ export default function OrderViewDesignUpload({
     submitOrderDesign(order.id, file.fileBase64, file.fileName, session.userId)
       .then(() => {
         setFile(undefined)
+        mutate()
         toast({
           title: "Design has been uploaded successfully",
           description: new Date().toLocaleString(),
@@ -108,7 +112,7 @@ export default function OrderViewDesignUpload({
   }
 
   return (
-    <div className="flex flex-col gap-4 self-center max-w-lg w-full">
+    <div className="flex flex-col gap-4 self-center w-full">
       <div className="rounded-lg border border-dashed border-gray-900/25 relative aspect-video w-full">
         <input
           ref={ref}

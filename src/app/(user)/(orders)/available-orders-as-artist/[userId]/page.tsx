@@ -25,7 +25,10 @@ export default async function AvailableOrdersAsArtistPage({
   return (
     <div className="flex flex-col gap-4">
       <TypographyH2>Available Orders as Artist</TypographyH2>
-      <AvailableOrderAsArtistDataTables canClaim={canClaim} />
+      <AvailableOrderAsArtistDataTables
+        userId={params.userId}
+        canClaim={canClaim}
+      />
     </div>
   )
 }

@@ -9,13 +9,15 @@ import GetOrdersModel from "@/types/getOrdersModel"
 import { CellContext } from "@tanstack/react-table"
 
 export default function AvailableOrderAsArtistDataTables({
+  userId,
   canClaim,
 }: {
+  userId: string
   canClaim: CanDoModel
 }) {
   const role = Role.Artist
-  const priorityKey = getOrderListKey(role, true)
-  const normalKey = getOrderListKey(role, false)
+  const priorityKey = getOrderListKey(role, true, userId)
+  const normalKey = getOrderListKey(role, false, userId)
 
   const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
     const order = row.original
