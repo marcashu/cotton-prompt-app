@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import OutputSizeSelect from "./OutputSizeSelect"
 import CustomerEmailInput from "./CustomerEmailInput"
+import UserGroupSelect from "./UserGroupSelect"
 
 export default function OrderForm({ order }: { order?: GetOrderModel }) {
   const { session } = useSession()
@@ -31,6 +32,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
       printColorId: order?.printColor.id.toString() ?? "",
       designBracketId: order?.designBracket.id.toString() ?? "",
       outputSizeId: order?.outputSize.id.toString() ?? "",
+      userGroupId: order?.userGroupId.toString() ?? "",
       customerEmail: order?.customerEmail ?? "",
       imageReferences:
         order?.imageReferences.map((ir) => ({ value: ir })) ?? [],
@@ -61,6 +63,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
           toast({
             title: `Something went wrong while creating the order: ${err}`,
             description: new Date().toLocaleString(),
+            variant: "destructive",
           })
         )
         .finally(() => router.back())
@@ -76,6 +79,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
           toast({
             title: `Something went wrong while updating the order: ${err}`,
             description: new Date().toLocaleString(),
+            variant: "destructive",
           })
         )
         .finally(() => router.back())
@@ -93,6 +97,7 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
             <DesignBracketSelect control={form.control} className="flex-1" />
             <OutputSizeSelect control={form.control} className="flex-1" />
           </div>
+          <UserGroupSelect control={form.control} />
           <CustomerEmailInput control={form.control} />
           <ConceptTextarea control={form.control} />
           <ImageReferenceUrls control={form.control} />
