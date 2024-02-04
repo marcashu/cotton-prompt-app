@@ -1,12 +1,8 @@
 "use client"
 
-import { Role } from "@/app/_lib/userConstants"
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
-import ClaimOrderButton from "@/components/modules/orders/list/OrdersDataTableActions/ClaimOrderButton"
-import { getOrderListKey } from "@/components/modules/orders/list/ordersListHelper"
+import { getArtistActionCell } from "@/components/modules/orders/list/ordersListHelper"
 import CanDoModel from "@/types/canDoModel"
-import GetOrdersModel from "@/types/getOrdersModel"
-import { CellContext } from "@tanstack/react-table"
 
 export default function AvailableOrderAsArtistDataTables({
   userId,
@@ -15,33 +11,31 @@ export default function AvailableOrderAsArtistDataTables({
   userId: string
   canClaim: CanDoModel
 }) {
-  const role = Role.Artist
-  const priorityKey = getOrderListKey(role, true, userId)
-  const normalKey = getOrderListKey(role, false, userId)
-
-  const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
-    const order = row.original
-    return (
-      <ClaimOrderButton
-        id={order.id}
-        priority={order.priority}
-        canClaim={canClaim}
-        role={role}
-      />
-    )
-  }
+  const baseKey = `/api/orders/available-as-artist?artistId=${userId}`
+  const changeRequestKey = `${baseKey}&changeRequest=true`
+  const priorityKey = `${baseKey}&priority=${true}`
+  const normalKey = `${baseKey}&priority=${false}`
+  const crActionCell = getArtistActionCell(canClaim, changeRequestKey)
+  const priorityActionCell = getArtistActionCell(canClaim, priorityKey)
+  const normalActionCell = getArtistActionCell(canClaim, normalKey)
 
   return (
     <>
       <OrdersDataTable
-        priority={true}
-        url={priorityKey}
-        actionCell={actionCell}
+        title="Change Request Orders"
+        url={changeRequestKey}
+        actionCell={crActionCell}
+        hideWhenEmpty
       />
       <OrdersDataTable
-        priority={false}
+        title="Priority Orders"
+        url={priorityKey}
+        actionCell={priorityActionCell}
+      />
+      <OrdersDataTable
+        title="Normal Orders"
         url={normalKey}
-        actionCell={actionCell}
+        actionCell={normalActionCell}
       />
     </>
   )

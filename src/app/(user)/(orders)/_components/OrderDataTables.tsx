@@ -29,12 +29,12 @@ export default function OrderDataTables() {
   return (
     <>
       <OrdersDataTable
-        priority={true}
+        title="Priority Orders"
         url={priorityOrdersKey}
         actionCell={actionCell}
       />
       <OrdersDataTable
-        priority={false}
+        title="Normal Orders"
         url={normalOrdersKey}
         actionCell={actionCell}
       />

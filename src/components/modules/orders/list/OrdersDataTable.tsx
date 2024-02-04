@@ -8,20 +8,24 @@ import { DataTable } from "@/components/ui/data-table"
 import { CellContext } from "@tanstack/react-table"
 
 export default function OrdersDataTable({
-  priority,
+  title,
   url,
   actionCell,
+  hideWhenEmpty,
 }: {
-  priority: boolean
+  title: string
   url: string
   actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element
+  hideWhenEmpty?: boolean
 }) {
   const { data, isLoading } = useSWR<GetOrdersModel[]>(url)
+
+  if (hideWhenEmpty && !data?.length) return <></>
 
   return (
     <Card className="shadow">
       <CardHeader>
-        <CardTitle>{`${priority ? "Priority" : "Normal"} Orders`}</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <DataTable

@@ -5,19 +5,18 @@ import { useSWRConfig } from "swr"
 import { Button } from "@/components/ui/button"
 import useSession from "@/hooks/useSession"
 import { useToast } from "@/components/ui/use-toast"
-import { getOrderListKey } from "../ordersListHelper"
 import { useState } from "react"
 import CanDoModel from "@/types/canDoModel"
 import { Role } from "@/app/_lib/userConstants"
 
 export default function ClaimOrderButton({
   id,
-  priority,
+  mutateKey,
   canClaim,
   role,
 }: {
   id: number
-  priority: boolean
+  mutateKey: string
   canClaim: CanDoModel
   role: Role
 }) {
@@ -34,8 +33,6 @@ export default function ClaimOrderButton({
 
       const assignToOrder =
         role === Role.Artist ? assignArtistToOrder : assignCheckerToOrder
-
-      const mutateKey = getOrderListKey(role, priority, session.userId)
 
       assignToOrder(id, session.userId).then(() => {
         setLoading(false)
