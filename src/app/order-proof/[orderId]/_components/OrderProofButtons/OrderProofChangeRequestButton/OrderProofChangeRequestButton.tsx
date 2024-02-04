@@ -23,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import ChangeRequestImageReferenceUrls from "./ChangeRequestImageReferenceUrls"
 
 const formSchema = z.object({
   comment: z
@@ -33,9 +34,18 @@ const formSchema = z.object({
     .max(160, {
       message: "Comment must not be longer than 3500 characters.",
     }),
+  imageReferences: z
+    .array(
+      z.object({
+        value: z
+          .string()
+          .url({ message: "Please enter a valid image reference URL." }),
+      })
+    )
+    .optional(),
 })
 
-type formType = z.infer<typeof formSchema>
+export type ChangeRequestFormType = z.infer<typeof formSchema>
 
 export default function OrderProofChangeRequestButton({
   orderId,
@@ -49,7 +59,7 @@ export default function OrderProofChangeRequestButton({
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const { toast } = useToast()
-  const form = useForm<formType>({
+  const form = useForm<ChangeRequestFormType>({
     resolver: zodResolver(formSchema),
   })
 
@@ -58,9 +68,14 @@ export default function OrderProofChangeRequestButton({
     setOpen(newOpen)
   }
 
-  const handleSubmit = (data: formType) => {
+  const handleSubmit = (data: ChangeRequestFormType) => {
     setLoading(true)
-    changeRequestOrder(orderId, designId, data.comment)
+    changeRequestOrder(
+      orderId,
+      designId,
+      data.comment,
+      data.imageReferences?.map((ir) => ir.value) ?? []
+    )
       .then(() =>
         toast({
           title: "Change request has been submitted successfully",
@@ -103,6 +118,7 @@ export default function OrderProofChangeRequestButton({
                 </FormItem>
               )}
             />
+            <ChangeRequestImageReferenceUrls control={form.control} />
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="button" variant="outline" disabled={loading}>

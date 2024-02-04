@@ -1,4 +1,7 @@
 type CommentModel = {
-  comment: string,
+  comment: string
+  createdBy: string
   createdOn: string
 }
+
+export default CommentModel

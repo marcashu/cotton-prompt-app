@@ -12,6 +12,7 @@ import {
   TypographySmall,
 } from "@/components/ui/typography"
 import { timeAgo } from "@/helpers/dateHelper"
+import CommentModel from "@/types/commentModel"
 import { TooltipTrigger } from "@radix-ui/react-tooltip"
 
 export default function OrderViewDesignCommentPreview({
@@ -22,7 +23,7 @@ export default function OrderViewDesignCommentPreview({
   return (
     <Card className="shadow p-4">
       <div className="flex justify-between items-start">
-        <TypographyLarge>Checker</TypographyLarge>
+        <TypographyLarge>{comment.createdBy}</TypographyLarge>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>

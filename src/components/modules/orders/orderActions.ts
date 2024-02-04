@@ -135,7 +135,7 @@ export const acceptOrder = async (id: number) => {
   revalidateTag(`orderId:${id}`)
 }
 
-export const changeRequestOrder = async (id: number, designId: number, comment: string) => {
+export const changeRequestOrder = async (id: number, designId: number, comment: string, imageReferences: string[]) => {
   const res = await fetch(`${baseUrl}/${id}/change-request`, {
     method: "POST",
     headers: {
@@ -144,6 +144,7 @@ export const changeRequestOrder = async (id: number, designId: number, comment: 
     body: JSON.stringify({
       designId,
       comment,
+      imageReferences,
     }),
   })
 

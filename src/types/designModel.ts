@@ -1,3 +1,5 @@
+import CommentModel from "./commentModel"
+
 type DesignModel = {
   id: number
   name: string
