@@ -13,11 +13,14 @@ import {
 import DesignModel from "@/types/designModel"
 import FullscreenableImage from "@/components/ui/fullscreenable-image"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
+import { ArtistStatus } from "@/app/(user)/(orders)/_lib/constants"
 
 export default function OrderViewPreviousDesigns({
   designs,
+  artistStatus,
 }: {
   designs: DesignModel[]
+  artistStatus?: string
 }) {
   return (
     <Card className="py-6 container shadow flex flex-col gap-4">
@@ -25,7 +28,14 @@ export default function OrderViewPreviousDesigns({
         Previous Designs
         <TypographyMuted>View previous designs</TypographyMuted>
       </TypographyH3>
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full"
+        {...(artistStatus !== ArtistStatus.Completed && {
+          defaultValue: designs[designs.length - 1].name,
+        })}
+      >
         {designs.map((d, i) => (
           <AccordionItem value={d.name} key={d.id}>
             <AccordionTrigger>{`#${i + 1}`}</AccordionTrigger>

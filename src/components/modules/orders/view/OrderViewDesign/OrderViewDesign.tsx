@@ -54,10 +54,9 @@ export default function OrderViewDesign({
       )}
       {!!currentDesign && (
         <>
-          {isChecker ||
-            (currentDesign.comments.length > 0 && (
-              <TypographyH4>Comments</TypographyH4>
-            ))}
+          {currentDesign.comments.length > 0 && (
+            <TypographyH4>Comments</TypographyH4>
+          )}
           {currentDesign.comments.map((c, i) => (
             <OrderViewDesignCommentPreview key={i} comment={c} />
           ))}

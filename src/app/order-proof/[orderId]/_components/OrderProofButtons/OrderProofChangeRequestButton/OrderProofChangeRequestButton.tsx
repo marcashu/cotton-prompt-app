@@ -31,7 +31,7 @@ const formSchema = z.object({
     .min(1, {
       message: "Please enter comment.",
     })
-    .max(160, {
+    .max(3500, {
       message: "Comment must not be longer than 3500 characters.",
     }),
   imageReferences: z

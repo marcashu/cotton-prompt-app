@@ -27,7 +27,10 @@ export default function ViewOrderPage({ params }: { params: { id: number } }) {
       <OrderViewImageReferences urls={order.imageReferences} />
       <OrderViewDesign order={order} mutate={mutate} />
       {order.previousDesigns.length > 0 && (
-        <OrderViewPreviousDesigns designs={order.previousDesigns} />
+        <OrderViewPreviousDesigns
+          designs={order.previousDesigns}
+          artistStatus={order.artistStatus}
+        />
       )}
     </div>
   )
