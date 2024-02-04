@@ -11,16 +11,12 @@ export default function OrdersDataTable({
   title,
   url,
   actionCell,
-  hideWhenEmpty,
 }: {
   title: string
   url: string
   actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element
-  hideWhenEmpty?: boolean
 }) {
   const { data, isLoading } = useSWR<GetOrdersModel[]>(url)
-
-  if (hideWhenEmpty && !data?.length) return <></>
 
   return (
     <Card className="shadow">

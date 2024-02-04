@@ -19,6 +19,7 @@ export enum CheckerStatus {
 }
 
 export enum CustomerStatus {
+  ForReview = "For Review",
   Accepted = "Accepted",
   ChangeRequested = "Change Requested",
 }

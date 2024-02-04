@@ -2,7 +2,9 @@
 
 import OrdersDataTable from "@/components/modules/orders/list/OrdersDataTable"
 import { getArtistActionCell } from "@/components/modules/orders/list/ordersListHelper"
+import useSession from "@/hooks/useSession"
 import CanDoModel from "@/types/canDoModel"
+import useSWR from "swr"
 
 export default function AvailableOrderAsArtistDataTables({
   userId,
@@ -11,6 +13,10 @@ export default function AvailableOrderAsArtistDataTables({
   userId: string
   canClaim: CanDoModel
 }) {
+  const { session } = useSession()
+  const { data: canClaimChangeRequestOrders } = useSWR<CanDoModel>(
+    `/api/artists/${session?.userId}/can-claim-change-request`
+  )
   const baseKey = `/api/orders/available-as-artist?artistId=${userId}`
   const changeRequestKey = `${baseKey}&changeRequest=true`
   const priorityKey = `${baseKey}&priority=${true}`
@@ -21,12 +27,13 @@ export default function AvailableOrderAsArtistDataTables({
 
   return (
     <>
-      <OrdersDataTable
-        title="Change Request Orders"
-        url={changeRequestKey}
-        actionCell={crActionCell}
-        hideWhenEmpty
-      />
+      {!!canClaimChangeRequestOrders?.canDo && (
+        <OrdersDataTable
+          title="Change Request Orders"
+          url={changeRequestKey}
+          actionCell={crActionCell}
+        />
+      )}
       <OrdersDataTable
         title="Priority Orders"
         url={priorityKey}
