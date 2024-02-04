@@ -1,0 +1,121 @@
+import { changeRequestOrder } from "@/components/modules/orders/orderActions"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/components/ui/use-toast"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+
+const formSchema = z.object({
+  comment: z
+    .string()
+    .min(1, {
+      message: "Please enter comment.",
+    })
+    .max(160, {
+      message: "Comment must not be longer than 3500 characters.",
+    }),
+})
+
+type formType = z.infer<typeof formSchema>
+
+export default function OrderProofChangeRequestButton({
+  orderId,
+  designId,
+  disabled,
+}: {
+  orderId: number
+  designId: number
+  disabled: boolean
+}) {
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { toast } = useToast()
+  const form = useForm<formType>({
+    resolver: zodResolver(formSchema),
+  })
+
+  const handleOpenChange = (newOpen: boolean) => {
+    form.reset()
+    setOpen(newOpen)
+  }
+
+  const handleSubmit = (data: formType) => {
+    setLoading(true)
+    changeRequestOrder(orderId, designId, data.comment)
+      .then(() =>
+        toast({
+          title: "Change request has been submitted successfully",
+          description: "You can now safely close this tab.",
+          duration: 60000,
+        })
+      )
+      .finally(() => {
+        setLoading(false)
+        handleOpenChange(false)
+      })
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="mr-4" disabled={disabled}>
+          Request For Changes
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Change Request</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-6"
+          >
+            <FormField
+              control={form.control}
+              name="comment"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Comment</FormLabel>
+                  <FormControl>
+                    <Textarea className="resize-none" {...field} rows={4} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="button" variant="outline" disabled={loading}>
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button type="submit" className="ml-2" loading={loading}>
+                Submit
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  )
+}

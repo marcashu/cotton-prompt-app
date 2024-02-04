@@ -134,3 +134,22 @@ export const acceptOrder = async (id: number) => {
 
   revalidateTag(`orderId:${id}`)
 }
+
+export const changeRequestOrder = async (id: number, designId: number, comment: string) => {
+  const res = await fetch(`${baseUrl}/${id}/change-request`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      designId,
+      comment,
+    }),
+  })
+
+  if (!res.ok) {
+    throw new Error()
+  }
+
+  revalidateTag(`orderId:${id}`)
+}

@@ -11,14 +11,19 @@ export default async function OrderProofPage({
 }) {
   const orderId = params.orderId
   const order = await getOrderById(orderId)
+  const design = order.design
+
+  if (!design) return <></>
 
   return (
     <Main className="pt-4">
       <div className="flex flex-col gap-4">
         <TypographyH2>Order {order.orderNumber}</TypographyH2>
-        {!order.customerStatus && <OrderProofButtons orderId={orderId} />}
+        {!order.customerStatus && (
+          <OrderProofButtons orderId={orderId} designId={design.id} />
+        )}
         <div>
-          <OrderViewDesignPreview url={order.design?.url} />
+          <OrderViewDesignPreview url={design.url} />
           <TypographyMuted className="italic">
             Tip: Click on the image to toggle fullscreen
           </TypographyMuted>

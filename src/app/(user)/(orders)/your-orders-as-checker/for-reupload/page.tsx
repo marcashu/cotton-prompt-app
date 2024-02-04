@@ -8,5 +8,5 @@ export default function YourOrdersAsCheckerForReuploadPage() {
   const { session } = useSession()
   const url = `/api/orders?checkerId=${session?.userId}&checkerStatus=${CheckerStatus.ReuploadRequested}`
 
-  return <YourOrdersPage title="Waiting for Checker Review" url={url} />
+  return <YourOrdersPage title="Waiting for Artist Reupload" url={url} />
 }

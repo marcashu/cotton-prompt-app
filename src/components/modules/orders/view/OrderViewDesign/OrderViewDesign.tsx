@@ -54,7 +54,7 @@ export default function OrderViewDesign({ order }: { order: GetOrderModel }) {
           {currentDesign.comments.map((c, i) => (
             <OrderViewDesignCommentPreview key={i} comment={c} />
           ))}
-          {isChecker && !!order.checkerStatus && (
+          {isChecker && !!order.checkerStatus && !isApproved && (
             <OrderViewDesignComment
               id={currentDesign.id}
               orderId={order.id}

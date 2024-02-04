@@ -4,8 +4,15 @@ import { acceptOrder } from "@/components/modules/orders/orderActions"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { useState } from "react"
+import OrderProofChangeRequestButton from "./OrderProofChangeRequestButton"
 
-export default function OrderProofButtons({ orderId }: { orderId: number }) {
+export default function OrderProofButtons({
+  orderId,
+  designId,
+}: {
+  orderId: number
+  designId: number
+}) {
   const [loading, setLoading] = useState(false)
   const { toast } = useToast()
 
@@ -24,9 +31,11 @@ export default function OrderProofButtons({ orderId }: { orderId: number }) {
 
   return (
     <div className="self-end">
-      <Button variant="outline" className="mr-4">
-        Request For Changes
-      </Button>
+      <OrderProofChangeRequestButton
+        orderId={orderId}
+        designId={designId}
+        disabled={loading}
+      />
       <Button onClick={handleClick} loading={loading}>
         Accept Proof
       </Button>

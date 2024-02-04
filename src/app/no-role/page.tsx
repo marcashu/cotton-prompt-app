@@ -13,7 +13,8 @@ export default function NoRolePage() {
       <div className="flex flex-col">
         <TypographyH3>{`Welcome ${session?.name}!`}</TypographyH3>
         <TypographyLarge className="font-normal">
-          You do not have a role currently. Please ask the admin for assistance.
+          You do not have a role currently. Please ask your admin for
+          assistance.
         </TypographyLarge>
       </div>
     </div>
