@@ -13,8 +13,13 @@ export enum ArtistStatus {
 export enum CheckerStatus {
   Claimed = "Claimed",
   ForReview = "For Review",
-  RequestedReupload = "Requested Reupload",
+  ReuploadRequested = "Reupload Requested",
   Approved = "Approved",
+}
+
+export enum CustomerStatus {
+  Accepted = "Accepted",
+  ChangeRequested = "Change Requested",
 }
 
 export const columnDef: ColumnDef<GetOrdersModel>[] = [

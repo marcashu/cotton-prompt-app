@@ -6,7 +6,7 @@ import YourOrdersPage from "../../_components/YourOrdersPage"
 
 export default function YourOrdersAsCheckerForReuploadPage() {
   const { session } = useSession()
-  const url = `/api/orders?checkerId=${session?.userId}&checkerStatus=${CheckerStatus.RequestedReupload}`
+  const url = `/api/orders?checkerId=${session?.userId}&checkerStatus=${CheckerStatus.ReuploadRequested}`
 
   return <YourOrdersPage title="Waiting for Checker Review" url={url} />
 }

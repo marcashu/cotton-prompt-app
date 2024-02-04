@@ -122,3 +122,15 @@ export const deleteOrder = async (id: number) => {
     throw new Error()
   }
 }
+
+export const acceptOrder = async (id: number) => {
+  const res = await fetch(`${baseUrl}/${id}/accept`, {
+    method: "POST",
+  })
+
+  if (!res.ok) {
+    throw new Error()
+  }
+
+  revalidateTag(`orderId:${id}`)
+}

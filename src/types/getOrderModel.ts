@@ -17,6 +17,7 @@ type GetOrderModel = {
   previousDesigns: DesignModel[]
   artistStatus?: string
   checkerStatus?: string
+  customerStatus?: string
   artistId?: string
   checkerId?: string
 }
