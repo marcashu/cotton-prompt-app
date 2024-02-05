@@ -24,7 +24,7 @@ export default function ChangeRoleDialog({
 }) {
   const [value, setValue] = useState<Role[]>(roles)
   const { toast } = useToast()
-  const { session } = useSession()
+  const { session, setSession } = useSession()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -49,6 +49,13 @@ export default function ChangeRoleDialog({
               description: new Date().toLocaleString(),
             })
             setOpen(false)
+
+            if (id === session.userId) {
+              setSession({
+                ...session,
+                userRoles: value,
+              })
+            }
           })
           .finally(() => setLoading(false))
       } else {
