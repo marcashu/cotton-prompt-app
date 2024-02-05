@@ -12,5 +12,5 @@ export default function YourOrdersAsCheckerForCustomerReviewPage() {
   const { session } = useSession()
   const url = `/api/orders?checkerId=${session?.userId}&artistStatus=${ArtistStatus.DesignSubmitted}&checkerStatus=${CheckerStatus.Approved}&customerStatus=${CustomerStatus.ForReview}`
 
-  return <YourOrdersPage title="Waiting for Customer Review" url={url} />
+  return <YourOrdersPage title="Waiting for Customer Review (CR)" url={url} />
 }

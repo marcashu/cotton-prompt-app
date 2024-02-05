@@ -47,11 +47,14 @@ export default function OrderViewDesign({
       ) : (
         <OrderViewDesignPreview url={currentDesign?.url} />
       )}
-      {isChecker && !!currentDesign && !isApproved && order.artistId && (
-        <div className="self-end">
-          <OrderViewDesignApproveButton id={order.id} mutate={mutate} />
-        </div>
-      )}
+      {isChecker &&
+        !!currentDesign &&
+        order.checkerStatus === CheckerStatus.ForReview &&
+        order.artistId && (
+          <div className="self-end">
+            <OrderViewDesignApproveButton id={order.id} mutate={mutate} />
+          </div>
+        )}
       {!!currentDesign && (
         <>
           {currentDesign.comments.length > 0 && (

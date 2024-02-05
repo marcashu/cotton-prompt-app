@@ -39,7 +39,7 @@ export default function OrderViewDesignComment({
     postComment(id, comment, session.userId, orderId)
       .then(() => {
         mutate()
-        if (checkerStatus !== CheckerStatus.ReuploadRequested) {
+        if (checkerStatus === CheckerStatus.ForReview) {
           toast({
             title: "Order has been requested for reupload!",
             description: new Date().toLocaleString(),

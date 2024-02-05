@@ -14,7 +14,7 @@ export const getNavItems = (hasWaitingForCustomer: boolean) => {
 
   if (hasWaitingForCustomer) {
     navItems.push({
-      name: 'Waiting for Customer Review',
+      name: 'Waiting for Customer Review (CR)',
       href: '/your-orders-as-checker/for-customer-review',
     })
   }

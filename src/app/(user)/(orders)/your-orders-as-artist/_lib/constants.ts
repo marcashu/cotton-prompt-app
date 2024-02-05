@@ -14,7 +14,7 @@ export const getNavItems = (isChangeRequestArtist: boolean) => {
 
   if (isChangeRequestArtist) {
     navItems.push({
-      name: 'Waiting for Customer Review',
+      name: 'Waiting for Customer Review (CR)',
       href: '/your-orders-as-artist/for-customer-review',
     })
   }
