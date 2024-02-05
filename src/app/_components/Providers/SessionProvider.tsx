@@ -13,7 +13,7 @@ export default function SessionProvider({
   const router = useRouter()
 
   useEffect(() => {
-    if (!session) return
+    if (!session?.userId) return
 
     const redirectPath =
       session.selectedRole === Role.Admin
@@ -24,7 +24,7 @@ export default function SessionProvider({
         ? `/available-orders-as-artist/${session.userId}`
         : "/no-role"
     router.replace(redirectPath)
-  }, [session, router])
+  }, [session?.selectedRole, session?.userId, router])
 
   return (
     <SessionContext.Provider
