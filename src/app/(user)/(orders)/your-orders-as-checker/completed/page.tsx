@@ -1,7 +1,7 @@
 "use client"
 
 import useSession from "@/hooks/useSession"
-import { CheckerStatus } from "../../_lib/constants"
+import CheckerStatus from "@/enums/checkerStatus"
 import ArtistStatus from "@/enums/artistStatus"
 import YourOrdersPage from "../../_components/YourOrdersPage"
 

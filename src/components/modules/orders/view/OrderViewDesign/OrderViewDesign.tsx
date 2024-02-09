@@ -13,7 +13,7 @@ import OrderViewDesignPreview from "./OrderViewDesignPreview"
 import OrderViewDesignComment from "./OrderViewDesignComment"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 import OrderViewDesignApproveButton from "./OrderViewDesignApproveButton"
-import { CheckerStatus } from "@/app/(user)/(orders)/_lib/constants"
+import CheckerStatus from "@/enums/checkerStatus"
 import { KeyedMutator } from "swr"
 
 export default function OrderViewDesign({
