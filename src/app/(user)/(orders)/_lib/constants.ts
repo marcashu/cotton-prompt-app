@@ -4,13 +4,6 @@ import GetOrdersModel from "@/types/getOrdersModel"
 import { ColumnDef } from "@tanstack/react-table"
 import ViewOrderButton from "../_components/ViewOrderButton"
 
-export enum ArtistStatus {
-  Claimed = "Claimed",
-  DesignSubmitted = "Design Submitted",
-  ForReupload = "For Reupload",
-  Completed = "Completed",
-}
-
 export enum CheckerStatus {
   Claimed = "Claimed",
   ForReview = "For Review",

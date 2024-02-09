@@ -1,7 +1,7 @@
 "use client"
 
 import useSession from "@/hooks/useSession"
-import { ArtistStatus } from "../../_lib/constants"
+import ArtistStatus from "@/enums/artistStatus"
 import YourOrdersPage from "../../_components/YourOrdersPage"
 
 export default function YourOrdersAsArtistForReviewPage() {
