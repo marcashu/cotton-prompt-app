@@ -1,4 +1,4 @@
-import { Role } from "@/app/_lib/userConstants"
+import { Role } from "@/enums/role"
 import SessionContext from "@/contexts/SessionContext"
 import Session from "@/types/session"
 import { useRouter } from "next/navigation"

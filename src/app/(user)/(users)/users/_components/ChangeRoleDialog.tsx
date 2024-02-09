@@ -1,6 +1,6 @@
 "use client"
 
-import { Role } from "@/app/_lib/userConstants"
+import { Role } from "@/enums/role"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
