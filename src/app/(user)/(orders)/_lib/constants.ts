@@ -4,12 +4,6 @@ import GetOrdersModel from "@/types/getOrdersModel"
 import { ColumnDef } from "@tanstack/react-table"
 import ViewOrderButton from "../_components/ViewOrderButton"
 
-export enum CustomerStatus {
-  ForReview = "For Review",
-  Accepted = "Accepted",
-  ChangeRequested = "Change Requested",
-}
-
 export const columnDef: ColumnDef<GetOrdersModel>[] = [
   {
     accessorKey: "orderNumber",

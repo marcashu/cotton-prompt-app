@@ -3,7 +3,7 @@ import { getOrderById } from "@/components/modules/orders/orderService"
 import OrderViewDesignPreview from "@/components/modules/orders/view/OrderViewDesign/OrderViewDesignPreview"
 import { TypographyH2, TypographyMuted } from "@/components/ui/typography"
 import OrderProofButtons from "./_components/OrderProofButtons"
-import { CustomerStatus } from "@/app/(user)/(orders)/_lib/constants"
+import CustomerStatus from "@/enums/customerStatus"
 
 export default async function OrderProofPage({
   params,
