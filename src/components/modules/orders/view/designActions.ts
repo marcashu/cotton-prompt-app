@@ -1,11 +1,12 @@
 'use server'
 
+import { mutate } from "@/helpers/fetchHelper"
 import { revalidateTag } from "next/cache"
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Designs`
 
 export const postComment = async (id: number, comment: string, userId: string, orderId: number) => {
-  const res = await fetch(`${baseUrl}/${id}/Comments`, {
+  await mutate(`${baseUrl}/${id}/Comments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -15,11 +16,5 @@ export const postComment = async (id: number, comment: string, userId: string, o
       comment,
       userId,
     }),
-  })
-
-  if (!res.ok) {
-    throw new Error()
-  }
-
-  revalidateTag(`orderId:${orderId}`)
+  }, [`orderId:${orderId}`])
 }

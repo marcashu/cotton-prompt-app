@@ -1,8 +1,8 @@
 'use server'
 
 import Role from "@/enums/role"
+import { mutate } from "@/helpers/fetchHelper"
 import CanDoModel from "@/types/canDoModel"
-import { revalidateTag } from "next/cache"
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Users`
 
@@ -17,7 +17,7 @@ export const canUserUpdateRole = async (id: string, roles: Role[]) => {
 }
 
 export const updateUserRole = async (id: string, updatedBy: string, roles: Role[]) => {
-  const res = await fetch(`${baseUrl}/${id}/role`, {
+  await mutate(`${baseUrl}/${id}/role`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -26,17 +26,11 @@ export const updateUserRole = async (id: string, updatedBy: string, roles: Role[
       roles,
       updatedBy,
     })
-  })
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-
-  revalidateTag('users')
+  }, ['users'])
 }
 
 export const addUser = async (id: string, name: string, email: string, createdBy: string, roles: Role[]) => {
-  const res = await fetch(baseUrl, {
+  await mutate(baseUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -48,11 +42,5 @@ export const addUser = async (id: string, name: string, email: string, createdBy
       roles,
       createdBy,
     })
-  })
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-
-  revalidateTag('users')
+  }, ['users'])
 }

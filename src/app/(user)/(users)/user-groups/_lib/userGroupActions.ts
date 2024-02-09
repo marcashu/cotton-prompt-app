@@ -1,11 +1,11 @@
 'use server'
 
-import { revalidateTag } from "next/cache"
+import { mutate } from "@/helpers/fetchHelper"
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/UserGroups`
 
 export const createUserGroup = async (name: string, userIds: string[], createdBy: string) => {
-  const res = await fetch(baseUrl, {
+  await mutate(baseUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -15,17 +15,11 @@ export const createUserGroup = async (name: string, userIds: string[], createdBy
       userIds,
       createdBy,
     }),
-  })
-
-  if (!res.ok) {
-    throw new Error()
-  }
-
-  revalidateTag('userGroups')
+  }, ['userGroups'])
 }
 
 export const updateUserGroup = async (id: number, name: string, userIds: string[], updatedBy: string) => {
-  const res = await fetch(`${baseUrl}/${id}`, {
+  await mutate(`${baseUrl}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -35,11 +29,5 @@ export const updateUserGroup = async (id: number, name: string, userIds: string[
       userIds,
       updatedBy,
     }),
-  })
-
-  if (!res.ok) {
-    throw new Error()
-  }
-
-  revalidateTag(`userGroup:${id}`)
+  }, [`userGroup:${id}`])
 }
