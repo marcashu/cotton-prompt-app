@@ -1,6 +1,6 @@
 'use server'
 
-import { Role } from "@/enums/role"
+import Role from "@/enums/role"
 import CanDoModel from "@/types/canDoModel"
 import { revalidateTag } from "next/cache"
 

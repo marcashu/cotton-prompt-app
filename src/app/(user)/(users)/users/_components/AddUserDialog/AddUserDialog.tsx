@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Role } from "@/enums/role"
+import Role from "@/enums/role"
 import { UsersComboBox } from "./UsersComboBox"
 import { addUser } from "../../_lib/actions"
 import useSession from "@/hooks/useSession"

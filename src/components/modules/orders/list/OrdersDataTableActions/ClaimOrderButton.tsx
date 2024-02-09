@@ -7,7 +7,7 @@ import useSession from "@/hooks/useSession"
 import { useToast } from "@/components/ui/use-toast"
 import { useState } from "react"
 import CanDoModel from "@/types/canDoModel"
-import { Role } from "@/enums/role"
+import Role from "@/enums/role"
 
 export default function ClaimOrderButton({
   id,
