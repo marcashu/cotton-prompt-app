@@ -23,7 +23,7 @@ export default function DesignBracketItem({
     <li key={data.id} className="flex gap-2">
       <DesignBracketItemEdit
         id={data.id}
-        initialValue={data.value}
+        initialValue={data.name}
         readOnly={readOnly}
         setReadOnly={setReadOnly}
         disableAll={disableAll}

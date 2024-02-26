@@ -24,7 +24,7 @@ export default function DesignBracketItemEdit({
   setDisableAll: (value: boolean) => void
 }) {
   const inputRef = createRef<HTMLInputElement>()
-  const [value, setValue] = useState(initialValue)
+  const [name, setName] = useState(initialValue)
   const [open, setOpen] = useState(false)
   const [ordersCount, setOrdersCount] = useState(0)
   const { toast } = useToast()
@@ -36,7 +36,7 @@ export default function DesignBracketItemEdit({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (!value) return
+    if (!name) return
 
     setDisableAll(true)
 
@@ -58,7 +58,7 @@ export default function DesignBracketItemEdit({
   }
 
   const proceedUpdate = async () => {
-    await updateDesignBrackets(id, value, session.userId)
+    await updateDesignBrackets(id, name, 0, session.userId)
     setReadOnly(true)
     setOpen(false)
     toast({
@@ -69,7 +69,7 @@ export default function DesignBracketItemEdit({
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
-    setValue(event.target.value)
+    setName(event.target.value)
 
   const enableEdit = () => {
     setReadOnly(false)
@@ -77,7 +77,8 @@ export default function DesignBracketItemEdit({
   }
 
   const disableEdit = () => {
-    setValue(initialValue)
+    setLoading(false)
+    setName(initialValue)
     setReadOnly(true)
     setOpen(false)
   }
@@ -87,7 +88,7 @@ export default function DesignBracketItemEdit({
       <form className="flex gap-2" onSubmit={handleSubmit}>
         <Input
           className={cn("w-[350px]", readOnly && "border-transparent")}
-          value={value}
+          value={name}
           readOnly={readOnly}
           ref={inputRef}
           onChange={handleChange}

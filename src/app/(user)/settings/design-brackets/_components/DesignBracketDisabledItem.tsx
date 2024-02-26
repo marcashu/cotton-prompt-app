@@ -34,7 +34,7 @@ export default function DesignBracketDisabledItem({
   return (
     <li key={data.id} className="flex gap-2">
       <TypographySmall className="font-normal px-3 py-2 w-[350px]">
-        {data.value}
+        {data.name}
       </TypographySmall>
       <Button
         type="button"
