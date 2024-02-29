@@ -10,7 +10,8 @@ import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
-import { DollarSign, Minus } from "lucide-react"
+import { DollarSign } from "lucide-react"
+import { TypographyLarge } from "@/components/ui/typography"
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
@@ -49,17 +50,16 @@ export default function DesignBracketCreate() {
   return (
     <Form {...form}>
       <form
-        className="flex w-full gap-2 items-center"
+        className="flex gap-2 items-center"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <Input
-          inputClassName="w-[230px]"
           control={form.control}
           name="name"
           placeholder="Name"
           hideFormMessage
         />
-        <Minus className="h-4 w-4" />
+        <TypographyLarge>-</TypographyLarge>
         <div className="relative">
           <DollarSign className="absolute left-2 top-3 h-4 w-4" />
           <Input

@@ -6,13 +6,14 @@ import { getDesignBracketOrdersCount } from "../../_lib/designBracketService"
 import { cn } from "@/lib/utils"
 import useSession from "@/hooks/useSession"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
-import { DollarSign, Minus } from "lucide-react"
+import { DollarSign } from "lucide-react"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import DesignBracket from "@/types/designBracket"
 import Input from "@/components/custom/Input"
 import { Form } from "@/components/ui/form"
+import { TypographyLarge } from "@/components/ui/typography"
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
@@ -101,14 +102,14 @@ export default function DesignBracketItemEdit({
           onSubmit={form.handleSubmit(handleSubmit)}
         >
           <Input
-            inputClassName={cn("w-[230px]", readOnly && "border-transparent")}
+            inputClassName={cn(readOnly && "border-transparent")}
             control={form.control}
             name="name"
             readOnly={readOnly}
             placeholder="Name"
             hideFormMessage
           />
-          <Minus className="h-4 w-4" />
+          <TypographyLarge>-</TypographyLarge>
           <div className="relative">
             <DollarSign className="absolute left-2 top-3 h-4 w-4" />
             <Input
