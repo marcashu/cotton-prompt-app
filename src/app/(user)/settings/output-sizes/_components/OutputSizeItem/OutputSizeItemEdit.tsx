@@ -77,6 +77,7 @@ export default function OutputSizeItemEdit({
   }
 
   const disableEdit = () => {
+    setLoading(false)
     setValue(initialValue)
     setReadOnly(true)
     setOpen(false)

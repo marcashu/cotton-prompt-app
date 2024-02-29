@@ -1,12 +1,14 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { TypographySmall } from "@/components/ui/typography"
+import { TypographyLarge } from "@/components/ui/typography"
 import { useToast } from "@/components/ui/use-toast"
 import DesignBracket from "@/types/designBracket"
 import { enableDesignBracket } from "../_lib/designBracketActions"
 import { useState } from "react"
 import useSession from "@/hooks/useSession"
+import { DollarSign } from "lucide-react"
+import { Input } from "@/components/ui/input"
 
 export default function DesignBracketDisabledItem({
   data,
@@ -32,10 +34,19 @@ export default function DesignBracketDisabledItem({
   }
 
   return (
-    <li key={data.id} className="flex gap-2">
-      <TypographySmall className="font-normal px-3 py-2 w-[350px]">
-        {data.value}
-      </TypographySmall>
+    <li key={data.id} className="flex gap-2 items-center">
+      <div>
+        <Input className="border-transparent" readOnly value={data.name} />
+      </div>
+      <TypographyLarge>-</TypographyLarge>
+      <div className="relative">
+        <DollarSign className="absolute left-2 top-3 h-4 w-4" />
+        <Input
+          className="w-[100px] pl-8 border-transparent"
+          value={data.value}
+          readOnly
+        />
+      </div>
       <Button
         type="button"
         variant="outline"

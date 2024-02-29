@@ -15,7 +15,7 @@ export default async function DesignBracketsPage() {
   return (
     <div className="px-8 max-w-3xl">
       <TypographyH3 withSeparator>Design Brackets</TypographyH3>
-      <ul className=" space-y-2 py-4">
+      <ul className="space-y-2 py-4">
         {activeBrackets.map((db, i) => (
           <DesignBracketItem
             key={db.id}

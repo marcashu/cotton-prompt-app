@@ -7,6 +7,7 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input as DefaultInput } from "../ui/input"
+import { cn } from "@/lib/utils"
 
 export default function Input<T extends FieldValues>({
   label,
@@ -14,24 +15,35 @@ export default function Input<T extends FieldValues>({
   name,
   className,
   placeholder,
+  readOnly,
+  inputClassName,
+  hideFormMessage,
 }: {
-  label: string
+  label?: string
   control: Control<T>
   name: Path<T>
   className?: string
   placeholder?: string
+  readOnly?: boolean
+  inputClassName?: string
+  hideFormMessage?: boolean
 }) {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className={className}>
+        <FormItem className={cn(className, !label && "space-y-0")}>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <DefaultInput placeholder={placeholder} {...field} />
+            <DefaultInput
+              placeholder={placeholder}
+              readOnly={readOnly}
+              className={inputClassName}
+              {...field}
+            />
           </FormControl>
-          <FormMessage />
+          {!hideFormMessage && <FormMessage />}
         </FormItem>
       )}
     />
