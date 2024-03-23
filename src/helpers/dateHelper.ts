@@ -1,8 +1,8 @@
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 
-export const formatDateToYYYYMMDD = (dateString: string, separator: string = '-') => {
-  const date = new Date(`${dateString}z`)
+export const formatDateToYYYYMMDD = (dateString: string, separator: string = '-', isDateUtc = true) => {
+  const date = new Date(`${dateString}${isDateUtc ? 'z' : ''}`)
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0') // Months are zero-based
   const day = String(date.getDate()).padStart(2, '0')

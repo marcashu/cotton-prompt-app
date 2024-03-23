@@ -26,6 +26,10 @@ const adminNavItems: NavItem[] = [
     name: "Settings",
     href: "/settings",
   },
+  {
+    name: "Invoices",
+    href: "/invoices",
+  },
 ]
 
 const artistNavItems = (userId: string): NavItem[] => [
