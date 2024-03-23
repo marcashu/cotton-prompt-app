@@ -14,6 +14,10 @@ const navItems: NavItem[] = [
     name: "Output Sizes",
     href: "/settings/output-sizes",
   },
+  {
+    name: "Rates",
+    href: "/settings/rates",
+  },
 ]
 
 export default function SettingsLayout({
