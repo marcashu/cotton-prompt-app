@@ -21,6 +21,7 @@ type GetOrderModel = {
   customerStatus?: string
   artistId?: string
   checkerId?: string
+  userGroup: string
 }
 
 export default GetOrderModel
