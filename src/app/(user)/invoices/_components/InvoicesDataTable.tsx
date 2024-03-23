@@ -1,9 +1,10 @@
-'use client'
+"use client"
 
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
 import { TypographySmall } from "@/components/ui/typography"
 import { formatDateToYYYYMMDD } from "@/helpers/dateHelper"
+import { formatNumberToCurrency } from "@/helpers/numberHelper"
 import useSession from "@/hooks/useSession"
 import GetInvoicesModel from "@/types/getInvoicesModel"
 import { ColumnDef } from "@tanstack/react-table"
@@ -27,7 +28,10 @@ const columnDef: ColumnDef<GetInvoicesModel>[] = [
     cell: ({ row }) => {
       const invoice = row.original
       return (
-        <TypographySmall className="font-normal">{`${formatDateToYYYYMMDD(invoice.startDate, '/')} - ${formatDateToYYYYMMDD(invoice.endDate, '/')}`}</TypographySmall>
+        <TypographySmall className="font-normal">{`${formatDateToYYYYMMDD(
+          invoice.startDate,
+          "/"
+        )} - ${formatDateToYYYYMMDD(invoice.endDate, "/")}`}</TypographySmall>
       )
     },
   },
@@ -36,13 +40,15 @@ const columnDef: ColumnDef<GetInvoicesModel>[] = [
     cell: ({ row }) => {
       const invoice = row.original
       return (
-        <TypographySmall className="font-normal">{`$${invoice.amount.toFixed(2)}`}</TypographySmall>
+        <TypographySmall className="font-normal">
+          {formatNumberToCurrency(invoice.amount)}
+        </TypographySmall>
       )
     },
   },
   {
-    header: 'Status',
-    accessorKey: 'status',
+    header: "Status",
+    accessorKey: "status",
   },
   {
     id: "actions",
@@ -53,19 +59,17 @@ const columnDef: ColumnDef<GetInvoicesModel>[] = [
           <Link href={`/invoices/${invoice.id}`}>View</Link>
         </Button>
       )
-    }
+    },
   },
 ]
 
 export default function InvoicesDataTable() {
-  const {session} = useSession()
-  const { data, isLoading } = useSWR<GetInvoicesModel[]>(`/api/invoices?userId=${session?.userId}`)
-  
+  const { session } = useSession()
+  const { data, isLoading } = useSWR<GetInvoicesModel[]>(
+    `/api/invoices?userId=${session?.userId}`
+  )
+
   return (
-    <DataTable
-      columns={columnDef}
-      data={data ?? []}
-      isLoading={isLoading}
-    />
+    <DataTable columns={columnDef} data={data ?? []} isLoading={isLoading} />
   )
 }
