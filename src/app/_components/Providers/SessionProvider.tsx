@@ -17,7 +17,7 @@ export default function SessionProvider({
 
     const redirectPath =
       session.selectedRole === Role.Admin
-        ? "/orders"
+        ? "/ongoing-orders"
         : session.selectedRole === Role.Checker
         ? "/available-orders-as-checker"
         : session.selectedRole === Role.Artist

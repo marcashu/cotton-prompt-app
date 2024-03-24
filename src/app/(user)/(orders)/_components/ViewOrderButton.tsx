@@ -16,7 +16,7 @@ export default function ViewOrderButton({
 }) {
   return (
     <Button variant={variant} asChild>
-      <Link href={`/orders/${id}/view`}>View</Link>
+      <Link href={`/view-order/${id}`}>View</Link>
     </Button>
   )
 }

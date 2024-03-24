@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation"
 const adminNavItems: NavItem[] = [
   {
     name: "Orders",
-    href: "/orders",
+    href: "/ongoing-orders",
   },
   {
     name: "Users",

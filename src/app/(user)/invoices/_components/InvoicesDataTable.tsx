@@ -26,21 +26,14 @@ const getColumnDef = (role?: Role) => {
       },
     },
     {
+      id: "billingPeriod",
       header: "Billing Period",
-      cell: ({ row }) => {
-        const invoice = row.original
-        return (
-          <TypographySmall className="font-normal">{`${formatDateToYYYYMMDD(
-            invoice.startDate,
-            "/",
-            false
-          )} - ${formatDateToYYYYMMDD(
-            invoice.endDate,
-            "/",
-            false
-          )}`}</TypographySmall>
-        )
-      },
+      accessorFn: (invoice) =>
+        `${formatDateToYYYYMMDD(
+          invoice.startDate,
+          "/",
+          false
+        )} - ${formatDateToYYYYMMDD(invoice.endDate, "/", false)}`,
     },
     ...(role === Role.Admin
       ? [
@@ -51,19 +44,20 @@ const getColumnDef = (role?: Role) => {
         ]
       : []),
     {
-      header: "Amount",
+      header: "Status",
+      accessorKey: "status",
+    },
+    {
+      id: "amount",
+      header: () => <div className="text-right">Amount</div>,
       cell: ({ row }) => {
-        const invoice = row.original
+        const section = row.original
         return (
-          <TypographySmall className="font-normal">
-            {formatNumberToCurrency(invoice.amount)}
+          <TypographySmall className="font-normal float-right">
+            {formatNumberToCurrency(section.amount)}
           </TypographySmall>
         )
       },
-    },
-    {
-      header: "Status",
-      accessorKey: "status",
     },
     {
       id: "actions",

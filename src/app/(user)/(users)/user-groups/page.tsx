@@ -8,7 +8,7 @@ export default async function UserGroupsPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <TypographyH2>User Groups</TypographyH2>
+      <TypographyH2 withSeparator>User Groups</TypographyH2>
       <div className="self-end">
         <AddEditUserGroupDialog />
       </div>

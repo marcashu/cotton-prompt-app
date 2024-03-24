@@ -7,13 +7,17 @@ export default function SideNavLayout({
   navItems,
   children,
 }: {
-  title: string
+  title: string | React.ReactNode
   navItems: NavItem[]
   children: React.ReactNode
 }) {
   return (
     <div>
-      <TypographyH2>{title}</TypographyH2>
+      {typeof title === "string" ? (
+        <TypographyH2 withSeparator>{title}</TypographyH2>
+      ) : (
+        title
+      )}
       <div className="flex mt-8">
         <aside>
           <SideNav navItems={navItems} />
