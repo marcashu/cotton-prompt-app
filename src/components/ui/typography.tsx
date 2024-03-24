@@ -19,14 +19,17 @@ const TypographyH1 = ({
 const TypographyH2 = ({
   className,
   children,
+  withSeparator,
 }: {
   className?: string
   children: React.ReactNode
+  withSeparator?: boolean
 }) => {
   return (
     <h2
       className={cn(
-        "scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0",
+        "scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0",
+        withSeparator && "border-b pb-2",
         className
       )}
     >

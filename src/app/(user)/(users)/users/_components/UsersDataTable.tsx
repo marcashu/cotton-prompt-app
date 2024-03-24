@@ -6,7 +6,7 @@ import GetUsersModel from "@/types/getUsersModel"
 import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 import ChangeRoleDialog from "./ChangeRoleDialog"
-import { Role } from "@/app/_lib/userConstants"
+import Role from "@/enums/role"
 import { TypographySmall } from "@/components/ui/typography"
 import { Badge } from "@/components/ui/badge"
 

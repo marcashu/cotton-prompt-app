@@ -4,7 +4,7 @@ import AvailableOrderAsCheckerDataTables from "./_components/AvailableOrderAsChe
 export default function AvailableOrdersAsCheckerPage() {
   return (
     <div className="flex flex-col gap-4">
-      <TypographyH2>Available Orders as Checker</TypographyH2>
+      <TypographyH2 withSeparator>Available Orders as Checker</TypographyH2>
       <AvailableOrderAsCheckerDataTables />
     </div>
   )

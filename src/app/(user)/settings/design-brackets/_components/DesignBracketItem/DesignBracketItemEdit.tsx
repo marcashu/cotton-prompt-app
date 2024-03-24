@@ -1,12 +1,26 @@
 import { Button } from "@/components/ui/button"
-import { ChangeEvent, FormEvent, createRef, useState } from "react"
+import { useState } from "react"
 import { updateDesignBrackets } from "../../_lib/designBracketActions"
 import { useToast } from "@/components/ui/use-toast"
-import { Input } from "@/components/ui/input"
 import { getDesignBracketOrdersCount } from "../../_lib/designBracketService"
 import { cn } from "@/lib/utils"
 import useSession from "@/hooks/useSession"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
+import { DollarSign } from "lucide-react"
+import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import DesignBracket from "@/types/designBracket"
+import Input from "@/components/custom/Input"
+import { Form } from "@/components/ui/form"
+import { TypographyLarge } from "@/components/ui/typography"
+
+const formSchema = z.object({
+  name: z.string().min(1).max(50),
+  value: z.coerce.number().gt(0),
+})
+
+type DesignBracketEditFormType = z.infer<typeof formSchema>
 
 export default function DesignBracketItemEdit({
   id,
@@ -17,27 +31,28 @@ export default function DesignBracketItemEdit({
   setDisableAll,
 }: {
   id: number
-  initialValue: string
+  initialValue: DesignBracket
   readOnly: boolean
   setReadOnly: (value: boolean) => void
   disableAll: boolean
   setDisableAll: (value: boolean) => void
 }) {
-  const inputRef = createRef<HTMLInputElement>()
-  const [value, setValue] = useState(initialValue)
   const [open, setOpen] = useState(false)
   const [ordersCount, setOrdersCount] = useState(0)
   const { toast } = useToast()
   const { session } = useSession()
   const [loading, setLoading] = useState(false)
+  const form = useForm<DesignBracketEditFormType>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: initialValue.name,
+      value: initialValue.value,
+    },
+  })
 
   if (!session) return <></>
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    if (!value) return
-
+  const handleSubmit = async (data: DesignBracketEditFormType) => {
     setDisableAll(true)
 
     try {
@@ -48,7 +63,7 @@ export default function DesignBracketItemEdit({
         setOrdersCount(count)
         setOpen(true)
       } else {
-        await proceedUpdate()
+        await proceedUpdate(data)
       }
     } catch (error) {
       setLoading(false)
@@ -57,8 +72,8 @@ export default function DesignBracketItemEdit({
     }
   }
 
-  const proceedUpdate = async () => {
-    await updateDesignBrackets(id, value, session.userId)
+  const proceedUpdate = async (data: DesignBracketEditFormType) => {
+    await updateDesignBrackets(id, data.name, data.value, session.userId)
     setReadOnly(true)
     setOpen(false)
     toast({
@@ -68,65 +83,83 @@ export default function DesignBracketItemEdit({
     setLoading(false)
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
-    setValue(event.target.value)
-
   const enableEdit = () => {
     setReadOnly(false)
-    inputRef.current?.focus()
   }
 
-  const disableEdit = () => {
-    setValue(initialValue)
+  const cancelEdit = () => {
+    form.reset()
+    setLoading(false)
     setReadOnly(true)
     setOpen(false)
   }
 
   return (
     <>
-      <form className="flex gap-2" onSubmit={handleSubmit}>
-        <Input
-          className={cn("w-[350px]", readOnly && "border-transparent")}
-          value={value}
-          readOnly={readOnly}
-          ref={inputRef}
-          onChange={handleChange}
-        />
-        <Button
-          type="button"
-          variant="outline"
-          onClick={enableEdit}
-          className={!readOnly ? "hidden" : ""}
-          disabled={disableAll}
+      <Form {...form}>
+        <form
+          className="flex gap-2 items-center"
+          onSubmit={form.handleSubmit(handleSubmit)}
         >
-          Edit
-        </Button>
-        <Button
-          type="submit"
-          className={readOnly ? "hidden" : ""}
-          disabled={readOnly || disableAll}
-          loading={loading}
-        >
-          Save
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={disableEdit}
-          className={readOnly ? "hidden" : ""}
-          disabled={disableAll}
-        >
-          Cancel
-        </Button>
-      </form>
+          <Input
+            inputClassName={cn(readOnly && "border-transparent")}
+            control={form.control}
+            name="name"
+            readOnly={readOnly}
+            placeholder="Name"
+            hideFormMessage
+          />
+          <TypographyLarge>-</TypographyLarge>
+          <div className="relative">
+            <DollarSign className="absolute left-2 top-3 h-4 w-4" />
+            <Input
+              inputClassName={cn(
+                "w-[100px] pl-8",
+                readOnly && "border-transparent"
+              )}
+              control={form.control}
+              name="value"
+              readOnly={readOnly}
+              placeholder="Value"
+              hideFormMessage
+            />
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={enableEdit}
+            className={!readOnly ? "hidden" : ""}
+            disabled={disableAll}
+          >
+            Edit
+          </Button>
+          <Button
+            type="submit"
+            className={readOnly ? "hidden" : ""}
+            disabled={readOnly || disableAll || !form.formState.isValid}
+            loading={loading}
+          >
+            Save
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={cancelEdit}
+            className={readOnly ? "hidden" : ""}
+            disabled={disableAll}
+          >
+            Cancel
+          </Button>
+        </form>
+      </Form>
       <ConfirmAlertDialog
         open={open}
         title="Are you sure you want to edit this Design Bracket?"
         description={`This design bracket is used by ${ordersCount} orders. Updating this
         will also affect those order/s.`}
         confirmButtonCaption="Continue"
-        onConfirm={proceedUpdate}
-        onCancel={disableEdit}
+        onConfirm={form.handleSubmit(proceedUpdate)}
+        onCancel={cancelEdit}
       />
     </>
   )

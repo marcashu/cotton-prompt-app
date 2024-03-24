@@ -1,6 +1,7 @@
 type DesignBracket = {
   id: number
-  value: string
+  name: string
+  value: number
 }
 
 export default DesignBracket

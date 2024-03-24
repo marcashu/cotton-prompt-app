@@ -98,7 +98,7 @@ export default function DesignBracketItemDelete({
       <ConfirmAlertDialog
         open={open}
         title="Unable to delete this design bracket"
-        description={`Cannot delete this design bracket because it is used by${ordersCount}
+        description={`Cannot delete this design bracket because it is used by ${ordersCount}
         order/s.`}
         confirmButtonCaption="Disable Instead?"
         onConfirm={handleDisable}

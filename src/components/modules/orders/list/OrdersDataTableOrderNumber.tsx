@@ -17,7 +17,7 @@ export default function OrdersDataTableOrderNumber({
   return pathname.startsWith("/available-orders-as-artist") ? (
     <TypographySmall>{order.orderNumber}</TypographySmall>
   ) : (
-    <Link href={`/orders/${order.id}/view`} className="font-medium">
+    <Link href={`/view-order/${order.id}`} className="font-medium">
       {order.orderNumber}
     </Link>
   )

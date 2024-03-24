@@ -17,7 +17,7 @@ export default function PageHeaderWithBack({
   const handleBack = () => router.back()
 
   return (
-    <TypographyH2 className="mb-4 col-span-2">
+    <TypographyH2 withSeparator className="mb-4 col-span-2">
       <div className="flex gap-2">
         <Button
           variant="link"

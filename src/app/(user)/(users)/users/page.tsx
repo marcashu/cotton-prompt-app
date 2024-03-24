@@ -8,7 +8,7 @@ export default async function UsersPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <TypographyH2>Users</TypographyH2>
+      <TypographyH2 withSeparator>Users</TypographyH2>
       <div className="self-end">
         <AddUserDialog />
       </div>

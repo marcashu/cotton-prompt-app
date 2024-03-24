@@ -13,7 +13,7 @@ import {
 import DesignModel from "@/types/designModel"
 import FullscreenableImage from "@/components/ui/fullscreenable-image"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
-import { ArtistStatus } from "@/app/(user)/(orders)/_lib/constants"
+import ArtistStatus from "@/enums/artistStatus"
 
 export default function OrderViewPreviousDesigns({
   designs,

@@ -1,4 +1,4 @@
-import { Role } from "@/app/_lib/userConstants"
+import Role from "@/enums/role"
 import SessionContext from "@/contexts/SessionContext"
 import Session from "@/types/session"
 import { useRouter } from "next/navigation"
@@ -17,7 +17,7 @@ export default function SessionProvider({
 
     const redirectPath =
       session.selectedRole === Role.Admin
-        ? "/orders"
+        ? "/ongoing-orders"
         : session.selectedRole === Role.Checker
         ? "/available-orders-as-checker"
         : session.selectedRole === Role.Artist

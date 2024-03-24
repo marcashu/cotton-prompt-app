@@ -1,4 +1,4 @@
-import { Role } from "@/app/_lib/userConstants"
+import Role from "@/enums/role"
 
 type Session = {
   userId: string,

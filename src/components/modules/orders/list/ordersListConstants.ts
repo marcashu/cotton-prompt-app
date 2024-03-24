@@ -2,7 +2,7 @@ import { formatDateToYYYYMMDD } from "@/helpers/dateHelper"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { CellContext, ColumnDef } from "@tanstack/react-table"
 import OrdersDataTableOrderNumber from "./OrdersDataTableOrderNumber"
-import { ArtistStatus } from "@/app/(user)/(orders)/_lib/constants"
+import ArtistStatus from "@/enums/artistStatus"
 
 const getOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element): ColumnDef<GetOrdersModel>[] => [
   {

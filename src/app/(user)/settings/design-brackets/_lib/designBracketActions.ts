@@ -24,13 +24,14 @@ export const swapDesignBrackets = async (id1: number, id2: number, userId: strin
   revalidatePath('/settings/design-brackets')
 }
 
-export const updateDesignBrackets = async (id: number, value: string, userId: string) => {
+export const updateDesignBrackets = async (id: number, name: string, value: number, userId: string) => {
   const res = await fetch(`${baseUrl}/${id}`, {
     method: 'PUT',
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      name,
       value,
       userId,
     })
@@ -91,13 +92,14 @@ export const enableDesignBracket = async (id: number, userId: string) => {
   revalidatePath('/settings/design-brackets')
 }
 
-export const createDesignBracket = async (value: string, userId: string) => {
+export const createDesignBracket = async (name: string, value: number, userId: string) => {
   const res = await fetch(baseUrl, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      name,
       value,
       userId,
     }),

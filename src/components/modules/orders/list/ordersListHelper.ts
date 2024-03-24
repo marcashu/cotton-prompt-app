@@ -1,5 +1,5 @@
 import { CellContext } from "@tanstack/react-table"
-import { Role } from "@/app/_lib/userConstants"
+import Role from "@/enums/role"
 import GetOrdersModel from "@/types/getOrdersModel"
 import ClaimOrderButton from "./OrdersDataTableActions/ClaimOrderButton"
 import CanDoModel from "@/types/canDoModel"

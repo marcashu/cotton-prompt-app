@@ -1,4 +1,4 @@
-import { Role } from "@/app/_lib/userConstants"
+import Role from "@/enums/role"
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation"
 const adminNavItems: NavItem[] = [
   {
     name: "Orders",
-    href: "/orders",
+    href: "/ongoing-orders",
   },
   {
     name: "Users",
@@ -25,6 +25,10 @@ const adminNavItems: NavItem[] = [
   {
     name: "Settings",
     href: "/settings",
+  },
+  {
+    name: "Invoices",
+    href: "/invoices",
   },
 ]
 
@@ -37,6 +41,10 @@ const artistNavItems = (userId: string): NavItem[] => [
     name: "Your Orders as Artist",
     href: "/your-orders-as-artist",
   },
+  {
+    name: "Invoices",
+    href: "/invoices",
+  },
 ]
 
 const checkerNavItems: NavItem[] = [
@@ -47,6 +55,10 @@ const checkerNavItems: NavItem[] = [
   {
     name: "Your Orders as Checker",
     href: "/your-orders-as-checker",
+  },
+  {
+    name: "Invoices",
+    href: "/invoices",
   },
 ]
 
