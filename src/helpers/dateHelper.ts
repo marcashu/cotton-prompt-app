@@ -10,8 +10,8 @@ export const formatDateToYYYYMMDD = (dateString: string, separator: string = '-'
   return `${year}${separator}${month}${separator}${day}`
 }
 
-export const formatDateToMMMDDYYYY = (dateString: string) => {
-  const date = new Date(`${dateString}z`)
+export const formatDateToMMMDDYYYY = (dateString: string, isDateUtc = true) => {
+  const date = new Date(`${dateString}${isDateUtc ? 'z' : ''}`)
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const month = months[date.getMonth()];
   const day = date.getDate();

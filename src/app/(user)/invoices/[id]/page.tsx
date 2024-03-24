@@ -31,7 +31,7 @@ export default function InvoiceDetailsPage({
             Date:
           </TypographyMuted>
           <TypographyMuted className="text-lg text-right w-40">
-            {formatDateToMMMDDYYYY(invoice.endDate)}
+            {formatDateToMMMDDYYYY(invoice.endDate, false)}
           </TypographyMuted>
         </div>
         <div className="flex flex-row gap-20">
@@ -39,7 +39,7 @@ export default function InvoiceDetailsPage({
             Due Date:
           </TypographyMuted>
           <TypographyMuted className="text-lg text-right w-40">
-            {formatDateToMMMDDYYYY(invoice.endDate)}
+            {formatDateToMMMDDYYYY(invoice.endDate, false)}
           </TypographyMuted>
         </div>
         <div className="flex flex-row gap-20">
