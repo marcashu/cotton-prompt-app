@@ -5,8 +5,10 @@ import { useState } from "react"
 
 export default function SaveTiptapButton({
   onSave,
+  disabled,
 }: {
   onSave: (content: string) => Promise<void>
+  disabled: boolean
 }) {
   const { editor } = useCurrentEditor()
   const { toast } = useToast()
@@ -30,7 +32,12 @@ export default function SaveTiptapButton({
   }
 
   return (
-    <Button className="mt-4" onClick={handleSave} loading={loading}>
+    <Button
+      className="mt-4"
+      onClick={handleSave}
+      loading={loading}
+      disabled={disabled}
+    >
       Save
     </Button>
   )

@@ -7,6 +7,7 @@ import Underline from "@tiptap/extension-underline"
 import MenuBar from "./MenuBar"
 import styles from "./Tiptap.module.css"
 import SaveTiptapButton from "./SaveTiptapButton"
+import { useState } from "react"
 
 export default function Tiptap({
   content,
@@ -20,6 +21,7 @@ export default function Tiptap({
     TextAlign.configure({ types: ["heading", "paragraph"] }),
     Underline,
   ]
+  const [error, setError] = useState(false)
 
   return (
     <div className={styles["tiptap-container"]}>
@@ -27,11 +29,26 @@ export default function Tiptap({
         extensions={extensions}
         content={content}
         slotBefore={<MenuBar />}
-        slotAfter={<SaveTiptapButton onSave={onSave} />}
+        slotAfter={
+          <>
+            {error && (
+              <p className="text-sm font-medium text-destructive mt-2">
+                {
+                  "Email should contain {link} as placeholder for the order proof URL."
+                }
+              </p>
+            )}
+            <SaveTiptapButton onSave={onSave} disabled={error} />
+          </>
+        }
         editorProps={{
           attributes: {
             class: "min-h-[200px] rounded-md border border-input px-3 py-2",
           },
+        }}
+        onUpdate={(props) => {
+          const content = props.editor.getHTML()
+          setError(!content.includes("{link}"))
         }}
       >
         <div></div>
