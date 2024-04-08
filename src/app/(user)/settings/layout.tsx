@@ -18,6 +18,10 @@ const navItems: NavItem[] = [
     name: "Rates",
     href: "/settings/rates",
   },
+  {
+    name: "Email Templates",
+    href: "/settings/email-templates",
+  },
 ]
 
 export default function SettingsLayout({
