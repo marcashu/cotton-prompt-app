@@ -5,7 +5,7 @@ import { DataTable } from "@/components/ui/data-table"
 import GetUsersModel from "@/types/getUsersModel"
 import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
-import Role from "@/enums/role"
+import Role, { isAdmin } from "@/enums/role"
 import { TypographySmall } from "@/components/ui/typography"
 import { Badge } from "@/components/ui/badge"
 
@@ -39,7 +39,7 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
           {user.roles.map((ur) => (
             <Badge
               variant={
-                ur === Role.Admin
+                isAdmin(ur)
                   ? "default"
                   : ur === Role.Checker
                   ? "secondary"

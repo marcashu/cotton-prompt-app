@@ -1,4 +1,4 @@
-import Role from "@/enums/role"
+import Role, { isAdmin } from "@/enums/role"
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -68,12 +68,11 @@ export default function HeaderMenu() {
 
   if (!session) return <></>
 
-  const navItems =
-    session?.selectedRole === Role.Admin
-      ? adminNavItems
-      : session.selectedRole === Role.Checker
-      ? checkerNavItems
-      : artistNavItems(session.userId)
+  const navItems = isAdmin(session.selectedRole)
+    ? adminNavItems
+    : session.selectedRole === Role.Checker
+    ? checkerNavItems
+    : artistNavItems(session.userId)
 
   return (
     <NavigationMenu className="container p-4">

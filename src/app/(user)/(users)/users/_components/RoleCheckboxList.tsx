@@ -11,6 +11,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import useSession from "@/hooks/useSession"
 
 const items = [
   {
@@ -28,7 +29,7 @@ const items = [
     label: Role.Artist,
     values: [Role.Artist],
   },
-] as const
+]
 
 const FormSchema = z.object({
   items: z.array(z.string()),
@@ -47,6 +48,20 @@ export default function RoleCheckboxList({
       items: defaultRoles,
     },
   })
+  const { session } = useSession()
+
+  if (!session) return <></>
+
+  if (
+    session.selectedRole === Role.SuperAdmin &&
+    !items.some((r) => r.id === Role.SuperAdmin)
+  ) {
+    items.unshift({
+      id: Role.SuperAdmin,
+      label: Role.SuperAdmin,
+      values: [Role.SuperAdmin, Role.Admin, Role.Checker, Role.Artist],
+    })
+  }
 
   return (
     <Form {...form}>

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
 import { TypographySmall } from "@/components/ui/typography"
-import Role from "@/enums/role"
+import Role, { isAdmin } from "@/enums/role"
 import { formatDateToYYYYMMDD } from "@/helpers/dateHelper"
 import { formatNumberToCurrency } from "@/helpers/numberHelper"
 import useSession from "@/hooks/useSession"
@@ -35,7 +35,7 @@ const getColumnDef = (role?: Role) => {
           false
         )} - ${formatDateToYYYYMMDD(invoice.endDate, "/", false)}`,
     },
-    ...(role === Role.Admin
+    ...(isAdmin(role)
       ? [
           {
             header: "User",
@@ -76,10 +76,9 @@ const getColumnDef = (role?: Role) => {
 }
 export default function InvoicesDataTable() {
   const { session } = useSession()
-  const key =
-    session?.selectedRole === Role.Admin
-      ? "/api/invoices"
-      : `/api/invoices?userId=${session?.userId}`
+  const key = isAdmin(session?.selectedRole)
+    ? "/api/invoices"
+    : `/api/invoices?userId=${session?.userId}`
   const { data, isLoading } = useSWR<GetInvoicesModel[]>(key)
 
   return (
