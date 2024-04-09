@@ -1,4 +1,4 @@
-import Role from "@/enums/role"
+import Role, { trimAdmin } from "@/enums/role"
 import {
   Select,
   SelectContent,
@@ -15,7 +15,7 @@ export default function RoleSelect() {
   const { session, setSession } = useSession()
   const [value, setValue] = useState(session?.selectedRole)
 
-  const options = session?.userRoles ?? []
+  const options = trimAdmin(session?.userRoles ?? [])
 
   const handleChange = (newValue: Role) => {
     setValue(newValue)
@@ -29,7 +29,7 @@ export default function RoleSelect() {
     <div className="flex gap-2 items-center">
       <TypographySmall className="font-normal">Logged in as</TypographySmall>
       <Select value={value} onValueChange={handleChange}>
-        <SelectTrigger className="w-[120px]">
+        <SelectTrigger className="w-[130px]">
           <SelectValue placeholder="Role" />
         </SelectTrigger>
         <SelectContent>

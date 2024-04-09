@@ -18,9 +18,11 @@ import RoleCheckboxList from "./RoleCheckboxList"
 export default function ChangeRoleDialog({
   id,
   roles,
+  disabled,
 }: {
   id: string
   roles: Role[]
+  disabled: boolean
 }) {
   const [value, setValue] = useState<Role[]>(roles)
   const { toast } = useToast()
@@ -72,7 +74,12 @@ export default function ChangeRoleDialog({
 
   return (
     <>
-      <Button type="button" variant="outline" onClick={handleOpen}>
+      <Button
+        type="button"
+        variant="outline"
+        onClick={handleOpen}
+        disabled={disabled}
+      >
         Change Roles
       </Button>
       <Dialog open={open}>

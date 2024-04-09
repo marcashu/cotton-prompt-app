@@ -6,7 +6,7 @@ import ordersSideNavItems from "./_lib/ordersSideNavItems"
 import Link from "next/link"
 import { TypographyH2 } from "@/components/ui/typography"
 import useSession from "@/hooks/useSession"
-import Role from "@/enums/role"
+import { isAdmin } from "@/enums/role"
 
 export default function OrdersLayout({
   children,
@@ -24,7 +24,7 @@ export default function OrdersLayout({
     </div>
   )
 
-  return session?.selectedRole === Role.Admin ? (
+  return isAdmin(session?.selectedRole) ? (
     <SideNavLayout title={title} navItems={ordersSideNavItems}>
       {children}
     </SideNavLayout>

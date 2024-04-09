@@ -1,4 +1,4 @@
-import Role from "@/enums/role"
+import Role, { isAdmin } from "@/enums/role"
 import SessionContext from "@/contexts/SessionContext"
 import Session from "@/types/session"
 import { useRouter } from "next/navigation"
@@ -15,14 +15,13 @@ export default function SessionProvider({
   useEffect(() => {
     if (!session?.userId) return
 
-    const redirectPath =
-      session.selectedRole === Role.Admin
-        ? "/ongoing-orders"
-        : session.selectedRole === Role.Checker
-        ? "/available-orders-as-checker"
-        : session.selectedRole === Role.Artist
-        ? `/available-orders-as-artist/${session.userId}`
-        : "/no-role"
+    const redirectPath = isAdmin(session.selectedRole)
+      ? "/ongoing-orders"
+      : session.selectedRole === Role.Checker
+      ? "/available-orders-as-checker"
+      : session.selectedRole === Role.Artist
+      ? `/available-orders-as-artist/${session.userId}`
+      : "/no-role"
     router.replace(redirectPath)
   }, [session?.selectedRole, session?.userId, router])
 
