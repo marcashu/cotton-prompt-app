@@ -1,8 +1,10 @@
-import Role from "./role"
+import Role from "@/enums/role"
 
 type Session = {
   userId: string,
-  userRole: Role
+  userRoles: Role[],
+  selectedRole?: Role,
+  name: string,
 }
 
 export default Session

@@ -1,29 +1,39 @@
 {
     "name": "cottonpromptapp",
     "version": "0.1.0",
-    "engines": {
-        "node": "16 || 18"
-    },
     "private": true,
-    "main": "server.js",
     "dependencies": {
         "@hookform/resolvers": "^3.3.2",
         "@microsoft/teams-js": "^2.18.0",
+        "@radix-ui/react-accordion": "^1.1.2",
         "@radix-ui/react-alert-dialog": "^1.0.5",
         "@radix-ui/react-checkbox": "^1.0.4",
+        "@radix-ui/react-dialog": "^1.0.5",
         "@radix-ui/react-label": "^2.0.2",
         "@radix-ui/react-navigation-menu": "^1.1.4",
+        "@radix-ui/react-popover": "^1.0.7",
         "@radix-ui/react-select": "^2.0.0",
+        "@radix-ui/react-separator": "^1.0.3",
         "@radix-ui/react-slot": "^1.0.2",
+        "@radix-ui/react-toast": "^1.1.5",
+        "@radix-ui/react-tooltip": "^1.0.7",
         "@tanstack/react-table": "^8.11.0",
+        "@tiptap/extension-text-align": "^2.2.5",
+        "@tiptap/extension-underline": "^2.2.5",
+        "@tiptap/pm": "^2.2.5",
+        "@tiptap/react": "^2.2.5",
+        "@tiptap/starter-kit": "^2.2.5",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
+        "cmdk": "^0.2.0",
         "embla-carousel-react": "^8.0.0-rc17",
+        "javascript-time-ago": "^2.5.9",
         "lucide-react": "^0.298.0",
         "next": "^14.0.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.49.2",
+        "react-select": "^5.8.0",
         "restify": "^11.1.0",
         "send": "^0.18.0",
         "swr": "^2.2.4",
@@ -50,10 +60,9 @@
     },
     "scripts": {
         "dev:teamsfx": "env-cmd --silent -f .localConfigs npm run dev",
-        "dev": "next dev --experimental-https -p 53000",
+        "dev": "next dev --experimental-https -p 7193",
         "build": "next build",
-        "start": "next start",
+        "start": "node server.js",
         "lint": "next lint"
-    },
-    "homepage": "."
+    }
 }
