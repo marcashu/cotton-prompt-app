@@ -2,9 +2,8 @@ import type { Metadata } from "next"
 import { Inter as FontSans } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
-import Providers from "@/components/modules/root/Providers"
-import Header from "@/components/modules/root/Header"
-import Main from "@/components/modules/root/Main"
+import Providers from "@/app/_components/Providers"
+import { Toaster } from "@/components/ui/toaster"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,8 +29,8 @@ export default function RootLayout({
         )}
       >
         <Providers>
-          <Header />
-          <Main>{children}</Main>
+          {children}
+          <Toaster />
         </Providers>
       </body>
     </html>

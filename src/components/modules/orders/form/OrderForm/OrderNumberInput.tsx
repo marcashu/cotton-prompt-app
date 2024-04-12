@@ -1,13 +1,6 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Control } from "react-hook-form"
 import { OrderFormValues } from "./orderFormSchema"
+import Input from "@/components/custom/Input"
 
 export default function OrderNumberInput({
   control,
@@ -17,18 +10,12 @@ export default function OrderNumberInput({
   className?: string
 }) {
   return (
-    <FormField
+    <Input
+      label="Order Number"
       control={control}
       name="orderNumber"
-      render={({ field }) => (
-        <FormItem className={className}>
-          <FormLabel>Order Number</FormLabel>
-          <FormControl>
-            <Input placeholder="Enter order number" {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
+      className={className}
+      placeholder="Enter order number"
     />
   )
 }

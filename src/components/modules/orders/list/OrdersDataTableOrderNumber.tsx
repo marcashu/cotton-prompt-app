@@ -1,7 +1,6 @@
 "use client"
 
 import { TypographySmall } from "@/components/ui/typography"
-import useSession from "@/hooks/useSession"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { Row } from "@tanstack/react-table"
 import Link from "next/link"
@@ -13,13 +12,12 @@ export default function OrdersDataTableOrderNumber({
   row: Row<GetOrdersModel>
 }) {
   const order = row.original
-  const { session } = useSession()
   const pathname = usePathname()
 
-  return session?.userRole === "artist" && pathname === "/orders/available" ? (
+  return pathname.startsWith("/available-orders-as-artist") ? (
     <TypographySmall>{order.orderNumber}</TypographySmall>
   ) : (
-    <Link href={`/orders/${order.id}/view`} className="font-medium">
+    <Link href={`/view-order/${order.id}`} className="font-medium">
       {order.orderNumber}
     </Link>
   )

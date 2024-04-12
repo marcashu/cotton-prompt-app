@@ -1,5 +1,6 @@
 type DesignBracket = {
   id: number
+  name: string
   value: number
 }
 

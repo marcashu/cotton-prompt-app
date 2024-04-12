@@ -12,10 +12,14 @@ import PrintColorSelect from "./PrintColorSelect"
 import DesignBracketSelect from "./DesignBracketSelect"
 import ImageReferenceUrls from "./ImageReferenceUrls"
 import useSession from "@/hooks/useSession"
-import OrderFormDialog from "./OrderFormDialog"
-import { useState } from "react"
-import { createOrder, updateOrder } from "../../orderService"
+import { createOrder, updateOrder } from "../../orderActions"
 import GetOrderModel from "@/types/getOrderModel"
+import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import OutputSizeSelect from "./OutputSizeSelect"
+import CustomerEmailInput from "./CustomerEmailInput"
+import UserGroupSelect from "./UserGroupSelect"
 
 export default function OrderForm({ order }: { order?: GetOrderModel }) {
   const { session } = useSession()
@@ -25,17 +29,18 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
       orderNumber: order?.orderNumber ?? "",
       priority: order?.priority ?? false,
       concept: order?.concept ?? "",
-      printColor: order?.printColor ?? "",
+      printColorId: order?.printColor.id.toString() ?? "",
       designBracketId: order?.designBracket.id.toString() ?? "",
+      outputSizeId: order?.outputSize.id.toString() ?? "",
+      userGroupId: order?.userGroupId.toString() ?? "",
+      customerEmail: order?.customerEmail ?? "",
       imageReferences:
         order?.imageReferences.map((ir) => ({ value: ir })) ?? [],
     },
   })
-  const [dialogProps, setDialogProps] = useState({
-    open: false,
-    title: "",
-    message: "",
-  })
+  const { toast } = useToast()
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const onSubmit = (values: OrderFormValues) => {
     const userId = session?.userId
@@ -44,63 +49,63 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
       return
     }
 
+    setLoading(true)
+
     if (!order) {
       createOrder(values, userId)
         .then(() =>
-          setDialogProps({
-            open: true,
-            title: "Create Order",
-            message: "Order successfully created.",
+          toast({
+            title: "Order has been created successfully",
+            description: new Date().toLocaleString(),
           })
         )
         .catch((err) =>
-          setDialogProps({
-            open: true,
-            title: "Create Order",
-            message: `Something went wrong while creating the order: ${err}`,
+          toast({
+            title: `Something went wrong while creating the order: ${err}`,
+            description: new Date().toLocaleString(),
+            variant: "destructive",
           })
         )
+        .finally(() => router.back())
     } else {
       updateOrder(values, userId, order.id)
         .then(() =>
-          setDialogProps({
-            open: true,
-            title: "Update Order",
-            message: "Order successfully updated.",
+          toast({
+            title: "Order has been updated successfully",
+            description: new Date().toLocaleString(),
           })
         )
         .catch((err) =>
-          setDialogProps({
-            open: true,
-            title: "Update Order",
-            message: `Something went wrong while updating the order: ${err}`,
+          toast({
+            title: `Something went wrong while updating the order: ${err}`,
+            description: new Date().toLocaleString(),
+            variant: "destructive",
           })
         )
+        .finally(() => router.back())
     }
   }
 
   return (
-    <>
-      <Form {...form} key={order?.id ?? 0}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="max-w-3xl flex flex-col gap-4">
-            <OrderNumberInput control={form.control} />
-            <PriorityCheckbox control={form.control} />
-            <div className="flex gap-4">
-              <PrintColorSelect control={form.control} className="grow" />
-              <DesignBracketSelect control={form.control} className="grow" />
-            </div>
-            <ConceptTextarea control={form.control} />
-            <ImageReferenceUrls control={form.control} />
+    <Form {...form} key={order?.id ?? 0}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="max-w-3xl flex flex-col gap-4">
+          <OrderNumberInput control={form.control} />
+          <PriorityCheckbox control={form.control} />
+          <div className="flex gap-2">
+            <PrintColorSelect control={form.control} className="flex-1" />
+            <DesignBracketSelect control={form.control} className="flex-1" />
+            <OutputSizeSelect control={form.control} className="flex-1" />
           </div>
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-      <OrderFormDialog
-        open={dialogProps.open}
-        title={dialogProps.title}
-        message={dialogProps.message}
-      />
-    </>
+          <UserGroupSelect control={form.control} />
+          <CustomerEmailInput control={form.control} />
+          <ConceptTextarea control={form.control} />
+          <ImageReferenceUrls control={form.control} />
+        </div>
+        <Button type="submit" loading={loading}>
+          Submit
+        </Button>
+      </form>
+    </Form>
   )
 }

@@ -1,10 +1,10 @@
 import { formatDateToYYYYMMDD } from "@/helpers/dateHelper"
 import GetOrdersModel from "@/types/getOrdersModel"
-import { ColumnDef } from "@tanstack/react-table"
-import OrdersDataTableActions from "./OrdersDataTableActions/OrdersDataTableActions"
+import { CellContext, ColumnDef } from "@tanstack/react-table"
 import OrdersDataTableOrderNumber from "./OrdersDataTableOrderNumber"
+import ArtistStatus from "@/enums/artistStatus"
 
-const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
+const getOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element): ColumnDef<GetOrdersModel>[] => [
   {
     accessorKey: "orderNumber",
     header: "Order Number",
@@ -16,20 +16,30 @@ const ordersColumnDef: ColumnDef<GetOrdersModel>[] = [
     header: "Date",
   },
   {
+    id: "artistStatus",
+    accessorFn: (order) => order.artistStatus ?? '-',
+    header: "Artist Status",
+  },
+  {
+    id: "checkerStatus",
+    accessorFn: (order) => order.checkerStatus ?? '-',
+    header: "Checker Status",
+  },
+  {
     id: "actions",
-    cell: ({ row }) => OrdersDataTableActions({ row })
+    cell: actionCell
   },
 ]
 
 const priorityOrdersKey = "/api/orders?priority=true"
 const normalOrdersKey = "/api/orders?priority=false"
-const priorityArtistAvailableOrdersKey = `${priorityOrdersKey}&hasArtistFilter=true`
-const normalArtistAvailableOrdersKey = `${normalOrdersKey}&hasArtistFilter=true`
+const priorityCheckerAvailableOrdersKey = `${priorityOrdersKey}&noChecker=true&artistStatus=${ArtistStatus.DesignSubmitted}`
+const normalCheckerAvailableOrdersKey = `${normalOrdersKey}&noChecker=true&artistStatus=${ArtistStatus.DesignSubmitted}`
 
 export {
-  ordersColumnDef,
+  getOrdersColumnDef,
   priorityOrdersKey,
   normalOrdersKey,
-  priorityArtistAvailableOrdersKey,
-  normalArtistAvailableOrdersKey,
+  priorityCheckerAvailableOrdersKey,
+  normalCheckerAvailableOrdersKey,
 }
