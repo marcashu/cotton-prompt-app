@@ -14,7 +14,7 @@ export default async function OutputSizesPage() {
 
   return (
     <div className="px-8 max-w-3xl">
-      <TypographyH3 withSeparator>Print Colors</TypographyH3>
+      <TypographyH3 withSeparator>Output Sizes</TypographyH3>
       <ul className=" space-y-2 py-4">
         {activeOutputSizes.map((db, i) => (
           <OutputSizeItem
