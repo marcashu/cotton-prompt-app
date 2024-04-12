@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  NEXT_PUBLIC_API_URL: https://cottonpromptapp-prod.azurewebsites.net
+  NEXT_PUBLIC_API_URL: https://cottonpromptapi-prod.azurewebsites.net
   NEXT_PUBLIC_IMAGE_UPLOAD_MAX_SIZE_IN_MB: 10
 
 jobs:
