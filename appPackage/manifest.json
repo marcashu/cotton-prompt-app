@@ -1,11 +1,11 @@
 {
 	"$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
 	"manifestVersion": "1.16",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"id": "${{TEAMS_APP_ID}}",
 	"packageName": "com.microsoft.teams.extension",
 	"developer": {
-		"name": "Cotton Prompt",
+		"name": "Allipium Ltd",
 		"websiteUrl": "https://cottonprompt.com",
 		"privacyUrl": "https://cottonprompt.com/pages/privacy-policy",
 		"termsOfUseUrl": "https://cottonprompt.com/pages/terms-of-service"
@@ -15,12 +15,12 @@
 		"outline": "outline.png"
 	},
 	"name": {
-		"short": "Cotton Prompt - ${{APP_NAME_SUFFIX}}",
-		"full": "Full name for CottomPromptApp"
+		"short": "Team CP Order Claim Platform - ${{APP_NAME_SUFFIX}}",
+		"full": "Team CP Order Claim Platform"
 	},
 	"description": {
-		"short": "Short description of CottomPromptApp",
-		"full": "Full description of CottomPromptApp"
+		"short": "This app allows for artists to claim orders with Team CP",
+		"full": "N/A"
 	},
 	"accentColor": "#FFFFFF",
 	"bots": [],
