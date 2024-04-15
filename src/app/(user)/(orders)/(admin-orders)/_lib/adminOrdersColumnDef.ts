@@ -2,6 +2,7 @@ import OrdersDataTableOrderNumber from "@/components/modules/orders/list/OrdersD
 import { formatDateToYYYYMMDD } from "@/helpers/dateHelper";
 import GetOrdersModel from "@/types/getOrdersModel";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
+import UserInfoCell from "../_components/AdminOrdersDataTable/UserInfoCell";
 
 const getAdminOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element): ColumnDef<GetOrdersModel>[] => [
   {
@@ -15,14 +16,22 @@ const getAdminOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersMode
     header: "Date",
   },
   {
-    id: "artistStatus",
-    accessorFn: (order) => order.artistStatus ?? '-',
-    header: "Artist Status",
+    id: "artist",
+    header: "Artist",
+    cell: ({ row }) => {
+      const order = row.original
+      const result = UserInfoCell({ name: order.artistName, status: order.artistStatus })
+      return result
+    }
   },
   {
-    id: "checkerStatus",
-    accessorFn: (order) => order.checkerStatus ?? '-',
-    header: "Checker Status",
+    id: "checker",
+    header: "Checker",
+    cell: ({ row }) => {
+      const order = row.original
+      const result = UserInfoCell({ name: order.checkerName, status: order.checkerStatus })
+      return result
+    }
   },
   {
     id: "priority",
