@@ -7,7 +7,7 @@ async function getCanClaim(userId: string) {
     `${process.env.NEXT_PUBLIC_API_URL}/api/artists/${userId}/can-claim`,
     {
       next: {
-        tags: [`canClaim:${userId}`],
+        tags: ["canArtistClaim"],
       },
     }
   )
