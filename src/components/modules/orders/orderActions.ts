@@ -80,7 +80,7 @@ export const createOrder = async (value: OrderFormValues, createdBy: string) => 
 export const deleteOrder = async (id: number) => {
   await mutate(`${baseUrl}/${id}`, {
     method: "DELETE",
-  }, ["canArtistClaim"])
+  })
 }
 
 export const acceptOrder = async (id: number) => {

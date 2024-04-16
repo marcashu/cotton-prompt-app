@@ -1,26 +1,25 @@
 import { deleteOrder } from "../../orderActions"
-import { useSWRConfig } from "swr"
+import { KeyedMutator } from "swr"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { normalOrdersKey, priorityOrdersKey } from "../ordersListConstants"
 import { useToast } from "@/components/ui/use-toast"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
+import GetOrdersModel from "@/types/getOrdersModel"
 
 export default function DeleteOrderDialog({
   id,
-  priority,
+  mutate,
 }: {
   id: number
-  priority: boolean
+  mutate: KeyedMutator<GetOrdersModel[]>
 }) {
   const [open, setOpen] = useState(false)
-  const { mutate } = useSWRConfig()
   const { toast } = useToast()
 
   const handleContinue = async () => {
     try {
       await deleteOrder(id)
-      mutate(priority ? priorityOrdersKey : normalOrdersKey)
+      mutate()
     } finally {
       setOpen(false)
       toast({
