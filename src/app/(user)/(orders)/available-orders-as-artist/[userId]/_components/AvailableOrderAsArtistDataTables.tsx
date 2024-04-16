@@ -8,12 +8,13 @@ import useSWR from "swr"
 
 export default function AvailableOrderAsArtistDataTables({
   userId,
-  canClaim,
 }: {
   userId: string
-  canClaim: CanDoModel
 }) {
   const { session } = useSession()
+  const { data: canClaim, isLoading } = useSWR<CanDoModel>(
+    `/api/artists/${userId}/can-claim`
+  )
   const { data: canClaimChangeRequestOrders } = useSWR<CanDoModel>(
     `/api/artists/${session?.userId}/can-claim-change-request`
   )
@@ -21,6 +22,9 @@ export default function AvailableOrderAsArtistDataTables({
   const changeRequestKey = `${baseKey}&changeRequest=true`
   const priorityKey = `${baseKey}&priority=${true}`
   const normalKey = `${baseKey}&priority=${false}`
+
+  if (isLoading || !canClaim) return <></>
+
   const crActionCell = getArtistActionCell(canClaim, changeRequestKey)
   const priorityActionCell = getArtistActionCell(canClaim, priorityKey)
   const normalActionCell = getArtistActionCell(canClaim, normalKey)
