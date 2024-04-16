@@ -30,13 +30,23 @@ export default function AdminOrdersDataTable({
     return (
       <div className="flex gap-2 justify-end">
         <ViewOrderButton id={order.id} variant="outline" />
-        {isOngoing && (
+        {isOngoing ? (
           <>
             <Button variant="outline" asChild>
               <Link href={`/edit-order/${order.id}`}>Edit</Link>
             </Button>
             <DeleteOrderDialog id={order.id} mutate={mutate} />
           </>
+        ) : (
+          <Button variant="outline" asChild>
+            <Link
+              href={`${process.env.NEXT_PUBLIC_API_URL}/api/Orders/${order.id}/download`}
+              target="_blank"
+              prefetch={false}
+            >
+              Download
+            </Link>
+          </Button>
         )}
       </div>
     )
