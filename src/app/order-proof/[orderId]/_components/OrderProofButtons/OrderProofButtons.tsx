@@ -30,15 +30,20 @@ export default function OrderProofButtons({
   }
 
   return (
-    <div className="self-end">
+    <div className="flex flex-col gap-2 pb-4">
+      <Button
+        onClick={handleClick}
+        loading={loading}
+        variant="orderProofDefault"
+        className="m-auto w-[300px]"
+      >
+        ACCEPT PROOF
+      </Button>
       <OrderProofChangeRequestButton
         orderId={orderId}
         designId={designId}
         disabled={loading}
       />
-      <Button onClick={handleClick} loading={loading}>
-        Accept Proof
-      </Button>
     </div>
   )
 }

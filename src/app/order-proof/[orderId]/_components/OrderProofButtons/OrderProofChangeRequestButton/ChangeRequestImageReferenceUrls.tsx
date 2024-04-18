@@ -26,7 +26,9 @@ export default function ChangeRequestImageReferenceUrls({
 
   return (
     <div className={className}>
-      <FormLabel>Image References (Optional)</FormLabel>
+      <FormLabel className="text-[#3A3A3A]">
+        Image References (Optional)
+      </FormLabel>
       <FormDescription>Add more image reference links.</FormDescription>
       {fields.map((field, index) => (
         <FormField
@@ -59,8 +61,7 @@ export default function ChangeRequestImageReferenceUrls({
       ))}
       <Button
         type="button"
-        variant="outline"
-        size="sm"
+        variant="orderProofOutline"
         className="mt-2"
         onClick={() => append({ value: "" })}
       >

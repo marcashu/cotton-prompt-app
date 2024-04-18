@@ -1,9 +1,9 @@
-import Main from "@/app/(user)/_components/Main"
 import { getOrderById } from "@/components/modules/orders/orderService"
-import OrderViewDesignPreview from "@/components/modules/orders/view/OrderViewDesign/OrderViewDesignPreview"
 import { TypographyH2, TypographyMuted } from "@/components/ui/typography"
 import OrderProofButtons from "./_components/OrderProofButtons"
 import CustomerStatus from "@/enums/customerStatus"
+import Image from "next/image"
+import FullscreenableImage from "@/components/ui/fullscreenable-image"
 
 export default async function OrderProofPage({
   params,
@@ -17,19 +17,33 @@ export default async function OrderProofPage({
   if (!design) return <></>
 
   return (
-    <Main className="pt-4">
-      <div className="flex flex-col gap-4">
-        <TypographyH2 withSeparator>Order {order.orderNumber}</TypographyH2>
-        {order.customerStatus === CustomerStatus.ForReview && (
-          <OrderProofButtons orderId={orderId} designId={design.id} />
-        )}
-        <div>
-          <OrderViewDesignPreview url={design.url} />
-          <TypographyMuted className="italic">
-            Tip: Click on the image to toggle fullscreen
-          </TypographyMuted>
-        </div>
+    <div
+      className="flex flex-col gap-4 bg-[#f0e9da]"
+      style={{ height: "100vh" }}
+    >
+      <div>
+        <Image
+          src="/logo/cottonprompt_logo.png"
+          alt="Cotton Prompt Logo"
+          width={192}
+          height={108}
+          className="mx-auto"
+        />
+        <TypographyH2 className="text-center text-[#3A3A3A]">
+          Order {order.orderNumber}
+        </TypographyH2>
       </div>
-    </Main>
+      <div className="grow flex flex-col">
+        <div className="grow relative">
+          <FullscreenableImage src={design.url} alt="design preview" />
+        </div>
+        <TypographyMuted className="italic text-center">
+          Tip: Click on the image to toggle fullscreen
+        </TypographyMuted>
+      </div>
+      {order.customerStatus === CustomerStatus.ForReview && (
+        <OrderProofButtons orderId={orderId} designId={design.id} />
+      )}
+    </div>
   )
 }
