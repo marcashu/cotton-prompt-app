@@ -18,8 +18,8 @@ export default async function OrderProofPage({
 
   return (
     <div
-      className="flex flex-col gap-4 bg-[#f0e9da]"
-      style={{ height: "100vh" }}
+      className="flex flex-col gap-4 bg-[#f0e9da] pb-4"
+      style={{ height: "100dvh" }}
     >
       <div>
         <Image

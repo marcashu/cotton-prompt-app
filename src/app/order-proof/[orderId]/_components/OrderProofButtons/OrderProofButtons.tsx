@@ -30,7 +30,7 @@ export default function OrderProofButtons({
   }
 
   return (
-    <div className="flex flex-col gap-2 pb-4">
+    <div className="flex flex-col gap-2">
       <Button
         onClick={handleClick}
         loading={loading}

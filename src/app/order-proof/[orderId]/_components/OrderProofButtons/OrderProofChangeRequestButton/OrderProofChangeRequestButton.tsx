@@ -135,7 +135,7 @@ export default function OrderProofChangeRequestButton({
               </DialogClose>
               <Button
                 type="submit"
-                className="ml-2"
+                className="mb-2 md:mb-0 md:ml-2"
                 loading={loading}
                 variant="orderProofDefault"
               >
