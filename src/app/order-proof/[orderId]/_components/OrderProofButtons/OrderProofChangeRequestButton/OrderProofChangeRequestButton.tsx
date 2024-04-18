@@ -92,13 +92,17 @@ export default function OrderProofChangeRequestButton({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="mr-4" disabled={disabled}>
-          Request For Changes
+        <Button
+          variant="outline"
+          className="m-auto w-[300px] rounded-[25px] text-[#3A3A3A] font-bold"
+          disabled={disabled}
+        >
+          REQUEST FOR CHANGES
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="bg-[#f0e9da]">
         <DialogHeader>
-          <DialogTitle>Change Request</DialogTitle>
+          <DialogTitle className="text-[#3A3A3A]">Change Request</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -110,7 +114,7 @@ export default function OrderProofChangeRequestButton({
               name="comment"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Comment</FormLabel>
+                  <FormLabel className="text-[#3A3A3A]">Comment</FormLabel>
                   <FormControl>
                     <Textarea className="resize-none" {...field} rows={4} />
                   </FormControl>
@@ -121,11 +125,20 @@ export default function OrderProofChangeRequestButton({
             <ChangeRequestImageReferenceUrls control={form.control} />
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="button" variant="outline" disabled={loading}>
+                <Button
+                  type="button"
+                  variant="orderProofOutline"
+                  disabled={loading}
+                >
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type="submit" className="ml-2" loading={loading}>
+              <Button
+                type="submit"
+                className="mb-2 md:mb-0 md:ml-2"
+                loading={loading}
+                variant="orderProofDefault"
+              >
                 Submit
               </Button>
             </DialogFooter>
