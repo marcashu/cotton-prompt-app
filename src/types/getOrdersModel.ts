@@ -8,6 +8,8 @@ type GetOrdersModel = {
   artistId?: string
   artistName?: string
   checkerName?: string
+  customerStatus: string
+  customerName: string
 }
 
 export default GetOrdersModel

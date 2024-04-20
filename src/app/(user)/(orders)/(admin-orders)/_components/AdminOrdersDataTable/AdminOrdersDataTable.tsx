@@ -7,19 +7,29 @@ import AdminOrderFilters from "./AdminOrderFilters"
 import { useState } from "react"
 import { CellContext } from "@tanstack/react-table"
 import getAdminOrdersColumnDef from "../../_lib/adminOrdersColumnDef"
-import ViewOrderButton from "../../../_components/ViewOrderButton"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import DeleteOrderDialog from "@/components/modules/orders/list/OrdersDataTableActions/DeleteOrderDialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { MoreHorizontal } from "lucide-react"
+import ArtistStatus from "@/enums/artistStatus"
 
 export default function AdminOrdersDataTable({
-  isOngoing,
+  adminStatus,
 }: {
-  isOngoing: boolean
+  adminStatus: "ongoing" | "rejected" | "completed"
 }) {
-  const baseUrl = `/api/orders/${isOngoing ? "ongoing" : "completed"}`
+  const baseUrl = `/api/orders/${adminStatus}`
   const [url, setUrl] = useState(baseUrl)
   const { data, isLoading, mutate } = useSWR<GetOrdersModel[]>(url)
+  const [open, setOpen] = useState(false)
+  const [deleteId, setDeleteId] = useState(0)
 
   const handleSearch = (orderNumber?: string) => {
     setUrl(`${baseUrl}?orderNumber=${orderNumber}`)
@@ -28,17 +38,41 @@ export default function AdminOrdersDataTable({
   const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
     const order = row.original
     return (
-      <div className="flex gap-2 justify-end">
-        <ViewOrderButton id={order.id} variant="outline" />
-        {isOngoing ? (
-          <>
-            <Button variant="outline" asChild>
-              <Link href={`/edit-order/${order.id}`}>Edit</Link>
-            </Button>
-            <DeleteOrderDialog id={order.id} mutate={mutate} />
-          </>
-        ) : (
-          <Button variant="outline" asChild>
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem className="cursor-pointer" asChild>
+            <Link href={`/view-order/${order.id}`}>View</Link>
+          </DropdownMenuItem>
+          {adminStatus === "ongoing" && (
+            <>
+              <DropdownMenuItem className="cursor-pointer" asChild>
+                <Link href={`/edit-order/${order.id}`}>Edit</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => {
+                  setDeleteId(order.id)
+                  setOpen(true)
+                }}
+              >
+                Delete
+              </DropdownMenuItem>
+            </>
+          )}
+          <DropdownMenuItem
+            disabled={
+              !order.artistStatus || order.artistStatus === ArtistStatus.Claimed
+            }
+            className="cursor-pointer"
+            asChild
+          >
             <Link
               href={`${process.env.NEXT_PUBLIC_API_URL}/api/Orders/${order.id}/download`}
               target="_blank"
@@ -46,14 +80,20 @@ export default function AdminOrdersDataTable({
             >
               Download
             </Link>
-          </Button>
-        )}
-      </div>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     )
   }
 
   return (
     <>
+      <DeleteOrderDialog
+        id={deleteId}
+        open={open}
+        mutate={mutate}
+        handleClose={() => setOpen(false)}
+      />
       <AdminOrderFilters onSearch={handleSearch} />
       <DataTable
         columns={getAdminOrdersColumnDef(actionCell)}

@@ -8,12 +8,15 @@ import GetOrdersModel from "@/types/getOrdersModel"
 
 export default function DeleteOrderDialog({
   id,
+  open,
   mutate,
+  handleClose,
 }: {
   id: number
+  open: boolean
   mutate: KeyedMutator<GetOrdersModel[]>
+  handleClose: () => void
 }) {
-  const [open, setOpen] = useState(false)
   const { toast } = useToast()
 
   const handleContinue = async () => {
@@ -21,7 +24,7 @@ export default function DeleteOrderDialog({
       await deleteOrder(id)
       mutate()
     } finally {
-      setOpen(false)
+      handleClose()
       toast({
         title: "Order has been deleted successfully",
         description: new Date().toLocaleString(),
@@ -29,24 +32,15 @@ export default function DeleteOrderDialog({
     }
   }
 
-  const handleOpen = () => setOpen(true)
-
-  const handleClose = () => setOpen(false)
-
   return (
-    <>
-      <Button variant="outline" onClick={handleOpen}>
-        Delete
-      </Button>
-      <ConfirmAlertDialog
-        open={open}
-        title="Are you sure you want to delete this order?"
-        description="This action cannot be undone. This will permanently delete the
+    <ConfirmAlertDialog
+      open={open}
+      title="Are you sure you want to delete this order?"
+      description="This action cannot be undone. This will permanently delete the
         order."
-        confirmButtonCaption="Continue"
-        onConfirm={handleContinue}
-        onCancel={handleClose}
-      />
-    </>
+      confirmButtonCaption="Continue"
+      onConfirm={handleContinue}
+      onCancel={handleClose}
+    />
   )
 }
