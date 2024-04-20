@@ -11,7 +11,7 @@ export default function UserInfoCell({
 
   return (
     <div className="flex flex-col gap-2 items-center">
-      <TypographySmall>{name}</TypographySmall>
+      <TypographySmall className="text-center">{name}</TypographySmall>
       <TypographyMuted className="text-xs">{status}</TypographyMuted>
     </div>
   )

@@ -16,6 +16,11 @@ const getAdminOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersMode
     header: "Date",
   },
   {
+    id: "priority",
+    accessorFn: (order) => order.priority ? 'Yes' : 'No',
+    header: "Priority",
+  },
+  {
     id: "artist",
     header: "Artist",
     cell: ({ row }) => {
@@ -34,9 +39,13 @@ const getAdminOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersMode
     }
   },
   {
-    id: "priority",
-    accessorFn: (order) => order.priority ? 'Yes' : 'No',
-    header: "Priority",
+    id: "customer",
+    header: "Customer",
+    cell: ({ row }) => {
+      const order = row.original
+      const result = UserInfoCell({ name: order.customerName, status: order.customerStatus })
+      return result
+    }
   },
   {
     id: "actions",
