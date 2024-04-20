@@ -6,6 +6,10 @@ const ordersSideNavItems: NavItem[] = [
     href: "/ongoing-orders",
   },
   {
+    name: "Rejected Orders",
+    href: "/rejected-orders",
+  },
+  {
     name: "Completed Orders",
     href: "/completed-orders",
   },

@@ -21,11 +21,11 @@ import { MoreHorizontal } from "lucide-react"
 import ArtistStatus from "@/enums/artistStatus"
 
 export default function AdminOrdersDataTable({
-  isOngoing,
+  adminStatus,
 }: {
-  isOngoing: boolean
+  adminStatus: "ongoing" | "rejected" | "completed"
 }) {
-  const baseUrl = `/api/orders/${isOngoing ? "ongoing" : "completed"}`
+  const baseUrl = `/api/orders/${adminStatus}`
   const [url, setUrl] = useState(baseUrl)
   const { data, isLoading, mutate } = useSWR<GetOrdersModel[]>(url)
   const [open, setOpen] = useState(false)
@@ -50,7 +50,7 @@ export default function AdminOrdersDataTable({
           <DropdownMenuItem className="cursor-pointer" asChild>
             <Link href={`/view-order/${order.id}`}>View</Link>
           </DropdownMenuItem>
-          {isOngoing && (
+          {adminStatus === "ongoing" && (
             <>
               <DropdownMenuItem className="cursor-pointer" asChild>
                 <Link href={`/edit-order/${order.id}`}>Edit</Link>
@@ -67,7 +67,9 @@ export default function AdminOrdersDataTable({
             </>
           )}
           <DropdownMenuItem
-            disabled={order.artistStatus === ArtistStatus.Claimed}
+            disabled={
+              !order.artistStatus || order.artistStatus === ArtistStatus.Claimed
+            }
             className="cursor-pointer"
             asChild
           >
