@@ -123,7 +123,12 @@ export default function AddEditUserGroupDialog({
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-6"
           >
-            <Input control={form.control} label="Group Name" name="name" />
+            <Input
+              control={form.control}
+              label="Group Name"
+              name="name"
+              disabled={userGroup?.name === "Change Request Artists"}
+            />
             <MultiSelect
               options={
                 (data as GetUsersModel[])?.map((u) => ({
@@ -137,7 +142,7 @@ export default function AddEditUserGroupDialog({
               }))}
               name="userIds"
               control={form.control}
-              label="Users"
+              label="Add Users"
               loading={isMutating}
             />
             <DialogFooter>
