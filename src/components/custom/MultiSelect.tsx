@@ -53,6 +53,10 @@ export default function MultiSelect<T extends FieldValues>({
                   maxHeight: "150px",
                   overflowY: "auto",
                 }),
+                menuList: (base: CSSObjectWithLabel) => ({
+                  ...base,
+                  maxHeight: "100px !important",
+                }),
               }}
             />
           </FormControl>
