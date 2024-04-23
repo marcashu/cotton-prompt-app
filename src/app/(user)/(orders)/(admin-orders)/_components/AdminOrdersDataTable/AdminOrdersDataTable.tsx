@@ -68,7 +68,9 @@ export default function AdminOrdersDataTable({
           )}
           <DropdownMenuItem
             disabled={
-              !order.artistStatus || order.artistStatus === ArtistStatus.Claimed
+              (!order.artistStatus ||
+                order.artistStatus === ArtistStatus.Claimed) &&
+              !order.checkerStatus
             }
             className="cursor-pointer"
             asChild
