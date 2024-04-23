@@ -55,7 +55,7 @@ export default function MultiSelect<T extends FieldValues>({
                 }),
                 menuList: (base: CSSObjectWithLabel) => ({
                   ...base,
-                  maxHeight: "100px !important",
+                  maxHeight: "200px !important",
                 }),
               }}
             />
