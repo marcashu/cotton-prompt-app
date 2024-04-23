@@ -29,5 +29,5 @@ export const updateUserGroup = async (id: number, name: string, userIds: string[
       userIds,
       updatedBy,
     }),
-  }, [`userGroup:${id}`])
+  }, ['userGroups'])
 }
