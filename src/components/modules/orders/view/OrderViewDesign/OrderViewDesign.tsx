@@ -15,6 +15,8 @@ import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 import OrderViewDesignApproveButton from "./OrderViewDesignApproveButton"
 import CheckerStatus from "@/enums/checkerStatus"
 import { KeyedMutator } from "swr"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function OrderViewDesign({
   order,
@@ -45,16 +47,27 @@ export default function OrderViewDesign({
       {forUpload ? (
         <OrderViewDesignUpload order={order} mutate={mutate} />
       ) : (
-        <OrderViewDesignPreview url={currentDesign?.url} />
-      )}
-      {isChecker &&
-        !!currentDesign &&
-        order.checkerStatus === CheckerStatus.ForReview &&
-        order.artistId && (
-          <div className="self-end">
-            <OrderViewDesignApproveButton id={order.id} mutate={mutate} />
+        <div className="flex flex-col gap-2">
+          <OrderViewDesignPreview url={currentDesign?.url} />
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" asChild>
+              <Link
+                href={`${process.env.NEXT_PUBLIC_API_URL}/api/Designs/${currentDesign?.id}/download`}
+                target="_blank"
+                prefetch={false}
+              >
+                Download
+              </Link>
+            </Button>
+            {isChecker &&
+              !!currentDesign &&
+              order.checkerStatus === CheckerStatus.ForReview &&
+              order.artistId && (
+                <OrderViewDesignApproveButton id={order.id} mutate={mutate} />
+              )}
           </div>
-        )}
+        </div>
+      )}
       {!!currentDesign && (
         <>
           {currentDesign.comments.length > 0 && (
