@@ -47,10 +47,10 @@ export default function AddEditUserGroupDialog({
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const { fetcher } = useSWRConfig()
-  const { data, trigger, isMutating } = useSWRMutation(
-    "/api/users/registered",
-    fetcher!
-  )
+  const url = !!userGroup
+    ? `/api/users/not-member-of-group/${userGroup.id}`
+    : "/api/users/registered"
+  const { data, trigger, isMutating } = useSWRMutation(url, fetcher!)
   const form = useForm<AddUserGroupFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -136,10 +136,6 @@ export default function AddEditUserGroupDialog({
                   label: u.name,
                 })) ?? []
               }
-              defaultValue={userGroup?.users.map((u) => ({
-                value: u.id,
-                label: u.name,
-              }))}
               name="userIds"
               control={form.control}
               label="Add Users"
