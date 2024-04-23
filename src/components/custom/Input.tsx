@@ -18,6 +18,7 @@ export default function Input<T extends FieldValues>({
   readOnly,
   inputClassName,
   hideFormMessage,
+  disabled,
 }: {
   label?: string
   control: Control<T>
@@ -27,6 +28,7 @@ export default function Input<T extends FieldValues>({
   readOnly?: boolean
   inputClassName?: string
   hideFormMessage?: boolean
+  disabled?: boolean
 }) {
   return (
     <FormField
@@ -41,6 +43,7 @@ export default function Input<T extends FieldValues>({
               readOnly={readOnly}
               className={inputClassName}
               {...field}
+              disabled={disabled}
             />
           </FormControl>
           {!hideFormMessage && <FormMessage />}

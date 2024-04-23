@@ -29,5 +29,14 @@ export const updateUserGroup = async (id: number, name: string, userIds: string[
       userIds,
       updatedBy,
     }),
-  }, [`userGroup:${id}`])
+  }, ['userGroups', `userGroup:${id}`])
+}
+
+export const removeUser = async (id: number, userId: string) => {
+  await mutate(`${baseUrl}/${id}/users/${userId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }, ['userGroups', `userGroup:${id}`])
 }

@@ -1,4 +1,4 @@
-import Select from "react-select"
+import Select, { CSSObjectWithLabel } from "react-select"
 import {
   FormControl,
   FormField,
@@ -45,8 +45,14 @@ export default function MultiSelect<T extends FieldValues>({
               }
               isLoading={loading}
               loadingMessage={(obj) => {
-                console.log(obj)
                 return "Fetching users..."
+              }}
+              styles={{
+                valueContainer: (base: CSSObjectWithLabel) => ({
+                  ...base,
+                  maxHeight: "150px",
+                  overflowY: "auto",
+                }),
               }}
             />
           </FormControl>

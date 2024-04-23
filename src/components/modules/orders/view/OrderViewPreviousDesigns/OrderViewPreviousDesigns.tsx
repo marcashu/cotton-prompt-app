@@ -14,6 +14,8 @@ import DesignModel from "@/types/designModel"
 import FullscreenableImage from "@/components/ui/fullscreenable-image"
 import OrderViewDesignCommentPreview from "../OrderViewDesignCommentPreview"
 import ArtistStatus from "@/enums/artistStatus"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function OrderViewPreviousDesigns({
   designs,
@@ -42,6 +44,17 @@ export default function OrderViewPreviousDesigns({
             <AccordionContent className="p-4 gap-2 flex flex-col">
               <div className="relative aspect-video w-full">
                 <FullscreenableImage src={d.url} alt="design preview" />
+              </div>
+              <div className="text-right mt-2">
+                <Button variant="outline" asChild>
+                  <Link
+                    href={`${process.env.NEXT_PUBLIC_API_URL}/api/Designs/${d.id}/download`}
+                    target="_blank"
+                    prefetch={false}
+                  >
+                    Download
+                  </Link>
+                </Button>
               </div>
               {d.comments.length > 0 && (
                 <>

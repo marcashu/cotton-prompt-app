@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { bytesToMegaBytes } from "@/helpers/fileHelper"
 import useSession from "@/hooks/useSession"
 import { KeyedMutator } from "swr"
+import Link from "next/link"
 
 export default function OrderViewDesignUpload({
   order,
@@ -150,17 +151,21 @@ export default function OrderViewDesignUpload({
         )}
       </div>
       {!!previewImage && (
-        <div className="self-end">
+        <div className="self-end flex gap-2">
+          <Button variant="outline" asChild>
+            <Link
+              href={`${process.env.NEXT_PUBLIC_API_URL}/api/Designs/${order.design?.id}/download`}
+              target="_blank"
+              prefetch={false}
+            >
+              Download
+            </Link>
+          </Button>
           <Button type="button" variant="outline" onClick={handleClick}>
             Reupload
           </Button>
           {!!file && (
-            <Button
-              type="button"
-              className="ml-4"
-              onClick={handleSubmit}
-              loading={loading}
-            >
+            <Button type="button" onClick={handleSubmit} loading={loading}>
               Submit
             </Button>
           )}

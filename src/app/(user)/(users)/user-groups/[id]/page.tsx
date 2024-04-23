@@ -16,7 +16,7 @@ export default async function UserGroupDetailsPage({
       <div className="self-end">
         <AddEditUserGroupDialog userGroup={userGroup} />
       </div>
-      <UserGroupUsersDataTable data={userGroup.users} />
+      <UserGroupUsersDataTable id={userGroup.id} data={userGroup.users} />
     </div>
   )
 }

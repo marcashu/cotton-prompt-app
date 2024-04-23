@@ -47,10 +47,10 @@ export default function AddEditUserGroupDialog({
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const { fetcher } = useSWRConfig()
-  const { data, trigger, isMutating } = useSWRMutation(
-    "/api/users/registered",
-    fetcher!
-  )
+  const url = !!userGroup
+    ? `/api/users/not-member-of-group/${userGroup.id}`
+    : "/api/users/registered"
+  const { data, trigger, isMutating } = useSWRMutation(url, fetcher!)
   const form = useForm<AddUserGroupFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -123,7 +123,12 @@ export default function AddEditUserGroupDialog({
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-6"
           >
-            <Input control={form.control} label="Group Name" name="name" />
+            <Input
+              control={form.control}
+              label="Group Name"
+              name="name"
+              disabled={userGroup?.name === "Change Request Artists"}
+            />
             <MultiSelect
               options={
                 (data as GetUsersModel[])?.map((u) => ({
@@ -131,13 +136,9 @@ export default function AddEditUserGroupDialog({
                   label: u.name,
                 })) ?? []
               }
-              defaultValue={userGroup?.users.map((u) => ({
-                value: u.id,
-                label: u.name,
-              }))}
               name="userIds"
               control={form.control}
-              label="Users"
+              label="Add Users"
               loading={isMutating}
             />
             <DialogFooter>

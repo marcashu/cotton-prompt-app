@@ -21,7 +21,7 @@ export default function ConfirmAlertDialog({
 }: {
   open: boolean
   title: string
-  description: string
+  description?: string
   confirmButtonCaption: string
   onConfirm: () => Promise<void>
   onCancel: () => void
@@ -33,7 +33,9 @@ export default function ConfirmAlertDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
+          {!!description && (
+            <AlertDialogDescription>{description}</AlertDialogDescription>
+          )}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
