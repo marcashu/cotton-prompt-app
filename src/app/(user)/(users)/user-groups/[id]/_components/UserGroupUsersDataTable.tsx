@@ -1,11 +1,10 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
 import GetUsersModel from "@/types/getUsersModel"
 import { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
-import Role, { isAdmin } from "@/enums/role"
+import Role, { isAdmin, trimAdmin } from "@/enums/role"
 import { TypographySmall } from "@/components/ui/typography"
 import { Badge } from "@/components/ui/badge"
 
@@ -34,9 +33,11 @@ const columnDef: ColumnDef<GetUsersModel>[] = [
 
       if (!user.roles.length) return "-"
 
+      const roles = trimAdmin(user.roles)
+
       return (
         <div className="flex gap-2">
-          {user.roles.map((ur) => (
+          {roles.map((ur) => (
             <Badge
               variant={
                 isAdmin(ur)
