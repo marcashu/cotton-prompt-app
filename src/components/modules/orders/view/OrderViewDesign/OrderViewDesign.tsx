@@ -49,23 +49,24 @@ export default function OrderViewDesign({
       ) : (
         <div className="flex flex-col gap-2">
           <OrderViewDesignPreview url={currentDesign?.url} />
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" asChild>
-              <Link
-                href={`${process.env.NEXT_PUBLIC_API_URL}/api/Designs/${currentDesign?.id}/download`}
-                target="_blank"
-                prefetch={false}
-              >
-                Download
-              </Link>
-            </Button>
-            {isChecker &&
-              !!currentDesign &&
-              order.checkerStatus === CheckerStatus.ForReview &&
-              order.artistId && (
-                <OrderViewDesignApproveButton id={order.id} mutate={mutate} />
-              )}
-          </div>
+          {!!currentDesign && (
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" asChild>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_API_URL}/api/Designs/${currentDesign.id}/download`}
+                  target="_blank"
+                  prefetch={false}
+                >
+                  Download
+                </Link>
+              </Button>
+              {isChecker &&
+                order.checkerStatus === CheckerStatus.ForReview &&
+                order.artistId && (
+                  <OrderViewDesignApproveButton id={order.id} mutate={mutate} />
+                )}
+            </div>
+          )}
         </div>
       )}
       {!!currentDesign && (
