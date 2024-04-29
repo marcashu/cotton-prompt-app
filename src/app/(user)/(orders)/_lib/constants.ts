@@ -8,7 +8,7 @@ export const columnDef: ColumnDef<GetOrdersModel>[] = [
   {
     accessorKey: "orderNumber",
     header: "Order Number",
-    cell: (({ row }) => OrdersDataTableOrderNumber({ row }))
+    cell: (({ row }) => OrdersDataTableOrderNumber({ row, canView: true }))
   },
   {
     id: "date",
