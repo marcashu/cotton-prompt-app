@@ -1,24 +1,22 @@
-"use client"
-
 import { TypographySmall } from "@/components/ui/typography"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { Row } from "@tanstack/react-table"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 export default function OrdersDataTableOrderNumber({
   row,
+  canView,
 }: {
   row: Row<GetOrdersModel>
+  canView: boolean
 }) {
   const order = row.original
-  const pathname = usePathname()
 
-  return pathname.startsWith("/available-orders-as-artist") ? (
-    <TypographySmall>{order.orderNumber}</TypographySmall>
-  ) : (
+  return canView ? (
     <Link href={`/view-order/${order.id}`} className="font-medium">
       {order.orderNumber}
     </Link>
+  ) : (
+    <TypographySmall>{order.orderNumber}</TypographySmall>
   )
 }

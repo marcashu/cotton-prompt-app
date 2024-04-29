@@ -8,7 +8,7 @@ const getOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersModel, un
   {
     accessorKey: "orderNumber",
     header: "Order Number",
-    cell: (({ row }) => OrdersDataTableOrderNumber({ row }))
+    cell: (({ row }) => OrdersDataTableOrderNumber({ row, canView: false }))
   },
   {
     id: "date",
