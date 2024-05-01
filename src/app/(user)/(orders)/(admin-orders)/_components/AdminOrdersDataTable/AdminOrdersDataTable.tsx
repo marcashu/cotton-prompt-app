@@ -9,6 +9,7 @@ import { CellContext } from "@tanstack/react-table"
 import getAdminOrdersColumnDef from "../../_lib/adminOrdersColumnDef"
 import DeleteOrderDialog from "@/components/modules/orders/list/OrdersDataTableActions/DeleteOrderDialog"
 import AdminOrdersDataTableActions from "./AdminOrdersDataTableActions"
+import ResendOrderForCustomerReviewDialog from "./ResendOrderForCustomerReviewDialog"
 
 export default function AdminOrdersDataTable({
   adminStatus,
@@ -18,16 +19,22 @@ export default function AdminOrdersDataTable({
   const baseUrl = `/api/orders/${adminStatus}`
   const [url, setUrl] = useState(baseUrl)
   const { data, isLoading, mutate } = useSWR<GetOrdersModel[]>(url)
-  const [open, setOpen] = useState(false)
-  const [deleteId, setDeleteId] = useState(0)
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+  const [openResendDialog, setOpenResendDialog] = useState(false)
+  const [selectedOrderId, setSelectedOrderId] = useState(0)
 
   const handleSearch = (orderNumber?: string) => {
     setUrl(`${baseUrl}?orderNumber=${orderNumber}`)
   }
 
   const handleDelete = (id: number) => {
-    setDeleteId(id)
-    setOpen(true)
+    setSelectedOrderId(id)
+    setOpenDeleteDialog(true)
+  }
+
+  const handleResend = (id: number) => {
+    setSelectedOrderId(id)
+    setOpenResendDialog(true)
   }
 
   const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
@@ -37,6 +44,7 @@ export default function AdminOrdersDataTable({
         adminStatus={adminStatus}
         order={order}
         onDelete={handleDelete}
+        onResend={handleResend}
       />
     )
   }
@@ -44,10 +52,17 @@ export default function AdminOrdersDataTable({
   return (
     <>
       <DeleteOrderDialog
-        id={deleteId}
-        open={open}
+        id={selectedOrderId}
+        open={openDeleteDialog}
         mutate={mutate}
-        handleClose={() => setOpen(false)}
+        handleClose={() => setOpenDeleteDialog(false)}
+      />
+      <ResendOrderForCustomerReviewDialog
+        id={selectedOrderId}
+        open={openResendDialog}
+        mutate={mutate}
+        handleClose={() => setOpenResendDialog(false)}
+        adminStatus={adminStatus}
       />
       <AdminOrderFilters onSearch={handleSearch} />
       <DataTable

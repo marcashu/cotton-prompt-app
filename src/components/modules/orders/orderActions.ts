@@ -102,3 +102,9 @@ export const changeRequestOrder = async (id: number, designId: number, comment: 
     }),
   }, [`orderId:${id}`])
 }
+
+export const resendOrderForCustomerReview = async (id: number) => {
+  await mutate(`${baseUrl}/${id}/resend-for-customer-review`, {
+    method: "POST",
+  })
+}

@@ -11,15 +11,18 @@ import GetOrdersModel from "@/types/getOrdersModel"
 import EditOrderAction from "./EditOrderAction"
 import DeleteOrderAction from "./DeleteOrderAction"
 import DownloadOrderAction from "./DownloadOrderAction"
+import ResendForCustomerReviewAction from "./ResendForCustomerReviewAction"
 
 export default function AdminOrdersDataTableActions({
   adminStatus,
   order,
   onDelete,
+  onResend,
 }: {
   adminStatus: "ongoing" | "rejected" | "completed"
   order: GetOrdersModel
   onDelete: (id: number) => void
+  onResend: (id: number) => void
 }) {
   return (
     <DropdownMenu modal={false}>
@@ -43,6 +46,9 @@ export default function AdminOrdersDataTableActions({
           artistStatus={order.artistStatus}
           checkerStatus={order.checkerStatus}
         />
+        {(adminStatus === "ongoing" || adminStatus === "completed") && (
+          <ResendForCustomerReviewAction id={order.id} onResend={onResend} />
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )
