@@ -12,6 +12,7 @@ import EditOrderAction from "./EditOrderAction"
 import DeleteOrderAction from "./DeleteOrderAction"
 import DownloadOrderAction from "./DownloadOrderAction"
 import ResendForCustomerReviewAction from "./ResendForCustomerReviewAction"
+import CustomerStatus from "@/enums/customerStatus"
 
 export default function AdminOrdersDataTableActions({
   adminStatus,
@@ -46,9 +47,11 @@ export default function AdminOrdersDataTableActions({
           artistStatus={order.artistStatus}
           checkerStatus={order.checkerStatus}
         />
-        {(adminStatus === "ongoing" || adminStatus === "completed") && (
-          <ResendForCustomerReviewAction id={order.id} onResend={onResend} />
-        )}
+        {adminStatus !== "rejected" &&
+          (order.customerStatus === CustomerStatus.ForReview ||
+            order.customerStatus === CustomerStatus.Accepted) && (
+            <ResendForCustomerReviewAction id={order.id} onResend={onResend} />
+          )}
       </DropdownMenuContent>
     </DropdownMenu>
   )
