@@ -5,6 +5,8 @@ import CustomerStatus from "@/enums/customerStatus"
 import Image from "next/image"
 import FullscreenableImage from "@/components/ui/fullscreenable-image"
 
+export const dynamic = "force-dynamic"
+
 export default async function OrderProofPage({
   params,
 }: {
