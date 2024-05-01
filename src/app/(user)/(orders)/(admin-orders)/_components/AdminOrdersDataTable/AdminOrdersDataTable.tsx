@@ -7,18 +7,8 @@ import AdminOrderFilters from "./AdminOrderFilters"
 import { useState } from "react"
 import { CellContext } from "@tanstack/react-table"
 import getAdminOrdersColumnDef from "../../_lib/adminOrdersColumnDef"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import DeleteOrderDialog from "@/components/modules/orders/list/OrdersDataTableActions/DeleteOrderDialog"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { MoreHorizontal } from "lucide-react"
-import ArtistStatus from "@/enums/artistStatus"
+import AdminOrdersDataTableActions from "./AdminOrdersDataTableActions"
 
 export default function AdminOrdersDataTable({
   adminStatus,
@@ -35,56 +25,19 @@ export default function AdminOrdersDataTable({
     setUrl(`${baseUrl}?orderNumber=${orderNumber}`)
   }
 
+  const handleDelete = (id: number) => {
+    setDeleteId(id)
+    setOpen(true)
+  }
+
   const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
     const order = row.original
     return (
-      <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem className="cursor-pointer" asChild>
-            <Link href={`/view-order/${order.id}`}>View</Link>
-          </DropdownMenuItem>
-          {adminStatus === "ongoing" && (
-            <>
-              <DropdownMenuItem className="cursor-pointer" asChild>
-                <Link href={`/edit-order/${order.id}`}>Edit</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => {
-                  setDeleteId(order.id)
-                  setOpen(true)
-                }}
-              >
-                Delete
-              </DropdownMenuItem>
-            </>
-          )}
-          <DropdownMenuItem
-            disabled={
-              (!order.artistStatus ||
-                order.artistStatus === ArtistStatus.Claimed) &&
-              !order.checkerStatus
-            }
-            className="cursor-pointer"
-            asChild
-          >
-            <Link
-              href={`${process.env.NEXT_PUBLIC_API_URL}/api/Orders/${order.id}/download`}
-              target="_blank"
-              prefetch={false}
-            >
-              Download
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <AdminOrdersDataTableActions
+        adminStatus={adminStatus}
+        order={order}
+        onDelete={handleDelete}
+      />
     )
   }
 
