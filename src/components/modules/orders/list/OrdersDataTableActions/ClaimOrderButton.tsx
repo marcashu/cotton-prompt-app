@@ -34,13 +34,22 @@ export default function ClaimOrderButton({
       const assignToOrder =
         role === Role.Artist ? assignArtistToOrder : assignCheckerToOrder
 
-      assignToOrder(id, session.userId).then(() => {
+      assignToOrder(id, session.userId).then((canDo) => {
         setLoading(false)
         mutate(mutateKey)
-        toast({
-          title: "Order has been claimed successfully",
-          description: new Date().toLocaleString(),
-        })
+
+        if (canDo.canDo) {
+          toast({
+            title: "Order has been claimed successfully",
+            description: new Date().toLocaleString(),
+          })
+        } else {
+          toast({
+            variant: "warning",
+            title: "Order claim failed",
+            description: canDo.message,
+          })
+        }
       })
     } else {
       toast({
