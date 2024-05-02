@@ -1,12 +1,13 @@
 'use server'
 
+import CanDoModel from "@/types/canDoModel"
 import { OrderFormValues } from "./form/OrderForm/orderFormSchema"
-import { mutate } from "@/helpers/fetchHelper"
+import { mutate, queryMutate } from "@/helpers/fetchHelper"
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Orders`
 
 export const assignArtistToOrder = async (id: number, artistId: string) => {
-  await mutate(`${baseUrl}/${id}/artist`, {
+  const result = await queryMutate<CanDoModel>(`${baseUrl}/${id}/artist`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,11 +15,14 @@ export const assignArtistToOrder = async (id: number, artistId: string) => {
     body: JSON.stringify({
       artistId
     }),
+    cache: 'no-store',
   }, [`orderId:${id}`, `canClaim:${artistId}`])
+
+  return result
 }
 
 export const assignCheckerToOrder = async (id: number, checkerId: string) => {
-  await mutate(`${baseUrl}/${id}/checker`, {
+  const result = await queryMutate<CanDoModel>(`${baseUrl}/${id}/checker`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,7 +30,10 @@ export const assignCheckerToOrder = async (id: number, checkerId: string) => {
     body: JSON.stringify({
       checkerId
     }),
+    cache: 'no-store',
   }, [`orderId:${id}`])
+
+  return result
 }
 
 export const submitOrderDesign = async (id: number, design: string, fileName: string, artistId: string) => {
