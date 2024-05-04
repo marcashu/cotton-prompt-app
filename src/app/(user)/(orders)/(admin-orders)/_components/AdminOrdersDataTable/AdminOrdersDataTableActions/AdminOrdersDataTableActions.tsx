@@ -36,6 +36,19 @@ export default function AdminOrdersDataTableActions({
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <ViewOrderAction id={order.id} />
+        {(adminStatus === "ongoing" || adminStatus === "completed") &&
+          !!order.originalOrderId && (
+            <ViewOrderAction
+              id={order.originalOrderId!}
+              label="View Original Order"
+            />
+          )}
+        {adminStatus === "rejected" && !!order.changeRequestOrderId && (
+          <ViewOrderAction
+            id={order.changeRequestOrderId!}
+            label="View Change Request Order"
+          />
+        )}
         {adminStatus === "ongoing" && (
           <>
             <EditOrderAction id={order.id} />
