@@ -10,6 +10,8 @@ type GetOrdersModel = {
   checkerName?: string
   customerStatus: string
   customerName: string
+  originalOrderId?: number
+  changeRequestOrderId?: number
 }
 
 export default GetOrdersModel
