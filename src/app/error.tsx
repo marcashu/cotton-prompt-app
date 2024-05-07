@@ -17,12 +17,9 @@ export default function RootError({
         description="Kindly contact your admin and send the error
         log below"
       />
+      <TypographyMuted>{`${error.name}: ${error.message}`}</TypographyMuted>
       <TypographyMuted>
-        {error.stack ??
-          error.message ??
-          error.digest ??
-          error.name ??
-          "Error message not found."}
+        {error.stack ?? "Error message not found."}
       </TypographyMuted>
     </div>
   )
