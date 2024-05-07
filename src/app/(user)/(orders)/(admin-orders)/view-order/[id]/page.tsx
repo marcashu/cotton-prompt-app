@@ -7,6 +7,10 @@ import OrderViewImageReferences from "@/components/modules/orders/view/OrderView
 import OrderViewPreviousDesigns from "@/components/modules/orders/view/OrderViewPreviousDesigns"
 import GetOrderModel from "@/types/getOrderModel"
 import useSWR from "swr"
+import ReportOrderDialog from "./_components/ReportOrderDialog"
+import useSession from "@/hooks/useSession"
+import Role from "@/enums/role"
+import ArtistStatus from "@/enums/artistStatus"
 
 export default function ViewOrderPage({ params }: { params: { id: number } }) {
   const {
@@ -14,14 +18,22 @@ export default function ViewOrderPage({ params }: { params: { id: number } }) {
     isLoading,
     mutate,
   } = useSWR<GetOrderModel>(`/api/orders/${params.id}`)
+  const { session } = useSession()
 
-  if (isLoading || !order) return <></>
+  if (!session || isLoading || !order) return <></>
+
+  const canReportOrder =
+    session.selectedRole === Role.Artist &&
+    order.artistStatus === ArtistStatus.Claimed
 
   return (
     <div className="grid grid-cols-2 gap-4">
       <PageHeaderWithBack
         title={`Order ${order.orderNumber}`}
         description="Viewing order details."
+        {...(canReportOrder && {
+          action: <ReportOrderDialog id={order.id} />,
+        })}
       />
       <OrderViewDetails order={order} />
       <OrderViewImageReferences urls={order.imageReferences} />

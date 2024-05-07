@@ -115,3 +115,16 @@ export const resendOrderForCustomerReview = async (id: number) => {
     method: "POST",
   })
 }
+
+export const reportOrder = async (id: number, reason: string, userId: string) => {
+  await mutate(`${baseUrl}/${id}/report`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      reason,
+      userId,
+    }),
+  }, [`orderId:${id}`])
+}

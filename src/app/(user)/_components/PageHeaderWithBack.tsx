@@ -8,9 +8,11 @@ import { useRouter } from "next/navigation"
 export default function PageHeaderWithBack({
   title,
   description,
+  action,
 }: {
   title: string
   description?: string
+  action?: React.ReactNode
 }) {
   const router = useRouter()
 
@@ -18,19 +20,17 @@ export default function PageHeaderWithBack({
 
   return (
     <TypographyH2 withSeparator className="mb-4 col-span-2">
-      <div className="flex gap-2">
-        <Button
-          variant="link"
-          size="icon"
-          className="mr-2"
-          onClick={handleBack}
-        >
-          <ChevronLeft className="h-5 w-5" strokeWidth={4} />
-        </Button>
-        <div>
-          {title}
-          {!!description && <TypographyMuted>{description}</TypographyMuted>}
+      <div className="flex justify-between">
+        <div className="flex gap-2">
+          <Button variant="link" size="icon" onClick={handleBack}>
+            <ChevronLeft className="h-5 w-5" strokeWidth={4} />
+          </Button>
+          <div>
+            {title}
+            {!!description && <TypographyMuted>{description}</TypographyMuted>}
+          </div>
         </div>
+        {action}
       </div>
     </TypographyH2>
   )
