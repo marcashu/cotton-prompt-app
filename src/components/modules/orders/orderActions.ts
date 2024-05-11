@@ -128,3 +128,15 @@ export const reportOrder = async (id: number, reason: string, userId: string) =>
     }),
   }, [`orderId:${id}`])
 }
+
+export const resolveOrder = async (id: number, resolvedBy: string) => {
+  await mutate(`${baseUrl}/${id}/resolve`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      resolvedBy,
+    }),
+  }, [`orderId:${id}`])
+}

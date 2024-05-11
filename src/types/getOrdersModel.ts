@@ -12,6 +12,7 @@ type GetOrdersModel = {
   customerName: string
   originalOrderId?: number
   changeRequestOrderId?: number
+  reason?: string
 }
 
 export default GetOrdersModel

@@ -13,17 +13,21 @@ import DeleteOrderAction from "./DeleteOrderAction"
 import DownloadOrderAction from "./DownloadOrderAction"
 import ResendForCustomerReviewAction from "./ResendForCustomerReviewAction"
 import CustomerStatus from "@/enums/customerStatus"
+import AdminStatus from "@/enums/adminStatus"
+import ResolveOrderAction from "./ResolveOrderAction"
 
 export default function AdminOrdersDataTableActions({
   adminStatus,
   order,
   onDelete,
   onResend,
+  onResolve,
 }: {
-  adminStatus: "ongoing" | "rejected" | "completed"
+  adminStatus: AdminStatus
   order: GetOrdersModel
   onDelete: (id: number) => void
   onResend: (id: number) => void
+  onResolve: (id: number) => void
 }) {
   return (
     <DropdownMenu modal={false}>
@@ -36,20 +40,23 @@ export default function AdminOrdersDataTableActions({
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <ViewOrderAction id={order.id} />
-        {(adminStatus === "ongoing" || adminStatus === "completed") &&
+        {(adminStatus === AdminStatus.Ongoing ||
+          adminStatus === AdminStatus.Completed) &&
           !!order.originalOrderId && (
             <ViewOrderAction
               id={order.originalOrderId!}
               label="View Original Order"
             />
           )}
-        {adminStatus === "rejected" && !!order.changeRequestOrderId && (
-          <ViewOrderAction
-            id={order.changeRequestOrderId!}
-            label="View Change Request Order"
-          />
-        )}
-        {adminStatus === "ongoing" && (
+        {adminStatus === AdminStatus.Rejected &&
+          !!order.changeRequestOrderId && (
+            <ViewOrderAction
+              id={order.changeRequestOrderId!}
+              label="View Change Request Order"
+            />
+          )}
+        {(adminStatus === AdminStatus.Ongoing ||
+          adminStatus === AdminStatus.Reported) && (
           <>
             <EditOrderAction id={order.id} />
             <DeleteOrderAction id={order.id} onDelete={onDelete} />
@@ -60,11 +67,14 @@ export default function AdminOrdersDataTableActions({
           artistStatus={order.artistStatus}
           checkerStatus={order.checkerStatus}
         />
-        {adminStatus !== "rejected" &&
+        {adminStatus !== AdminStatus.Rejected &&
           (order.customerStatus === CustomerStatus.ForReview ||
             order.customerStatus === CustomerStatus.Accepted) && (
             <ResendForCustomerReviewAction id={order.id} onResend={onResend} />
           )}
+        {adminStatus === AdminStatus.Reported && (
+          <ResolveOrderAction id={order.id} onResolve={onResolve} />
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

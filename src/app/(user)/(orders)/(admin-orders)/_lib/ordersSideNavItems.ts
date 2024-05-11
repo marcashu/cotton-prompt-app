@@ -13,6 +13,10 @@ const ordersSideNavItems: NavItem[] = [
     name: "Completed Orders",
     href: "/completed-orders",
   },
+  {
+    name: "Reported Orders",
+    href: "/reported-orders",
+  },
 ]
 
 export default ordersSideNavItems

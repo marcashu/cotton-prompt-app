@@ -71,7 +71,7 @@ export default function ReportOrderDialog({ id }: { id: number }) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline">Report a Problem</Button>
+        <Button variant="destructive">Report a Problem</Button>
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
