@@ -2,7 +2,7 @@ type GetOrdersModel = {
   id: number
   orderNumber: string
   priority: boolean
-  createdOn: string
+  date: string
   artistStatus?: string
   checkerStatus?: string
   artistId?: string
@@ -13,6 +13,7 @@ type GetOrdersModel = {
   originalOrderId?: number
   changeRequestOrderId?: number
   reason?: string
+  reporterName?: string
 }
 
 export default GetOrdersModel

@@ -102,7 +102,7 @@ export default function ReportOrderDialog({ id }: { id: number }) {
                 </Button>
               </DialogClose>
               <Button type="submit" loading={loading}>
-                Save changes
+                Submit
               </Button>
             </DialogFooter>
           </form>

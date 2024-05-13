@@ -62,11 +62,13 @@ export default function AdminOrdersDataTableActions({
             <DeleteOrderAction id={order.id} onDelete={onDelete} />
           </>
         )}
-        <DownloadOrderAction
-          id={order.id}
-          artistStatus={order.artistStatus}
-          checkerStatus={order.checkerStatus}
-        />
+        {adminStatus !== AdminStatus.Reported && (
+          <DownloadOrderAction
+            id={order.id}
+            artistStatus={order.artistStatus}
+            checkerStatus={order.checkerStatus}
+          />
+        )}
         {adminStatus !== AdminStatus.Rejected &&
           (order.customerStatus === CustomerStatus.ForReview ||
             order.customerStatus === CustomerStatus.Accepted) && (
