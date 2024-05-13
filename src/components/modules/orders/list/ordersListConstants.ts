@@ -12,7 +12,7 @@ const getOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersModel, un
   },
   {
     id: "date",
-    accessorFn: (order) => formatDateToYYYYMMDD(order.createdOn),
+    accessorFn: (order) => formatDateToYYYYMMDD(order.date),
     header: "Date",
   },
   {

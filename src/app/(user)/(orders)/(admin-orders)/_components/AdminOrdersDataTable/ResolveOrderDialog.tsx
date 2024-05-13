@@ -1,33 +1,34 @@
-import { resendOrderForCustomerReview } from "@/components/modules/orders/orderActions"
+import { resolveOrder } from "@/components/modules/orders/orderActions"
 import { KeyedMutator } from "swr"
 import { useToast } from "@/components/ui/use-toast"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
 import GetOrdersModel from "@/types/getOrdersModel"
-import AdminStatus from "@/enums/adminStatus"
+import useSession from "@/hooks/useSession"
 
-export default function ResendOrderForCustomerReviewDialog({
+export default function ResolveOrderDialog({
   id,
   open,
   mutate,
   handleClose,
-  adminStatus,
 }: {
   id: number
   open: boolean
   mutate: KeyedMutator<GetOrdersModel[]>
   handleClose: () => void
-  adminStatus: AdminStatus
 }) {
   const { toast } = useToast()
+  const { session } = useSession()
+
+  if (!session) return <></>
 
   const handleContinue = async () => {
     try {
-      await resendOrderForCustomerReview(id)
+      await resolveOrder(id, session.userId)
       mutate()
     } finally {
       handleClose()
       toast({
-        title: "Order has been resent to the customer successfully",
+        title: "Order has been resolved successfully",
         description: new Date().toLocaleString(),
       })
     }
@@ -36,11 +37,8 @@ export default function ResendOrderForCustomerReviewDialog({
   return (
     <ConfirmAlertDialog
       open={open}
-      title="Are you sure you want to resend this order to the customer?"
-      {...(adminStatus === AdminStatus.Completed && {
-        description:
-          'This action will revert the customer status to "For Review"',
-      })}
+      title="Are you sure you want to resolve this order?"
+      description="This action will make this order available for artists to claim"
       confirmButtonCaption="Continue"
       onConfirm={handleContinue}
       onCancel={handleClose}

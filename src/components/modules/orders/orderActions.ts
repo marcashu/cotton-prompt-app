@@ -115,3 +115,28 @@ export const resendOrderForCustomerReview = async (id: number) => {
     method: "POST",
   })
 }
+
+export const reportOrder = async (id: number, reason: string, userId: string) => {
+  await mutate(`${baseUrl}/${id}/report`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      reason,
+      userId,
+    }),
+  }, [`orderId:${id}`])
+}
+
+export const resolveOrder = async (id: number, resolvedBy: string) => {
+  await mutate(`${baseUrl}/${id}/resolve`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      resolvedBy,
+    }),
+  }, [`orderId:${id}`])
+}

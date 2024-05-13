@@ -3,8 +3,71 @@ import { formatDateToYYYYMMDD } from "@/helpers/dateHelper";
 import GetOrdersModel from "@/types/getOrdersModel";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import UserInfoCell from "../_components/AdminOrdersDataTable/UserInfoCell";
+import AdminStatus from "@/enums/adminStatus";
+import { TypographyP, TypographySmall } from "@/components/ui/typography";
 
-const getAdminOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element): ColumnDef<GetOrdersModel>[] => [
+const artistColumn: ColumnDef<GetOrdersModel> = {
+  id: "artist",
+  header: "Artist",
+  cell: ({ row }) => {
+    const order = row.original
+    const result = UserInfoCell({ name: order.artistName, status: order.artistStatus })
+    return result
+  }
+}
+
+const checkerColumn: ColumnDef<GetOrdersModel> = {
+  id: "checker",
+  header: "Checker",
+  cell: ({ row }) => {
+    const order = row.original
+    const result = UserInfoCell({ name: order.checkerName, status: order.checkerStatus })
+    return result
+  }
+}
+
+const customerColumn: ColumnDef<GetOrdersModel> = {
+  id: "customer",
+  header: "Customer",
+  cell: ({ row }) => {
+    const order = row.original
+    const result = UserInfoCell({ name: order.customerName, status: order.customerStatus })
+    return result
+  }
+}
+
+const priorityColumn: ColumnDef<GetOrdersModel> = {
+  id: "priority",
+  accessorFn: (order) => order.priority ? 'Yes' : 'No',
+  header: "Priority",
+}
+
+const reporterColumn: ColumnDef<GetOrdersModel> = {
+  id: "reporter",
+  header: "Reported By",
+  cell: ({ row }) => {
+    const order = row.original
+    const result = TypographySmall({ children: order.reporterName, className: 'text-center' })
+    return result
+  }
+}
+
+const reasonColumn: ColumnDef<GetOrdersModel> = {
+  id: "reason",
+  header: "Reason",
+  cell: ({ row }) => {
+    const order = row.original
+    const result = TypographyP({ children: order.reason, className: 'max-w-md' })
+    return result
+  }
+}
+
+const getDateHeader = (adminStatus: AdminStatus) => {
+  const result = `Date ${adminStatus === AdminStatus.Ongoing ? 'Created' : adminStatus}`
+  return result
+}
+
+const getAdminOrdersColumnDef = (adminStatus: AdminStatus, actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element): ColumnDef<GetOrdersModel>[] => [
   {
     accessorKey: "orderNumber",
     header: "Order Number",
@@ -12,41 +75,10 @@ const getAdminOrdersColumnDef = (actionCell: ({ row }: CellContext<GetOrdersMode
   },
   {
     id: "date",
-    accessorFn: (order) => formatDateToYYYYMMDD(order.createdOn),
-    header: "Date",
+    accessorFn: (order) => formatDateToYYYYMMDD(order.date),
+    header: getDateHeader(adminStatus),
   },
-  {
-    id: "priority",
-    accessorFn: (order) => order.priority ? 'Yes' : 'No',
-    header: "Priority",
-  },
-  {
-    id: "artist",
-    header: "Artist",
-    cell: ({ row }) => {
-      const order = row.original
-      const result = UserInfoCell({ name: order.artistName, status: order.artistStatus })
-      return result
-    }
-  },
-  {
-    id: "checker",
-    header: "Checker",
-    cell: ({ row }) => {
-      const order = row.original
-      const result = UserInfoCell({ name: order.checkerName, status: order.checkerStatus })
-      return result
-    }
-  },
-  {
-    id: "customer",
-    header: "Customer",
-    cell: ({ row }) => {
-      const order = row.original
-      const result = UserInfoCell({ name: order.customerName, status: order.customerStatus })
-      return result
-    }
-  },
+  ...(adminStatus !== AdminStatus.Reported ? [priorityColumn, artistColumn, checkerColumn, customerColumn] : [reporterColumn, reasonColumn]),
   {
     id: "actions",
     cell: actionCell

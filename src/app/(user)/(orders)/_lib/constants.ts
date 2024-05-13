@@ -12,7 +12,7 @@ export const columnDef: ColumnDef<GetOrdersModel>[] = [
   },
   {
     id: "date",
-    accessorFn: (order) => formatDateToYYYYMMDD(order.createdOn),
+    accessorFn: (order) => formatDateToYYYYMMDD(order.date),
     header: "Date",
   },
   {
