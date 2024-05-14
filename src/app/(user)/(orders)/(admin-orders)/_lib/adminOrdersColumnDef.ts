@@ -63,7 +63,11 @@ const reasonColumn: ColumnDef<GetOrdersModel> = {
 }
 
 const getDateHeader = (adminStatus: AdminStatus) => {
-  const result = `Date ${adminStatus === AdminStatus.Ongoing ? 'Created' : adminStatus}`
+  if (adminStatus === AdminStatus.Ongoing) return 'Date Created'
+
+  if (adminStatus === AdminStatus.SentForPrinting) return 'Date Sent'
+
+  const result = `Date ${adminStatus}`
   return result
 }
 

@@ -17,6 +17,10 @@ const ordersSideNavItems: NavItem[] = [
     name: "Completed Orders",
     href: "/completed-orders",
   },
+  {
+    name: "Sent for Printing Orders",
+    href: "/sent-for-printing-orders",
+  },
 ]
 
 export default ordersSideNavItems

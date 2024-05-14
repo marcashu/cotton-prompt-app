@@ -140,3 +140,15 @@ export const resolveOrder = async (id: number, resolvedBy: string) => {
     }),
   }, [`orderId:${id}`])
 }
+
+export const sendOrderForPrinting = async (id: number, userId: string) => {
+  await mutate(`${baseUrl}/${id}/send-for-printing`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+    }),
+  }, [`orderId:${id}`])
+}
