@@ -1,5 +1,9 @@
 import { getOrderById } from "@/components/modules/orders/orderService"
-import { TypographyH2, TypographyMuted } from "@/components/ui/typography"
+import {
+  TypographyH2,
+  TypographyLarge,
+  TypographyMuted,
+} from "@/components/ui/typography"
 import OrderProofButtons from "./_components/OrderProofButtons"
 import CustomerStatus from "@/enums/customerStatus"
 import Image from "next/image"
@@ -20,7 +24,7 @@ export default async function OrderProofPage({
 
   return (
     <div
-      className="flex flex-col gap-4 bg-[#f0e9da] pb-4"
+      className="flex flex-col gap-4 bg-[#f0e9da] pb-5"
       style={{ height: "100dvh" }}
     >
       <div>
@@ -37,14 +41,31 @@ export default async function OrderProofPage({
       </div>
       <div className="grow flex flex-col">
         <div className="grow relative">
-          <FullscreenableImage src={design.url} alt="design preview" />
+          <FullscreenableImage
+            src={
+              order.customerStatus === CustomerStatus.ForReview
+                ? design.url
+                : "/order-proof-placeholder.png"
+            }
+            alt="design preview"
+          />
         </div>
-        <TypographyMuted className="italic text-center">
-          Tip: Click on the image to toggle fullscreen
-        </TypographyMuted>
+        {order.customerStatus === CustomerStatus.ForReview && (
+          <TypographyMuted className="italic text-center">
+            Tip: Click on the image to toggle fullscreen
+          </TypographyMuted>
+        )}
       </div>
-      {order.customerStatus === CustomerStatus.ForReview && (
+      {order.customerStatus === CustomerStatus.ForReview ? (
         <OrderProofButtons orderId={orderId} designId={design.id} />
+      ) : order.customerStatus === CustomerStatus.Accepted ? (
+        <TypographyLarge className="text-center italic text-[#3a3a3a]">
+          We are currently working on finalizing your order.
+        </TypographyLarge>
+      ) : (
+        <TypographyLarge className="text-center italic text-[#3a3a3a]">
+          We are currently updating the order design based on your request.
+        </TypographyLarge>
       )}
     </div>
   )
