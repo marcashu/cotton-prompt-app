@@ -15,6 +15,7 @@ import ResendForCustomerReviewAction from "./ResendForCustomerReviewAction"
 import CustomerStatus from "@/enums/customerStatus"
 import AdminStatus from "@/enums/adminStatus"
 import ResolveOrderAction from "./ResolveOrderAction"
+import SendForPrintingOrderAction from "./SendForPrintingOrderAction"
 
 export default function AdminOrdersDataTableActions({
   adminStatus,
@@ -22,12 +23,14 @@ export default function AdminOrdersDataTableActions({
   onDelete,
   onResend,
   onResolve,
+  onSendForPrinting,
 }: {
   adminStatus: AdminStatus
   order: GetOrdersModel
   onDelete: (id: number) => void
   onResend: (id: number) => void
   onResolve: (id: number) => void
+  onSendForPrinting: (id: number) => void
 }) {
   return (
     <DropdownMenu modal={false}>
@@ -76,6 +79,12 @@ export default function AdminOrdersDataTableActions({
           )}
         {adminStatus === AdminStatus.Reported && (
           <ResolveOrderAction id={order.id} onResolve={onResolve} />
+        )}
+        {adminStatus === AdminStatus.Completed && (
+          <SendForPrintingOrderAction
+            id={order.id}
+            onSendForPrinting={onSendForPrinting}
+          />
         )}
       </DropdownMenuContent>
     </DropdownMenu>

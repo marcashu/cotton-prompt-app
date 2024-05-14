@@ -12,6 +12,7 @@ import AdminOrdersDataTableActions from "./AdminOrdersDataTableActions"
 import ResendOrderForCustomerReviewDialog from "./ResendOrderForCustomerReviewDialog"
 import AdminStatus from "@/enums/adminStatus"
 import ResolveOrderDialog from "./ResolveOrderDialog"
+import SendOrderForPrintingDialog from "./SendOrderForPrintingDialog"
 
 export default function AdminOrdersDataTable({
   adminStatus,
@@ -24,6 +25,8 @@ export default function AdminOrdersDataTable({
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [openResendDialog, setOpenResendDialog] = useState(false)
   const [openResolveDialog, setOpenResolveDialog] = useState(false)
+  const [openSendForPrintingDialog, setOpenSendForPrintingDialog] =
+    useState(false)
   const [selectedOrderId, setSelectedOrderId] = useState(0)
 
   const handleSearch = (orderNumber?: string) => {
@@ -45,6 +48,11 @@ export default function AdminOrdersDataTable({
     setOpenResolveDialog(true)
   }
 
+  const handleSendForPrinting = (id: number) => {
+    setSelectedOrderId(id)
+    setOpenSendForPrintingDialog(true)
+  }
+
   const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
     const order = row.original
     return (
@@ -54,6 +62,7 @@ export default function AdminOrdersDataTable({
         onDelete={handleDelete}
         onResend={handleResend}
         onResolve={handleResolve}
+        onSendForPrinting={handleSendForPrinting}
       />
     )
   }
@@ -78,6 +87,12 @@ export default function AdminOrdersDataTable({
         open={openResolveDialog}
         mutate={mutate}
         handleClose={() => setOpenResolveDialog(false)}
+      />
+      <SendOrderForPrintingDialog
+        id={selectedOrderId}
+        open={openSendForPrintingDialog}
+        mutate={mutate}
+        handleClose={() => setOpenSendForPrintingDialog(false)}
       />
       <AdminOrderFilters onSearch={handleSearch} />
       <DataTable
