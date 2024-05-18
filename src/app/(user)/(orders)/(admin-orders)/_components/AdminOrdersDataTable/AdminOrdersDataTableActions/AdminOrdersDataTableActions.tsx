@@ -72,11 +72,13 @@ export default function AdminOrdersDataTableActions({
             checkerStatus={order.checkerStatus}
           />
         )}
-        {adminStatus !== AdminStatus.Rejected &&
-          (order.customerStatus === CustomerStatus.ForReview ||
-            order.customerStatus === CustomerStatus.Accepted) && (
-            <ResendForCustomerReviewAction id={order.id} onResend={onResend} />
-          )}
+        {(order.customerStatus === CustomerStatus.ForReview ||
+          (order.customerStatus === CustomerStatus.Accepted &&
+            adminStatus === AdminStatus.Completed) ||
+          (order.customerStatus === CustomerStatus.ChangeRequested &&
+            !order.changeRequestOrderId)) && (
+          <ResendForCustomerReviewAction id={order.id} onResend={onResend} />
+        )}
         {adminStatus === AdminStatus.Reported && (
           <ResolveOrderAction id={order.id} onResolve={onResolve} />
         )}
