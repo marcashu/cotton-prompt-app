@@ -37,7 +37,8 @@ export default function ResendOrderForCustomerReviewDialog({
     <ConfirmAlertDialog
       open={open}
       title="Are you sure you want to resend this order to the customer?"
-      {...(adminStatus === AdminStatus.Completed && {
+      {...((adminStatus === AdminStatus.Completed ||
+        adminStatus === AdminStatus.Rejected) && {
         description:
           'This action will revert the customer status to "For Review"',
       })}
