@@ -8,8 +8,7 @@ const orderFormSchema = z.object({
   priority: z.boolean().default(false).optional(),
   concept: z
     .string()
-    .min(1, "Please enter concept.")
-    .max(800, "Concept must not be longer than 800 characters."),
+    .min(1, "Please enter concept."),
   printColorId: z.string().min(1, "Please select a print color."),
   designBracketId: z.string().min(1, "Please select a design bracket."),
   outputSizeId: z.string().min(1, "Please select an output size."),
