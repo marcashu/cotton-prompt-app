@@ -39,7 +39,7 @@ const artistNavItems = (userId: string): NavItem[] => [
   },
   {
     name: "Your Orders as Artist",
-    href: "/your-orders-as-artist",
+    href: `/your-orders-as-artist/${userId}`,
   },
   {
     name: "Invoices",
