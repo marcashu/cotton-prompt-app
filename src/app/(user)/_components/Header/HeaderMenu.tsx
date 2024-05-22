@@ -47,14 +47,14 @@ const artistNavItems = (userId: string): NavItem[] => [
   },
 ]
 
-const checkerNavItems: NavItem[] = [
+const checkerNavItems = (userId: string): NavItem[] => [
   {
     name: "Available Orders as Checker",
     href: "/available-orders-as-checker",
   },
   {
     name: "Your Orders as Checker",
-    href: "/your-orders-as-checker",
+    href: `/your-orders-as-checker/${userId}`,
   },
   {
     name: "Invoices",
@@ -71,7 +71,7 @@ export default function HeaderMenu() {
   const navItems = isAdmin(session.selectedRole)
     ? adminNavItems
     : session.selectedRole === Role.Checker
-    ? checkerNavItems
+    ? checkerNavItems(session.userId)
     : artistNavItems(session.userId)
 
   return (
