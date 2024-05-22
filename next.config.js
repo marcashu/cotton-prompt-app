@@ -13,7 +13,7 @@ const nextConfig = {
         pathname: '**',
       },
     ],
-    minimumCacheTTL: 60 * 60 * 24, // 24 hours
+    minimumCacheTTL: 60 * 60 * 6, // 6 hours
   },
   experimental: {
     serverActions: {
