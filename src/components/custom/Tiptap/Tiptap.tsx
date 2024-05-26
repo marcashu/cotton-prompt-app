@@ -6,39 +6,37 @@ import TextAlign from "@tiptap/extension-text-align"
 import Underline from "@tiptap/extension-underline"
 import MenuBar from "./MenuBar"
 import styles from "./Tiptap.module.css"
-import SaveTiptapButton from "./SaveTiptapButton"
-import { useState } from "react"
 
 export default function Tiptap({
-  content,
-  onSave,
+  value,
+  error,
+  errorMessage,
+  onChange,
 }: {
-  content: string
-  onSave: (content: string) => Promise<void>
+  value: string
+  error: boolean
+  errorMessage: string
+  onChange: (value: string) => void
 }) {
   const extensions = [
     StarterKit,
     TextAlign.configure({ types: ["heading", "paragraph"] }),
     Underline,
   ]
-  const [error, setError] = useState(false)
 
   return (
     <div className={styles["tiptap-container"]}>
       <EditorProvider
         extensions={extensions}
-        content={content}
+        content={value}
         slotBefore={<MenuBar />}
         slotAfter={
           <>
             {error && (
               <p className="text-sm font-medium text-destructive mt-2">
-                {
-                  "Email should contain {link} as placeholder for the order proof URL."
-                }
+                {errorMessage}
               </p>
             )}
-            <SaveTiptapButton onSave={onSave} disabled={error} />
           </>
         }
         editorProps={{
@@ -47,12 +45,19 @@ export default function Tiptap({
           },
         }}
         onUpdate={(props) => {
-          const content = props.editor.getHTML()
-          setError(!content.includes("{link}"))
+          const content = formatHtml(props.editor.getHTML())
+          onChange(content)
         }}
       >
         <div></div>
       </EditorProvider>
     </div>
   )
+}
+
+const formatHtml = (content: string) => {
+  const result = content
+    .replaceAll('<p style="', '<p style="margin: 0;')
+    .replaceAll("<p>", '<p style="margin: 0">')
+  return result
 }
