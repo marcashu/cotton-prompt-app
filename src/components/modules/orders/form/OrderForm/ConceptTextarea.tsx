@@ -1,13 +1,6 @@
 import { Control } from "react-hook-form"
 import { OrderFormValues } from "./orderFormSchema"
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
+import FormTipTap from "@/components/custom/Tiptap/FormTiptap"
 
 export default function ConceptTextarea({
   control,
@@ -17,18 +10,11 @@ export default function ConceptTextarea({
   className?: string
 }) {
   return (
-    <FormField
+    <FormTipTap
+      label="Concept"
       control={control}
       name="concept"
-      render={({ field }) => (
-        <FormItem className={className}>
-          <FormLabel>Concept</FormLabel>
-          <FormControl>
-            <Textarea className="resize-none" {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
+      className={className}
     />
   )
 }

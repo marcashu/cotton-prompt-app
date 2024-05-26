@@ -6,17 +6,16 @@ import TextAlign from "@tiptap/extension-text-align"
 import Underline from "@tiptap/extension-underline"
 import MenuBar from "./MenuBar"
 import styles from "./Tiptap.module.css"
+import { cn } from "@/lib/utils"
 
 export default function Tiptap({
   value,
-  error,
-  errorMessage,
   onChange,
+  readOnly,
 }: {
   value: string
-  error: boolean
-  errorMessage: string
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
+  readOnly?: boolean
 }) {
   const extensions = [
     StarterKit,
@@ -29,25 +28,21 @@ export default function Tiptap({
       <EditorProvider
         extensions={extensions}
         content={value}
-        slotBefore={<MenuBar />}
-        slotAfter={
-          <>
-            {error && (
-              <p className="text-sm font-medium text-destructive mt-2">
-                {errorMessage}
-              </p>
-            )}
-          </>
-        }
+        editable={!readOnly}
+        {...(!readOnly && {
+          slotBefore: <MenuBar />,
+        })}
         editorProps={{
           attributes: {
-            class: "min-h-[200px] rounded-md border border-input px-3 py-2",
+            class: cn(
+              "min-h-[200px]",
+              !readOnly && "border border-input rounded-md px-3 py-2"
+            ),
           },
         }}
-        onUpdate={(props) => {
-          const content = formatHtml(props.editor.getHTML())
-          onChange(content)
-        }}
+        {...(onChange && {
+          onUpdate: ({ editor }) => onChange(formatHtml(editor.getHTML())),
+        })}
       >
         <div></div>
       </EditorProvider>

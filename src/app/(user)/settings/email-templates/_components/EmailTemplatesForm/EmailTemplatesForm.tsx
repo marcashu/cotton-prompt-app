@@ -40,12 +40,14 @@ export default function EmailTemplatesForm({
 
   return (
     <div>
-      <Tiptap
-        value={initialValue}
-        error={error}
-        errorMessage="Email should contain {link} as placeholder for the order proof URL."
-        onChange={handleChange}
-      />
+      <Tiptap value={initialValue} onChange={handleChange} />
+      {error && (
+        <p className="text-sm font-medium text-destructive mt-2">
+          {
+            "Email should contain {link} as placeholder for the order proof URL."
+          }
+        </p>
+      )}
       <Button
         className="mt-4"
         onClick={handleSave}
