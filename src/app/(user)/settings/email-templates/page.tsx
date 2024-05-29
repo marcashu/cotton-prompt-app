@@ -1,7 +1,6 @@
 import { TypographyH3 } from "@/components/ui/typography"
 import EmailTemplatesForm from "./_components/EmailTemplatesForm/EmailTemplatesForm"
 import { getEmailTemplates } from "./_lib/emailTemplatesService"
-import { updateOrderProof } from "./_lib/emailTemplatesActions"
 
 export default async function EmailTemplatesPage() {
   const emailTemplates = await getEmailTemplates()
@@ -9,10 +8,7 @@ export default async function EmailTemplatesPage() {
   return (
     <div className="px-8 max-w-3xl flex flex-col gap-4">
       <TypographyH3 withSeparator>Order Proof Ready Email</TypographyH3>
-      <EmailTemplatesForm
-        content={emailTemplates.orderProofReadyEmail}
-        onSave={updateOrderProof}
-      />
+      <EmailTemplatesForm value={emailTemplates.orderProofReadyEmail} />
     </div>
   )
 }

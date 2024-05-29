@@ -5,6 +5,7 @@ import { Undo2 } from "lucide-react"
 export default function UndoButton({ editor }: { editor: Editor }) {
   return (
     <Button
+      type="button"
       size="icon"
       variant="outline"
       onClick={() => editor.chain().focus().undo().run()}

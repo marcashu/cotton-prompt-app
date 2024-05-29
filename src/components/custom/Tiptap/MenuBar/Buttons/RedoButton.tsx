@@ -5,6 +5,7 @@ import { Redo2 } from "lucide-react"
 export default function RedoButton({ editor }: { editor: Editor }) {
   return (
     <Button
+      type="button"
       size="icon"
       variant="outline"
       onClick={() => editor.chain().focus().redo().run()}

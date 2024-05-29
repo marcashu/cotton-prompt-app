@@ -8,7 +8,7 @@ const orderFormSchema = z.object({
   priority: z.boolean().default(false).optional(),
   concept: z
     .string()
-    .min(1, "Please enter concept."),
+    .refine((value) => value !== '<p style="margin: 0"></p>', { message: 'Please enter concept.' }),
   printColorId: z.string().min(1, "Please select a print color."),
   designBracketId: z.string().min(1, "Please select a design bracket."),
   outputSizeId: z.string().min(1, "Please select an output size."),

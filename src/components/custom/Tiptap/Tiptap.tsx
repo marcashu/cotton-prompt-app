@@ -6,53 +6,53 @@ import TextAlign from "@tiptap/extension-text-align"
 import Underline from "@tiptap/extension-underline"
 import MenuBar from "./MenuBar"
 import styles from "./Tiptap.module.css"
-import SaveTiptapButton from "./SaveTiptapButton"
-import { useState } from "react"
+import { cn } from "@/lib/utils"
 
 export default function Tiptap({
-  content,
-  onSave,
+  value,
+  onChange,
+  readOnly,
 }: {
-  content: string
-  onSave: (content: string) => Promise<void>
+  value: string
+  onChange?: (value: string) => void
+  readOnly?: boolean
 }) {
   const extensions = [
     StarterKit,
     TextAlign.configure({ types: ["heading", "paragraph"] }),
     Underline,
   ]
-  const [error, setError] = useState(false)
 
   return (
     <div className={styles["tiptap-container"]}>
       <EditorProvider
         extensions={extensions}
-        content={content}
-        slotBefore={<MenuBar />}
-        slotAfter={
-          <>
-            {error && (
-              <p className="text-sm font-medium text-destructive mt-2">
-                {
-                  "Email should contain {link} as placeholder for the order proof URL."
-                }
-              </p>
-            )}
-            <SaveTiptapButton onSave={onSave} disabled={error} />
-          </>
-        }
+        content={value}
+        editable={!readOnly}
+        {...(!readOnly && {
+          slotBefore: <MenuBar />,
+        })}
         editorProps={{
           attributes: {
-            class: "min-h-[200px] rounded-md border border-input px-3 py-2",
+            class: cn(
+              "min-h-[200px]",
+              !readOnly && "border border-input rounded-md px-3 py-2"
+            ),
           },
         }}
-        onUpdate={(props) => {
-          const content = props.editor.getHTML()
-          setError(!content.includes("{link}"))
-        }}
+        {...(onChange && {
+          onUpdate: ({ editor }) => onChange(formatHtml(editor.getHTML())),
+        })}
       >
         <div></div>
       </EditorProvider>
     </div>
   )
+}
+
+const formatHtml = (content: string) => {
+  const result = content
+    .replaceAll('<p style="', '<p style="margin: 0;')
+    .replaceAll("<p>", '<p style="margin: 0">')
+  return result
 }

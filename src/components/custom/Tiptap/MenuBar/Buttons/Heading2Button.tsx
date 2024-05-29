@@ -7,6 +7,7 @@ export default function Heading2Button({ editor }: { editor: Editor }) {
 
   return (
     <Button
+      type="button"
       size="icon"
       variant="outline"
       onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}

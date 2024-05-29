@@ -7,6 +7,7 @@ export default function UnderlineButton({ editor }: { editor: Editor }) {
 
   return (
     <Button
+      type="button"
       size="icon"
       variant="outline"
       onClick={() => editor.chain().focus().toggleUnderline().run()}

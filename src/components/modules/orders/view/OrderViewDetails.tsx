@@ -1,3 +1,4 @@
+import Tiptap from "@/components/custom/Tiptap"
 import { Card } from "@/components/ui/card"
 import {
   TypographyH3,
@@ -34,7 +35,7 @@ export default function OrderViewDetails({ order }: { order: GetOrderModel }) {
       </div>
       <div>
         <TypographySmall>Concept</TypographySmall>
-        <TypographyMuted>{order.concept}</TypographyMuted>
+        <Tiptap value={order.concept} readOnly />
       </div>
     </Card>
   )
