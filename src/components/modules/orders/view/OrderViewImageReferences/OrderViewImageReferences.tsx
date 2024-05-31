@@ -21,8 +21,10 @@ export default function OrderViewImageReferences({ urls }: { urls: string[] }) {
               <ImageReference url={url} index={i} key={i} />
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <div className="flex gap-2 justify-center mt-2">
+            <CarouselPrevious type="button" />
+            <CarouselNext type="button" />
+          </div>
         </Carousel>
       ) : (
         <TypographyMuted>No image reference</TypographyMuted>

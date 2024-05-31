@@ -24,23 +24,33 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import ChangeRequestImageReferenceUrls from "./ChangeRequestImageReferenceUrls"
+import ImageReferenceModel from "@/types/imageReferenceModel"
 
 const formSchema = z.object({
   comment: z
-    .string()
-    .min(1, {
-      message: "Please enter comment.",
+    .string({
+      required_error: "Please enter a comment.",
     })
-    .max(3500, {
-      message: "Comment must not be longer than 3500 characters.",
-    }),
+    .min(1, { message: "Please enter a comment." }),
   imageReferences: z
     .array(
-      z.object({
-        value: z
-          .string()
-          .url({ message: "Please enter a valid image reference URL." }),
-      })
+      z
+        .object({
+          type: z.literal("Link").or(z.literal("File")),
+          value: z.string(),
+          name: z.string(),
+          filePreviewUrl: z.string().optional(),
+        })
+        .refine(
+          (val) => {
+            if (val.type !== "Link") return true
+            return z.string().url().safeParse(val.value).success
+          },
+          {
+            message: "Please enter a valid URL.",
+            path: ["value"],
+          }
+        )
     )
     .optional(),
 })
@@ -74,7 +84,7 @@ export default function OrderProofChangeRequestButton({
       orderId,
       designId,
       data.comment,
-      data.imageReferences?.map((ir) => ir.value) ?? []
+      (data.imageReferences as ImageReferenceModel[]) ?? []
     )
       .then(() =>
         toast({
@@ -100,7 +110,12 @@ export default function OrderProofChangeRequestButton({
           REQUEST FOR CHANGES
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-[#f0e9da]">
+      <DialogContent
+        className="bg-[#f0e9da]"
+        onInteractOutside={(e) => {
+          e.preventDefault()
+        }}
+      >
         <DialogHeader>
           <DialogTitle className="text-[#3A3A3A]">Change Request</DialogTitle>
         </DialogHeader>

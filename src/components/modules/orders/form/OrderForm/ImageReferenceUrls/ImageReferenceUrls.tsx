@@ -1,16 +1,16 @@
 import { ArrayPath, Control, FieldArray, useFieldArray } from "react-hook-form"
-import { ChangeRequestFormType } from "./OrderProofChangeRequestButton"
-import { FormDescription, FormLabel } from "@/components/ui/form"
+import { OrderFormValues } from "../orderFormSchema"
+import { FormLabel } from "@/components/ui/form"
 import { TypographyMuted } from "@/components/ui/typography"
-import ImageReferenceCarousel from "@/components/modules/orders/form/OrderForm/ImageReferenceUrls/ImageReferenceCarousel"
-import UploadImageButton from "@/components/modules/orders/form/OrderForm/ImageReferenceUrls/UploadImageButton"
-import AddLinkInput from "@/components/modules/orders/form/OrderForm/ImageReferenceUrls/AddLinkInput"
+import AddLinkInput from "./AddLinkInput"
+import ImageReferenceCarousel from "./ImageReferenceCarousel"
+import UploadImageButton from "./UploadImageButton"
 
-export default function ChangeRequestImageReferenceUrls({
+export default function ImageReferenceUrls({
   control,
   className,
 }: {
-  control: Control<ChangeRequestFormType>
+  control: Control<OrderFormValues>
   className?: string
 }) {
   const { fields, append, remove } = useFieldArray({
@@ -23,23 +23,22 @@ export default function ChangeRequestImageReferenceUrls({
   }
 
   const handleAdd = (
-    value: FieldArray<ChangeRequestFormType, ArrayPath<ChangeRequestFormType>>
+    value: FieldArray<OrderFormValues, ArrayPath<OrderFormValues>>
   ) => {
     append(value)
   }
 
   return (
     <div className={className}>
-      <FormLabel className="text-[#3A3A3A]">
-        Image References (Optional)
-      </FormLabel>
-      <FormDescription>Add more image references.</FormDescription>
+      <FormLabel>Image References</FormLabel>
       <div className="py-3">
-        {fields.length > 0 && (
+        {fields.length > 0 ? (
           <ImageReferenceCarousel
             imageReferences={fields}
             onRemove={handleRemove}
           />
+        ) : (
+          <TypographyMuted>No image reference</TypographyMuted>
         )}
       </div>
       <div className="mt-2 flex gap-2 items-center">

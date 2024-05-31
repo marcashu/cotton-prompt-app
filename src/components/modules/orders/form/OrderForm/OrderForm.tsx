@@ -35,7 +35,11 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
       userGroupId: order?.userGroupId.toString() ?? "",
       customerEmail: order?.customerEmail ?? "",
       imageReferences:
-        order?.imageReferences.map((ir) => ({ value: ir })) ?? [],
+        order?.imageReferences.map((ir) => ({
+          type: ir.type,
+          value: ir.value,
+          name: ir.name,
+        })) ?? [],
     },
   })
   const { toast } = useToast()
