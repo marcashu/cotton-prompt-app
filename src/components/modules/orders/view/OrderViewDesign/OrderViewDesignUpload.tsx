@@ -9,6 +9,7 @@ import { bytesToMegaBytes } from "@/helpers/fileHelper"
 import useSession from "@/hooks/useSession"
 import { KeyedMutator } from "swr"
 import Link from "next/link"
+import FileUpload from "@/types/fileUpload"
 
 export default function OrderViewDesignUpload({
   order,
@@ -21,10 +22,7 @@ export default function OrderViewDesignUpload({
   const [previewImage, setPreviewImage] = useState<string>(
     order.design?.url ?? ""
   )
-  const [file, setFile] = useState<{
-    fileName: string
-    fileBase64: string
-  }>()
+  const [file, setFile] = useState<FileUpload>()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const { session } = useSession()
@@ -59,7 +57,7 @@ export default function OrderViewDesignUpload({
 
     setLoading(true)
 
-    submitOrderDesign(order.id, file.fileBase64, file.fileName, session.userId)
+    submitOrderDesign(order.id, file.content, file.name, session.userId)
       .then(() => {
         setFile(undefined)
         mutate()
@@ -103,8 +101,8 @@ export default function OrderViewDesignUpload({
     reader.readAsDataURL(file)
     reader.onload = function () {
       setFile({
-        fileName: file.name,
-        fileBase64: reader.result as string,
+        name: file.name,
+        content: reader.result as string,
       })
     }
     reader.onerror = function (error) {

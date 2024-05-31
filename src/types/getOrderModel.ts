@@ -1,5 +1,6 @@
 import DesignBracket from "./designBracket"
 import DesignModel from "./designModel"
+import ImageReferenceModel from "./imageReferenceModel"
 import OutputSize from "./outputSize"
 import PrintColor from "./printColor"
 
@@ -13,7 +14,7 @@ type GetOrderModel = {
   outputSize: OutputSize
   userGroupId: number,
   customerEmail: string
-  imageReferences: string[]
+  imageReferences: ImageReferenceModel[]
   design?: DesignModel
   previousDesigns: DesignModel[]
   artistStatus?: string

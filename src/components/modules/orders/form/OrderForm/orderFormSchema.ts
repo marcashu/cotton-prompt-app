@@ -16,9 +16,23 @@ const orderFormSchema = z.object({
   customerEmail: z.string().email("Please enter a valid email."),
   imageReferences: z
     .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid image reference URL." }),
-      })
+      z
+        .object({
+          type: z.literal('Link').or(z.literal('File')),
+          value: z.string(),
+          name: z.string(),
+          filePreviewUrl: z.string().optional(),
+        })
+        .refine(
+          (val) => {
+            if (val.type !== "Link") return true
+            return z.string().url().safeParse(val.value).success
+          },
+          {
+            message: "Please enter a valid URL.",
+            path: ["value"],
+          }
+        )
     )
     .optional(),
 })

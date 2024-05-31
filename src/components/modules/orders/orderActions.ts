@@ -3,6 +3,7 @@
 import CanDoModel from "@/types/canDoModel"
 import { OrderFormValues } from "./form/OrderForm/orderFormSchema"
 import { mutate, queryMutate } from "@/helpers/fetchHelper"
+import ImageReferenceModel from "@/types/imageReferenceModel"
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Orders`
 
@@ -64,7 +65,6 @@ export const updateOrder = async (value: OrderFormValues, updatedBy: string, id:
     body: JSON.stringify({
       id,
       ...value,
-      imageReferences: value.imageReferences?.map((ir) => ir.value),
       updatedBy,
     }),
   }, [`orderId:${id}`])
@@ -78,7 +78,6 @@ export const createOrder = async (value: OrderFormValues, createdBy: string) => 
     },
     body: JSON.stringify({
       ...value,
-      imageReferences: value.imageReferences?.map((ir) => ir.value),
       createdBy,
     }),
   })
@@ -96,7 +95,7 @@ export const acceptOrder = async (id: number) => {
   }, [`orderId:${id}`])
 }
 
-export const changeRequestOrder = async (id: number, designId: number, comment: string, imageReferences: string[]) => {
+export const changeRequestOrder = async (id: number, designId: number, comment: string, imageReferences: ImageReferenceModel[]) => {
   await mutate(`${baseUrl}/${id}/change-request`, {
     method: "POST",
     headers: {
