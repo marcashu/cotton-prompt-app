@@ -13,6 +13,7 @@ import ResendOrderForCustomerReviewDialog from "./ResendOrderForCustomerReviewDi
 import AdminStatus from "@/enums/adminStatus"
 import ResolveOrderDialog from "./ResolveOrderDialog"
 import SendOrderForPrintingDialog from "./SendOrderForPrintingDialog"
+import OrderFiltersModel from "@/types/orderFiltersModel"
 
 export default function AdminOrdersDataTable({
   adminStatus,
@@ -29,8 +30,18 @@ export default function AdminOrdersDataTable({
     useState(false)
   const [selectedOrderId, setSelectedOrderId] = useState(0)
 
-  const handleSearch = (orderNumber?: string) => {
-    setUrl(`${baseUrl}?orderNumber=${orderNumber}`)
+  const handleSearch = (orderFilters: OrderFiltersModel) => {
+    const queryParams = new URLSearchParams()
+
+    Object.keys(orderFilters).forEach((filterKey) => {
+      const filterValue = orderFilters[filterKey as keyof OrderFiltersModel]
+      if (filterValue.length) {
+        queryParams.append(filterKey, filterValue.join(","))
+      }
+    })
+
+    const newUrl = `${baseUrl}?${queryParams.toString()}`
+    if (url !== newUrl) setUrl(newUrl)
   }
 
   const handleDelete = (id: number) => {
@@ -94,7 +105,7 @@ export default function AdminOrdersDataTable({
         mutate={mutate}
         handleClose={() => setOpenSendForPrintingDialog(false)}
       />
-      <AdminOrderFilters onSearch={handleSearch} />
+      <AdminOrderFilters adminStatus={adminStatus} onSearch={handleSearch} />
       <DataTable
         columns={getAdminOrdersColumnDef(adminStatus, actionCell)}
         data={data ?? []}
