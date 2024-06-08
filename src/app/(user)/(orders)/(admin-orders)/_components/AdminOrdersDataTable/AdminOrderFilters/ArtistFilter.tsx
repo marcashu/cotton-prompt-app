@@ -18,14 +18,14 @@ export default function ArtistFilter({
       new Set(orderWithArtists.map((o) => o.artistId!))
     )
 
-    const result = uniqueArtistIds
-      .map((n) => {
-        return {
-          label: orderWithArtists.find((o) => o.artistId === n)!.artistName!,
-          value: n,
-        }
-      })
-      .toSorted((a, b) => a.label.localeCompare(b.label))
+    const result = uniqueArtistIds.map((n) => {
+      return {
+        label: orderWithArtists.find((o) => o.artistId === n)!.artistName!,
+        value: n,
+      }
+    })
+
+    result.sort((a, b) => a.label.localeCompare(b.label))
 
     return result
   }, [data])
