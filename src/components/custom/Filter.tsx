@@ -30,7 +30,7 @@ export default function Filter({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <PlusCircleIcon className="mr-2 h-4 w-4" />
+          <PlusCircleIcon className="mr-2 h-4 w-4 mt-[3px]" />
           {title}
           {values.length > 0 && (
             <>

@@ -20,9 +20,8 @@ export default function OrderNumberFilter({
         data
           .toSorted((a, b) => a.orderNumber.localeCompare(b.orderNumber))
           .map((o) => o.orderNumber)
-          .map((n) => ({ label: n, value: n }))
       )
-    )
+    ).map((n) => ({ label: n, value: n }))
 
     return orderNumbers
   }, [data])

@@ -5,6 +5,7 @@ import OrderFiltersModel from "@/types/orderFiltersModel"
 import AdminStatus from "@/enums/adminStatus"
 import useSWR from "swr"
 import PriorityFilter from "./PriorityFilter"
+import ResetFiltersButton from "./ResetFiltersButton"
 
 export default function AdminOrderFilters({
   adminStatus,
@@ -18,6 +19,13 @@ export default function AdminOrderFilters({
     orderNumbers: [],
     priorities: [],
   })
+
+  const resetFilters = () => {
+    setOrderFilters({
+      orderNumbers: [],
+      priorities: [],
+    })
+  }
 
   useEffect(() => {
     onSearch(orderFilters)
@@ -34,6 +42,10 @@ export default function AdminOrderFilters({
         values={orderFilters.priorities}
         onSelect={setOrderFilters}
       />
+      {(orderFilters.orderNumbers.length > 0 ||
+        orderFilters.priorities.length > 0) && (
+        <ResetFiltersButton onReset={resetFilters} />
+      )}
     </div>
   )
 }
