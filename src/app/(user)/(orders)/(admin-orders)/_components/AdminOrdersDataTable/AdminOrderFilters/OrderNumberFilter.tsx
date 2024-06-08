@@ -1,7 +1,6 @@
 import Filter from "@/components/custom/Filter"
 import GetOrdersModel from "@/types/getOrdersModel"
-import OrderFiltersModel from "@/types/orderFiltersModel"
-import { SetStateAction, useMemo } from "react"
+import { useMemo } from "react"
 
 export default function OrderNumberFilter({
   data,
@@ -10,7 +9,7 @@ export default function OrderNumberFilter({
 }: {
   data?: GetOrdersModel[]
   values: string[]
-  onSelect: (value: SetStateAction<OrderFiltersModel>) => void
+  onSelect: (values: string[]) => void
 }) {
   const options = useMemo(() => {
     if (!data) return []
@@ -32,19 +31,12 @@ export default function OrderNumberFilter({
     return result
   }, [data])
 
-  const handleOrderNumbersSelect = (orderNumbers: string[]) => {
-    onSelect((prevValues) => ({
-      ...prevValues,
-      orderNumbers,
-    }))
-  }
-
   return (
     <Filter
       title="Order Number"
       options={options}
       values={values}
-      onSelect={handleOrderNumbersSelect}
+      onSelect={onSelect}
     />
   )
 }

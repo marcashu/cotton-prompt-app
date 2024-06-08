@@ -1,8 +1,7 @@
 import Filter from "@/components/custom/Filter"
 import FilterOption from "@/types/filterOption"
 import GetOrdersModel from "@/types/getOrdersModel"
-import OrderFiltersModel from "@/types/orderFiltersModel"
-import { SetStateAction, useMemo } from "react"
+import { useMemo } from "react"
 
 export default function PriorityFilter({
   data,
@@ -11,7 +10,7 @@ export default function PriorityFilter({
 }: {
   data?: GetOrdersModel[]
   values: string[]
-  onSelect: (value: SetStateAction<OrderFiltersModel>) => void
+  onSelect: (values: string[]) => void
 }) {
   const options = useMemo(() => {
     if (!data) return []
@@ -32,19 +31,12 @@ export default function PriorityFilter({
     return options
   }, [data])
 
-  const handlePrioritiesSelect = (priorities: string[]) => {
-    onSelect((prevValues) => ({
-      ...prevValues,
-      priorities,
-    }))
-  }
-
   return (
     <Filter
       title="Priority"
       options={options}
       values={values}
-      onSelect={handlePrioritiesSelect}
+      onSelect={onSelect}
     />
   )
 }

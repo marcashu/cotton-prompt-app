@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useReducer } from "react"
 import OrderNumberFilter from "./OrderNumberFilter"
 import GetOrdersModel from "@/types/getOrdersModel"
 import OrderFiltersModel from "@/types/orderFiltersModel"
@@ -15,16 +15,14 @@ export default function AdminOrderFilters({
   onSearch: (orderFilters: OrderFiltersModel) => void
 }) {
   const { data } = useSWR<GetOrdersModel[]>(`/api/orders/${adminStatus}`)
-  const [orderFilters, setOrderFilters] = useState<OrderFiltersModel>({
+  const [orderFilters, dispatch] = useReducer(orderFiltersReducer, {
     orderNumbers: [],
     priorities: [],
+    artists: [],
   })
 
   const resetFilters = () => {
-    setOrderFilters({
-      orderNumbers: [],
-      priorities: [],
-    })
+    dispatch({ type: "reset", payload: [] })
   }
 
   useEffect(() => {
@@ -36,12 +34,16 @@ export default function AdminOrderFilters({
       <OrderNumberFilter
         data={data}
         values={orderFilters.orderNumbers}
-        onSelect={setOrderFilters}
+        onSelect={(values) =>
+          dispatch({ type: "setOrderNumbers", payload: values })
+        }
       />
       <PriorityFilter
         data={data}
         values={orderFilters.priorities}
-        onSelect={setOrderFilters}
+        onSelect={(values) =>
+          dispatch({ type: "setPriorities", payload: values })
+        }
       />
       {(orderFilters.orderNumbers.length > 0 ||
         orderFilters.priorities.length > 0) && (
@@ -49,4 +51,40 @@ export default function AdminOrderFilters({
       )}
     </div>
   )
+}
+
+const orderFiltersReducer = (
+  state: OrderFiltersModel,
+  action: { type: string; payload: string[] }
+) => {
+  if (action.type === "setOrderNumbers") {
+    return {
+      ...state,
+      orderNumbers: action.payload,
+    }
+  }
+
+  if (action.type === "setPriorities") {
+    return {
+      ...state,
+      priorities: action.payload,
+    }
+  }
+
+  if (action.type === "setArtists") {
+    return {
+      ...state,
+      artists: action.payload,
+    }
+  }
+
+  if (action.type === "reset") {
+    return {
+      orderNumbers: [],
+      priorities: [],
+      artists: [],
+    }
+  }
+
+  return state
 }
