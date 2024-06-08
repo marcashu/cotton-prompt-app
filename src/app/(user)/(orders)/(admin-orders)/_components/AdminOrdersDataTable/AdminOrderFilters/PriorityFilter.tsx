@@ -4,32 +4,30 @@ import GetOrdersModel from "@/types/getOrdersModel"
 import { useMemo } from "react"
 
 export default function PriorityFilter({
-  data,
+  currentData,
   values,
   onSelect,
 }: {
-  data?: GetOrdersModel[]
+  currentData: GetOrdersModel[]
   values: string[]
   onSelect: (values: string[]) => void
 }) {
   const options = useMemo(() => {
-    if (!data) return []
-
     const options: FilterOption[] = [
       {
         label: "Yes",
         value: "Yes",
-        count: data.filter((o) => o.priority).length,
+        count: currentData.filter((o) => o.priority).length,
       },
       {
         label: "No",
         value: "No",
-        count: data.filter((o) => !o.priority).length,
+        count: currentData.filter((o) => !o.priority).length,
       },
     ]
 
     return options
-  }, [data])
+  }, [currentData])
 
   return (
     <Filter

@@ -67,7 +67,7 @@ export default function Filter({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent className="min-w-[200px] p-0" align="start">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
@@ -100,12 +100,10 @@ export default function Filter({
                     {option.icon && (
                       <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
-                    <span>{option.label}</span>
-                    {option.count > 0 && (
-                      <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {option.count}
-                      </span>
-                    )}
+                    <span className="mr-2">{option.label}</span>
+                    <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
+                      {option.count}
+                    </span>
                   </CommandItem>
                 )
               })}

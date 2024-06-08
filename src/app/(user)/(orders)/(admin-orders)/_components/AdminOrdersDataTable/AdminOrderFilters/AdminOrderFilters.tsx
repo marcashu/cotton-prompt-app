@@ -6,11 +6,16 @@ import AdminStatus from "@/enums/adminStatus"
 import useSWR from "swr"
 import PriorityFilter from "./PriorityFilter"
 import ResetFiltersButton from "./ResetFiltersButton"
+import ArtistFilter from "./ArtistFilter"
+import CheckerFilter from "./CheckerFilter"
+import CustomerFilter from "./CustomerFilter"
 
 export default function AdminOrderFilters({
+  currentData,
   adminStatus,
   onSearch,
 }: {
+  currentData: GetOrdersModel[]
   adminStatus: AdminStatus
   onSearch: (orderFilters: OrderFiltersModel) => void
 }) {
@@ -19,7 +24,9 @@ export default function AdminOrderFilters({
     orderNumbers: [],
     priorities: [],
     artists: [],
-  })
+    checkers: [],
+    customers: [],
+  } as OrderFiltersModel)
 
   const resetFilters = () => {
     dispatch({ type: "reset", payload: [] })
@@ -30,23 +37,45 @@ export default function AdminOrderFilters({
   }, [onSearch, orderFilters])
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 flex-wrap">
       <OrderNumberFilter
-        data={data}
+        data={data ?? []}
+        currentData={currentData}
         values={orderFilters.orderNumbers}
         onSelect={(values) =>
           dispatch({ type: "setOrderNumbers", payload: values })
         }
       />
       <PriorityFilter
-        data={data}
+        currentData={currentData}
         values={orderFilters.priorities}
         onSelect={(values) =>
           dispatch({ type: "setPriorities", payload: values })
         }
       />
-      {(orderFilters.orderNumbers.length > 0 ||
-        orderFilters.priorities.length > 0) && (
+      <ArtistFilter
+        data={data ?? []}
+        currentData={currentData}
+        values={orderFilters.artists}
+        onSelect={(values) => dispatch({ type: "setArtists", payload: values })}
+      />
+      <CheckerFilter
+        data={data ?? []}
+        currentData={currentData}
+        values={orderFilters.checkers}
+        onSelect={(values) =>
+          dispatch({ type: "setCheckers", payload: values })
+        }
+      />
+      <CustomerFilter
+        data={data ?? []}
+        currentData={currentData}
+        values={orderFilters.customers}
+        onSelect={(values) =>
+          dispatch({ type: "setCustomers", payload: values })
+        }
+      />
+      {Object.values(orderFilters).some((field) => field.length > 0) && (
         <ResetFiltersButton onReset={resetFilters} />
       )}
     </div>
@@ -57,34 +86,44 @@ const orderFiltersReducer = (
   state: OrderFiltersModel,
   action: { type: string; payload: string[] }
 ) => {
+  let result: OrderFiltersModel
+
   if (action.type === "setOrderNumbers") {
-    return {
+    result = {
       ...state,
       orderNumbers: action.payload,
     }
-  }
-
-  if (action.type === "setPriorities") {
-    return {
+  } else if (action.type === "setPriorities") {
+    result = {
       ...state,
       priorities: action.payload,
     }
-  }
-
-  if (action.type === "setArtists") {
-    return {
+  } else if (action.type === "setArtists") {
+    result = {
       ...state,
       artists: action.payload,
     }
-  }
-
-  if (action.type === "reset") {
-    return {
+  } else if (action.type === "setCheckers") {
+    result = {
+      ...state,
+      checkers: action.payload,
+    }
+  } else if (action.type === "setCustomers") {
+    result = {
+      ...state,
+      customers: action.payload,
+    }
+  } else if (action.type === "reset") {
+    result = {
       orderNumbers: [],
       priorities: [],
       artists: [],
+      checkers: [],
+      customers: [],
     }
+  } else {
+    result = state
   }
 
-  return state
+  return result
 }

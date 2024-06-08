@@ -105,7 +105,11 @@ export default function AdminOrdersDataTable({
         mutate={mutate}
         handleClose={() => setOpenSendForPrintingDialog(false)}
       />
-      <AdminOrderFilters adminStatus={adminStatus} onSearch={handleSearch} />
+      <AdminOrderFilters
+        currentData={data ?? []}
+        adminStatus={adminStatus}
+        onSearch={handleSearch}
+      />
       <DataTable
         columns={getAdminOrdersColumnDef(adminStatus, actionCell)}
         data={data ?? []}

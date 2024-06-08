@@ -2,7 +2,7 @@ import Filter from "@/components/custom/Filter"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { useMemo } from "react"
 
-export default function OrderNumberFilter({
+export default function CustomerFilter({
   data,
   currentData,
   values,
@@ -14,26 +14,20 @@ export default function OrderNumberFilter({
   onSelect: (values: string[]) => void
 }) {
   const options = useMemo(() => {
-    const uniqueOrderNumbers = Array.from(
-      new Set(
-        data
-          .toSorted((a, b) => a.orderNumber.localeCompare(b.orderNumber))
-          .map((o) => o.orderNumber)
-      )
-    )
-
-    const result = uniqueOrderNumbers.map((n) => ({
-      label: n,
-      value: n,
-      count: currentData.filter((o) => o.orderNumber === n).length,
-    }))
+    const result = Array.from(new Set(data.map((o) => o.customerName)))
+      .map((n) => ({
+        label: n,
+        value: n,
+        count: currentData.filter((o) => o.customerName === n).length,
+      }))
+      .toSorted((a, b) => a.label.localeCompare(b.label))
 
     return result
   }, [currentData, data])
 
   return (
     <Filter
-      title="Order Number"
+      title="Customer"
       options={options}
       values={values}
       onSelect={onSelect}
