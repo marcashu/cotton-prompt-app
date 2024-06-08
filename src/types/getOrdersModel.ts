@@ -7,6 +7,7 @@ type GetOrdersModel = {
   checkerStatus?: string
   artistId?: string
   artistName?: string
+  checkerId?: string
   checkerName?: string
   customerStatus: string
   customerName: string
@@ -14,6 +15,8 @@ type GetOrdersModel = {
   changeRequestOrderId?: number
   reason?: string
   reporterName?: string
+  userGroupId: number
+  userGroupName: string
 }
 
 export default GetOrdersModel
