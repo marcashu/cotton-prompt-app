@@ -39,6 +39,7 @@ export default function AdminOrderFilters({
         onSelect={setOrderFilters}
       />
       <PriorityFilter
+        data={data}
         values={orderFilters.priorities}
         onSelect={setOrderFilters}
       />

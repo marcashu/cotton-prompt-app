@@ -15,15 +15,21 @@ export default function OrderNumberFilter({
   const options = useMemo(() => {
     if (!data) return []
 
-    const orderNumbers = Array.from(
+    const uniqueOrderNumbers = Array.from(
       new Set(
         data
           .toSorted((a, b) => a.orderNumber.localeCompare(b.orderNumber))
           .map((o) => o.orderNumber)
       )
-    ).map((n) => ({ label: n, value: n }))
+    )
 
-    return orderNumbers
+    const result = uniqueOrderNumbers.map((n) => ({
+      label: n,
+      value: n,
+      count: 0,
+    }))
+
+    return result
   }, [data])
 
   const handleOrderNumbersSelect = (orderNumbers: string[]) => {
