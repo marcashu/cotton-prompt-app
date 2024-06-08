@@ -4,6 +4,8 @@ type OrderFiltersModel = {
   artists: string[]
   checkers: string[]
   customers: string[]
+  status: string[]
+  userGroups: string[]
 }
 
 export default OrderFiltersModel

@@ -4,12 +4,10 @@ import { useMemo } from "react"
 
 export default function ArtistFilter({
   data,
-  currentData,
   values,
   onSelect,
 }: {
   data: GetOrdersModel[]
-  currentData: GetOrdersModel[]
   values: string[]
   onSelect: (values: string[]) => void
 }) {
@@ -25,13 +23,12 @@ export default function ArtistFilter({
         return {
           label: orderWithArtists.find((o) => o.artistId === n)!.artistName!,
           value: n,
-          count: currentData.filter((o) => o.artistId === n).length,
         }
       })
       .toSorted((a, b) => a.label.localeCompare(b.label))
 
     return result
-  }, [currentData, data])
+  }, [data])
 
   return (
     <Filter

@@ -26,6 +26,10 @@ export default function Filter({
   values: string[]
   onSelect: (values: string[]) => void
 }) {
+  const optionGroups = Array.from(
+    new Set(options.map((option) => option.group))
+  )
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -58,7 +62,9 @@ export default function Filter({
                         key={option.value}
                         className="rounded-sm px-1 font-normal"
                       >
-                        {option.label}
+                        {`${option.group ? option.group + " - " : ""}${
+                          option.label
+                        }`}
                       </Badge>
                     ))
                 )}
@@ -72,42 +78,51 @@ export default function Filter({
           <CommandInput placeholder={title} />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
-              {options.map((option) => {
-                const isSelected = values.includes(option.value)
+            {optionGroups.map((group, i) => (
+              <>
+                <CommandGroup key={i} heading={group}>
+                  {options
+                    .filter((o) => o.group === group)
+                    .map((option) => {
+                      const isSelected = values.includes(option.value)
 
-                return (
-                  <CommandItem
-                    key={option.value}
-                    onSelect={() => {
-                      if (isSelected) {
-                        onSelect(values.filter((v) => v !== option.value))
-                      } else {
-                        onSelect([...values, option.value])
-                      }
-                    }}
-                  >
-                    <div
-                      className={cn(
-                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                        isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible"
-                      )}
-                    >
-                      <CheckIcon className={cn("h-4 w-4")} />
-                    </div>
-                    {option.icon && (
-                      <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
-                    <span className="mr-2">{option.label}</span>
-                    <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                      {option.count}
-                    </span>
-                  </CommandItem>
-                )
-              })}
-            </CommandGroup>
+                      return (
+                        <CommandItem
+                          key={option.value}
+                          onSelect={() => {
+                            if (isSelected) {
+                              onSelect(values.filter((v) => v !== option.value))
+                            } else {
+                              onSelect([...values, option.value])
+                            }
+                          }}
+                        >
+                          <div
+                            className={cn(
+                              "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                              isSelected
+                                ? "bg-primary text-primary-foreground"
+                                : "opacity-50 [&_svg]:invisible"
+                            )}
+                          >
+                            <CheckIcon className={cn("h-4 w-4")} />
+                          </div>
+                          {option.icon && (
+                            <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                          )}
+                          <span>{option.label}</span>
+                          {/* <span
+                            className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs"
+                          >
+                            {option.count}
+                          </span> */}
+                        </CommandItem>
+                      )
+                    })}
+                </CommandGroup>
+                {i < optionGroups.length - 1 && <CommandSeparator />}
+              </>
+            ))}
             {values.length > 0 && (
               <>
                 <CommandSeparator />

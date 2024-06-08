@@ -106,7 +106,7 @@ export default function AdminOrdersDataTable({
         handleClose={() => setOpenSendForPrintingDialog(false)}
       />
       <AdminOrderFilters
-        currentData={data ?? []}
+        count={data?.length ?? 0}
         adminStatus={adminStatus}
         onSearch={handleSearch}
       />

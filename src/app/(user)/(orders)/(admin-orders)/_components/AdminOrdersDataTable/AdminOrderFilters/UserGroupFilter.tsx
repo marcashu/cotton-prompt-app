@@ -2,7 +2,7 @@ import Filter from "@/components/custom/Filter"
 import GetOrdersModel from "@/types/getOrdersModel"
 import { useMemo } from "react"
 
-export default function OrderNumberFilter({
+export default function UserGroupFilter({
   data,
   values,
   onSelect,
@@ -12,25 +12,25 @@ export default function OrderNumberFilter({
   onSelect: (values: string[]) => void
 }) {
   const options = useMemo(() => {
-    const uniqueOrderNumbers = Array.from(
-      new Set(
-        data
-          .toSorted((a, b) => a.orderNumber.localeCompare(b.orderNumber))
-          .map((o) => o.orderNumber)
-      )
+    const uniqueUserGroupIds = Array.from(
+      new Set(data.map((o) => o.userGroupId!))
     )
 
-    const result = uniqueOrderNumbers.map((n) => ({
-      label: n,
-      value: n,
-    }))
+    const result = uniqueUserGroupIds
+      .map((n) => {
+        return {
+          label: data.find((o) => o.userGroupId === n)!.userGroupName,
+          value: n.toString(),
+        }
+      })
+      .toSorted((a, b) => a.label.localeCompare(b.label))
 
     return result
   }, [data])
 
   return (
     <Filter
-      title="Order Number"
+      title="User Group"
       options={options}
       values={values}
       onSelect={onSelect}

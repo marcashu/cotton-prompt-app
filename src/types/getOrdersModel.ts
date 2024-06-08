@@ -15,6 +15,8 @@ type GetOrdersModel = {
   changeRequestOrderId?: number
   reason?: string
   reporterName?: string
+  userGroupId: number
+  userGroupName: string
 }
 
 export default GetOrdersModel

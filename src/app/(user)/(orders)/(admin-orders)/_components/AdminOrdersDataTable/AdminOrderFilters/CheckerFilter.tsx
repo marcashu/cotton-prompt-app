@@ -4,12 +4,10 @@ import { useMemo } from "react"
 
 export default function CheckerFilter({
   data,
-  currentData,
   values,
   onSelect,
 }: {
   data: GetOrdersModel[]
-  currentData: GetOrdersModel[]
   values: string[]
   onSelect: (values: string[]) => void
 }) {
@@ -25,13 +23,12 @@ export default function CheckerFilter({
         return {
           label: orderWithCheckers.find((o) => o.checkerId === n)!.checkerName!,
           value: n,
-          count: currentData.filter((o) => o.checkerId === n).length,
         }
       })
       .toSorted((a, b) => a.label.localeCompare(b.label))
 
     return result
-  }, [currentData, data])
+  }, [data])
 
   return (
     <Filter

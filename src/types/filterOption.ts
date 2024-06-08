@@ -1,8 +1,8 @@
 type FilterOption = {
   label: string
   value: string
-  count: number
   icon?: React.ComponentType<{ className?: string }>
+  group?: string
 }
 
 export default FilterOption
