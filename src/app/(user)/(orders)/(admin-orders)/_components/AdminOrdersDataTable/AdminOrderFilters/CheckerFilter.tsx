@@ -18,14 +18,14 @@ export default function CheckerFilter({
       new Set(orderWithCheckers.map((o) => o.checkerId!))
     )
 
-    const result = uniqueCheckerIds
-      .map((n) => {
-        return {
-          label: orderWithCheckers.find((o) => o.checkerId === n)!.checkerName!,
-          value: n,
-        }
-      })
-      .toSorted((a, b) => a.label.localeCompare(b.label))
+    const result = uniqueCheckerIds.map((n) => {
+      return {
+        label: orderWithCheckers.find((o) => o.checkerId === n)!.checkerName!,
+        value: n,
+      }
+    })
+
+    result.sort((a, b) => a.label.localeCompare(b.label))
 
     return result
   }, [data])

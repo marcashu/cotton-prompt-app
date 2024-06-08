@@ -12,12 +12,14 @@ export default function CustomerFilter({
   onSelect: (values: string[]) => void
 }) {
   const options = useMemo(() => {
-    const result = Array.from(new Set(data.map((o) => o.customerName)))
-      .map((n) => ({
+    const result = Array.from(new Set(data.map((o) => o.customerName))).map(
+      (n) => ({
         label: n,
         value: n,
-      }))
-      .toSorted((a, b) => a.label.localeCompare(b.label))
+      })
+    )
+
+    result.sort((a, b) => a.label.localeCompare(b.label))
 
     return result
   }, [data])

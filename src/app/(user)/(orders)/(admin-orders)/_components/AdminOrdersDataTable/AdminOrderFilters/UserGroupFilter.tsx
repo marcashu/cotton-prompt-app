@@ -16,14 +16,14 @@ export default function UserGroupFilter({
       new Set(data.map((o) => o.userGroupId!))
     )
 
-    const result = uniqueUserGroupIds
-      .map((n) => {
-        return {
-          label: data.find((o) => o.userGroupId === n)!.userGroupName,
-          value: n.toString(),
-        }
-      })
-      .toSorted((a, b) => a.label.localeCompare(b.label))
+    const result = uniqueUserGroupIds.map((n) => {
+      return {
+        label: data.find((o) => o.userGroupId === n)!.userGroupName,
+        value: n.toString(),
+      }
+    })
+
+    result.sort((a, b) => a.label.localeCompare(b.label))
 
     return result
   }, [data])
