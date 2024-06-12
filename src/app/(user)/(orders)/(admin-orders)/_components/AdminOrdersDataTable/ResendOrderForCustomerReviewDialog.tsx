@@ -38,9 +38,10 @@ export default function ResendOrderForCustomerReviewDialog({
       open={open}
       title="Are you sure you want to resend this order to the customer?"
       {...((adminStatus === AdminStatus.Completed ||
-        adminStatus === AdminStatus.Rejected) && {
+        adminStatus === AdminStatus.Rejected ||
+        adminStatus === AdminStatus.SentForPrinting) && {
         description:
-          'This action will revert the customer status to "For Review"',
+          'This action will revert the customer status to "For Review" and return the order to "Ongoing"',
       })}
       confirmButtonCaption="Continue"
       onConfirm={handleContinue}
