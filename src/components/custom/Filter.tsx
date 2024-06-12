@@ -74,7 +74,12 @@ export default function Filter({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="min-w-[200px] p-0" align="start">
-        <Command>
+        <Command
+          filter={(value, search) => {
+            if (value.startsWith(search)) return 1
+            return 0
+          }}
+        >
           <CommandInput placeholder={title} />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
