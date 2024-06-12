@@ -79,8 +79,7 @@ export default function AdminOrdersDataTableActions({
           />
         )}
         {(order.customerStatus === CustomerStatus.ForReview ||
-          (order.customerStatus === CustomerStatus.Accepted &&
-            adminStatus === AdminStatus.Completed) ||
+          order.customerStatus === CustomerStatus.Accepted ||
           (order.customerStatus === CustomerStatus.ChangeRequested &&
             !order.changeRequestOrderId)) && (
           <ResendForCustomerReviewAction id={order.id} onResend={onResend} />
