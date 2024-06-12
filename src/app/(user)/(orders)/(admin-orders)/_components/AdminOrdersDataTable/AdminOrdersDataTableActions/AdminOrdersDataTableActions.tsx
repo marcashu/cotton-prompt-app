@@ -59,9 +59,15 @@ export default function AdminOrdersDataTableActions({
             />
           )}
         {(adminStatus === AdminStatus.Ongoing ||
+          adminStatus === AdminStatus.Rejected ||
           adminStatus === AdminStatus.Reported) && (
           <>
             <EditOrderAction id={order.id} />
+          </>
+        )}
+        {(adminStatus === AdminStatus.Ongoing ||
+          adminStatus === AdminStatus.Reported) && (
+          <>
             <DeleteOrderAction id={order.id} onDelete={onDelete} />
           </>
         )}
