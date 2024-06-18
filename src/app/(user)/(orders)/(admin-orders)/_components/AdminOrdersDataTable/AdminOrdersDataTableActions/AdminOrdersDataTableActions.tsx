@@ -16,6 +16,7 @@ import CustomerStatus from "@/enums/customerStatus"
 import AdminStatus from "@/enums/adminStatus"
 import ResolveOrderAction from "./ResolveOrderAction"
 import SendForPrintingOrderAction from "./SendForPrintingOrderAction"
+import RedrawOrderAction from "./RedrawOrderAction"
 
 export default function AdminOrdersDataTableActions({
   adminStatus,
@@ -84,8 +85,15 @@ export default function AdminOrdersDataTableActions({
             !order.changeRequestOrderId)) && (
           <ResendForCustomerReviewAction id={order.id} onResend={onResend} />
         )}
+        {adminStatus === AdminStatus.Reported && order.isReportRedraw && (
+          <RedrawOrderAction id={order.id} />
+        )}
         {adminStatus === AdminStatus.Reported && (
-          <ResolveOrderAction id={order.id} onResolve={onResolve} />
+          <ResolveOrderAction
+            id={order.id}
+            isRedraw={!!order.isReportRedraw}
+            onResolve={onResolve}
+          />
         )}
         {adminStatus === AdminStatus.Completed && (
           <SendForPrintingOrderAction

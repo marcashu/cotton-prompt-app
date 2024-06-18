@@ -62,6 +62,18 @@ const reasonColumn: ColumnDef<GetOrdersModel> = {
   }
 }
 
+const redrawColumn: ColumnDef<GetOrdersModel> = {
+  id: "redraw",
+  accessorFn: (order) => order.isReportRedraw ? 'Yes' : 'No',
+  header: "Redraw",
+}
+
+const designSubmittedColumn: ColumnDef<GetOrdersModel> = {
+  id: "designSubmitted",
+  accessorFn: (order) => order.isReportDesignSubmitted ? 'Yes' : 'No',
+  header: "Design Submitted",
+}
+
 const getDateHeader = (adminStatus: AdminStatus) => {
   if (adminStatus === AdminStatus.Ongoing) return 'Date Created'
 
@@ -82,7 +94,7 @@ const getAdminOrdersColumnDef = (adminStatus: AdminStatus, actionCell: ({ row }:
     accessorFn: (order) => formatDateToYYYYMMDD(order.date),
     header: getDateHeader(adminStatus),
   },
-  ...(adminStatus !== AdminStatus.Reported ? [priorityColumn, artistColumn, checkerColumn, customerColumn] : [reporterColumn, reasonColumn]),
+  ...(adminStatus !== AdminStatus.Reported ? [priorityColumn, artistColumn, checkerColumn, customerColumn] : [reporterColumn, redrawColumn, reasonColumn]),
   {
     id: "actions",
     cell: actionCell

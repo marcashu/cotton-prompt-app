@@ -10,7 +10,7 @@ import useSWR from "swr"
 import ReportOrderDialog from "./_components/ReportOrderDialog"
 import useSession from "@/hooks/useSession"
 import Role from "@/enums/role"
-import ArtistStatus from "@/enums/artistStatus"
+import CheckerStatus from "@/enums/checkerStatus"
 
 export default function ViewOrderPage({ params }: { params: { id: number } }) {
   const {
@@ -24,7 +24,7 @@ export default function ViewOrderPage({ params }: { params: { id: number } }) {
 
   const canReportOrder =
     session.selectedRole === Role.Artist &&
-    order.artistStatus === ArtistStatus.Claimed
+    order.checkerStatus !== CheckerStatus.Approved
 
   return (
     <div className="grid grid-cols-2 gap-4">
@@ -32,7 +32,12 @@ export default function ViewOrderPage({ params }: { params: { id: number } }) {
         title={`Order ${order.orderNumber}`}
         description="Viewing order details."
         {...(canReportOrder && {
-          action: <ReportOrderDialog id={order.id} />,
+          action: (
+            <ReportOrderDialog
+              id={order.id}
+              isChangeRequest={order.isChangeRequest}
+            />
+          ),
         })}
       />
       <OrderViewDetails order={order} />

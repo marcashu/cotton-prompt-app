@@ -17,6 +17,8 @@ type GetOrdersModel = {
   reporterName?: string
   userGroupId: number
   userGroupName: string
+  isReportDesignSubmitted?: boolean
+  isReportRedraw?: boolean
 }
 
 export default GetOrdersModel

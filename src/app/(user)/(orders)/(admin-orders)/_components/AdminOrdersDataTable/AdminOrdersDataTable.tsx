@@ -28,7 +28,7 @@ export default function AdminOrdersDataTable({
   const [openResolveDialog, setOpenResolveDialog] = useState(false)
   const [openSendForPrintingDialog, setOpenSendForPrintingDialog] =
     useState(false)
-  const [selectedOrderId, setSelectedOrderId] = useState(0)
+  const [selectedOrder, setSelectedOrder] = useState<GetOrdersModel>()
 
   const handleSearch = (orderFilters: OrderFiltersModel) => {
     const queryParams = new URLSearchParams()
@@ -45,22 +45,26 @@ export default function AdminOrdersDataTable({
   }
 
   const handleDelete = (id: number) => {
-    setSelectedOrderId(id)
+    const order = data?.find((o) => o.id === id)
+    setSelectedOrder(order)
     setOpenDeleteDialog(true)
   }
 
   const handleResend = (id: number) => {
-    setSelectedOrderId(id)
+    const order = data?.find((o) => o.id === id)
+    setSelectedOrder(order)
     setOpenResendDialog(true)
   }
 
   const handleResolve = (id: number) => {
-    setSelectedOrderId(id)
+    const order = data?.find((o) => o.id === id)
+    setSelectedOrder(order)
     setOpenResolveDialog(true)
   }
 
   const handleSendForPrinting = (id: number) => {
-    setSelectedOrderId(id)
+    const order = data?.find((o) => o.id === id)
+    setSelectedOrder(order)
     setOpenSendForPrintingDialog(true)
   }
 
@@ -80,31 +84,38 @@ export default function AdminOrdersDataTable({
 
   return (
     <>
-      <DeleteOrderDialog
-        id={selectedOrderId}
-        open={openDeleteDialog}
-        mutate={mutate}
-        handleClose={() => setOpenDeleteDialog(false)}
-      />
-      <ResendOrderForCustomerReviewDialog
-        id={selectedOrderId}
-        open={openResendDialog}
-        mutate={mutate}
-        handleClose={() => setOpenResendDialog(false)}
-        adminStatus={adminStatus}
-      />
-      <ResolveOrderDialog
-        id={selectedOrderId}
-        open={openResolveDialog}
-        mutate={mutate}
-        handleClose={() => setOpenResolveDialog(false)}
-      />
-      <SendOrderForPrintingDialog
-        id={selectedOrderId}
-        open={openSendForPrintingDialog}
-        mutate={mutate}
-        handleClose={() => setOpenSendForPrintingDialog(false)}
-      />
+      {selectedOrder && (
+        <>
+          <DeleteOrderDialog
+            id={selectedOrder.id}
+            open={openDeleteDialog}
+            mutate={mutate}
+            handleClose={() => setOpenDeleteDialog(false)}
+          />
+          <ResendOrderForCustomerReviewDialog
+            id={selectedOrder.id}
+            open={openResendDialog}
+            mutate={mutate}
+            handleClose={() => setOpenResendDialog(false)}
+            adminStatus={adminStatus}
+          />
+          <ResolveOrderDialog
+            id={selectedOrder.id}
+            isDesignSubmitted={!!selectedOrder.isReportDesignSubmitted}
+            isRedraw={!!selectedOrder.isReportRedraw}
+            isChangeRequest={!!selectedOrder.originalOrderId}
+            open={openResolveDialog}
+            mutate={mutate}
+            handleClose={() => setOpenResolveDialog(false)}
+          />
+          <SendOrderForPrintingDialog
+            id={selectedOrder.id}
+            open={openSendForPrintingDialog}
+            mutate={mutate}
+            handleClose={() => setOpenSendForPrintingDialog(false)}
+          />
+        </>
+      )}
       <AdminOrderFilters
         count={data?.length ?? 0}
         adminStatus={adminStatus}

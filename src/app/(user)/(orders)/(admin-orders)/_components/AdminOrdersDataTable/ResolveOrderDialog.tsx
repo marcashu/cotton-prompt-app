@@ -7,11 +7,17 @@ import useSession from "@/hooks/useSession"
 
 export default function ResolveOrderDialog({
   id,
+  isDesignSubmitted,
+  isRedraw,
+  isChangeRequest,
   open,
   mutate,
   handleClose,
 }: {
   id: number
+  isDesignSubmitted: boolean
+  isRedraw: boolean
+  isChangeRequest: boolean
   open: boolean
   mutate: KeyedMutator<GetOrdersModel[]>
   handleClose: () => void
@@ -38,7 +44,15 @@ export default function ResolveOrderDialog({
     <ConfirmAlertDialog
       open={open}
       title="Are you sure you want to resolve this order?"
-      description="This action will make this order available for artists to claim"
+      description={
+        isDesignSubmitted
+          ? "This action will return the order to the original artist and checker"
+          : isRedraw
+          ? "This action will return the order to the CR artist and checker"
+          : isChangeRequest
+          ? "This action will return the order to the CR checker and make it available for other CR artists to claim"
+          : "This action will make this order available for other artists and checkers to claim"
+      }
       confirmButtonCaption="Continue"
       onConfirm={handleContinue}
       onCancel={handleClose}

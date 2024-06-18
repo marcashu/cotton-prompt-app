@@ -115,7 +115,7 @@ export const resendOrderForCustomerReview = async (id: number) => {
   })
 }
 
-export const reportOrder = async (id: number, reason: string, userId: string) => {
+export const reportOrder = async (id: number, reason: string, isRedraw: boolean) => {
   await mutate(`${baseUrl}/${id}/report`, {
     method: "POST",
     headers: {
@@ -123,7 +123,7 @@ export const reportOrder = async (id: number, reason: string, userId: string) =>
     },
     body: JSON.stringify({
       reason,
-      userId,
+      isRedraw,
     }),
   }, [`orderId:${id}`])
 }
@@ -150,4 +150,17 @@ export const sendOrderForPrinting = async (id: number, userId: string) => {
       userId,
     }),
   }, [`orderId:${id}`])
+}
+
+export const redrawOrder = async (value: OrderFormValues, changeRequestOrderId: number, createdBy: string) => {
+  await mutate(`${baseUrl}/${changeRequestOrderId}/redraw`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...value,
+      createdBy,
+    }),
+  })
 }
