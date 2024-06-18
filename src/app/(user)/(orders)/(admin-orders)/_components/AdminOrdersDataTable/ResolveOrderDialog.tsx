@@ -43,7 +43,9 @@ export default function ResolveOrderDialog({
   return (
     <ConfirmAlertDialog
       open={open}
-      title="Are you sure you want to resolve this order?"
+      title={`Are you sure you want to ${
+        isRedraw ? "reject" : "resolve"
+      } this order?`}
       description={
         isDesignSubmitted
           ? "This action will return the order to the original artist and checker"
