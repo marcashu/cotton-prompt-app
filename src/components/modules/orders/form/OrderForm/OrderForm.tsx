@@ -12,7 +12,7 @@ import PrintColorSelect from "./PrintColorSelect"
 import DesignBracketSelect from "./DesignBracketSelect"
 import ImageReferenceUrls from "./ImageReferenceUrls"
 import useSession from "@/hooks/useSession"
-import { createOrder, updateOrder } from "../../orderActions"
+import { createOrder, redrawOrder, updateOrder } from "../../orderActions"
 import GetOrderModel from "@/types/getOrderModel"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
@@ -21,18 +21,28 @@ import OutputSizeSelect from "./OutputSizeSelect"
 import CustomerEmailInput from "./CustomerEmailInput"
 import UserGroupSelect from "./UserGroupSelect"
 
-export default function OrderForm({ order }: { order?: GetOrderModel }) {
+export default function OrderForm({
+  order,
+  isRedraw = false,
+}: {
+  order?: GetOrderModel
+  isRedraw?: boolean
+}) {
   const { session } = useSession()
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
-      orderNumber: order?.orderNumber ?? "",
+      orderNumber: order
+        ? isRedraw
+          ? order.orderNumber.replace("CR", "(REDRAW)")
+          : order.orderNumber
+        : "",
       priority: order?.priority ?? false,
       concept: order?.concept ?? "",
       printColorId: order?.printColor.id.toString() ?? "",
       designBracketId: order?.designBracket.id.toString() ?? "",
       outputSizeId: order?.outputSize.id.toString() ?? "",
-      userGroupId: order?.userGroupId.toString() ?? "",
+      userGroupId: order && !isRedraw ? order.userGroupId.toString() : "",
       customerEmail: order?.customerEmail ?? "",
       imageReferences:
         order?.imageReferences.map((ir) => ({
@@ -66,6 +76,22 @@ export default function OrderForm({ order }: { order?: GetOrderModel }) {
         .catch((err) =>
           toast({
             title: `Something went wrong while creating the order: ${err}`,
+            description: new Date().toLocaleString(),
+            variant: "destructive",
+          })
+        )
+        .finally(() => router.back())
+    } else if (isRedraw) {
+      redrawOrder(values, order.id, userId)
+        .then(() =>
+          toast({
+            title: "Redraw order has been created successfully",
+            description: new Date().toLocaleString(),
+          })
+        )
+        .catch((err) =>
+          toast({
+            title: `Something went wrong while creating the redraw order: ${err}`,
             description: new Date().toLocaleString(),
             variant: "destructive",
           })

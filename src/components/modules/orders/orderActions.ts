@@ -151,3 +151,16 @@ export const sendOrderForPrinting = async (id: number, userId: string) => {
     }),
   }, [`orderId:${id}`])
 }
+
+export const redrawOrder = async (value: OrderFormValues, changeRequestOrderId: number, createdBy: string) => {
+  await mutate(`${baseUrl}/${changeRequestOrderId}/redraw`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...value,
+      createdBy,
+    }),
+  })
+}
