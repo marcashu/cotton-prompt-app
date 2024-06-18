@@ -102,6 +102,8 @@ export default function AdminOrdersDataTable({
           <ResolveOrderDialog
             id={selectedOrder.id}
             isDesignSubmitted={!!selectedOrder.isReportDesignSubmitted}
+            isRedraw={!!selectedOrder.isReportRedraw}
+            isChangeRequest={!!selectedOrder.originalOrderId}
             open={openResolveDialog}
             mutate={mutate}
             handleClose={() => setOpenResolveDialog(false)}
