@@ -51,7 +51,7 @@ export default function ResolveOrderDialog({
           ? "This action will return the order to the CR artist and checker"
           : isChangeRequest
           ? "This action will return the order to the CR checker and make it available for other CR artists to claim"
-          : "This action will make this order available for artists to claim"
+          : "This action will make this order available for other artists and checkers to claim"
       }
       confirmButtonCaption="Continue"
       onConfirm={handleContinue}

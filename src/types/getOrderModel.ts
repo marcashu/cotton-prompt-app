@@ -23,6 +23,7 @@ type GetOrderModel = {
   artistId?: string
   checkerId?: string
   userGroup: string
+  isChangeRequest: boolean
 }
 
 export default GetOrderModel

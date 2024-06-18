@@ -32,7 +32,12 @@ export default function ViewOrderPage({ params }: { params: { id: number } }) {
         title={`Order ${order.orderNumber}`}
         description="Viewing order details."
         {...(canReportOrder && {
-          action: <ReportOrderDialog id={order.id} />,
+          action: (
+            <ReportOrderDialog
+              id={order.id}
+              isChangeRequest={order.isChangeRequest}
+            />
+          ),
         })}
       />
       <OrderViewDetails order={order} />
