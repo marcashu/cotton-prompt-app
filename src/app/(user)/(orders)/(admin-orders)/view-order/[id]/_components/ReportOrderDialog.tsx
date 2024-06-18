@@ -1,5 +1,6 @@
 import { reportOrder } from "@/components/modules/orders/orderActions"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogContent,
@@ -18,7 +19,6 @@ import {
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
-import useSession from "@/hooks/useSession"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { useRouter } from "next/navigation"
@@ -27,16 +27,16 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 const formSchema = z.object({
+  redraw: z.boolean().default(false),
   reason: z
     .string()
     .min(1, "Please enter reason.")
     .max(3500, "Reason must not be longer than 3500 characters."),
 })
 
-export type ReportOrderFormType = z.infer<typeof formSchema>
+type ReportOrderFormType = z.infer<typeof formSchema>
 
 export default function ReportOrderDialog({ id }: { id: number }) {
-  const { session } = useSession()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const { toast } = useToast()
@@ -45,8 +45,6 @@ export default function ReportOrderDialog({ id }: { id: number }) {
   })
   const router = useRouter()
 
-  if (!session) return <></>
-
   const handleOpenChange = (newOpen: boolean) => {
     form.reset()
     setOpen(newOpen)
@@ -54,7 +52,7 @@ export default function ReportOrderDialog({ id }: { id: number }) {
 
   const handleSubmit = (data: ReportOrderFormType) => {
     setLoading(true)
-    reportOrder(id, data.reason, session?.userId)
+    reportOrder(id, data.reason, data.redraw)
       .then(() => {
         toast({
           title: "Order has been reported successfully",
@@ -73,7 +71,7 @@ export default function ReportOrderDialog({ id }: { id: number }) {
       <DialogTrigger asChild>
         <Button variant="destructive">Report a Problem</Button>
       </DialogTrigger>
-      <DialogContent className="">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Report a Problem</DialogTitle>
         </DialogHeader>
@@ -82,6 +80,23 @@ export default function ReportOrderDialog({ id }: { id: number }) {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-6"
           >
+            <FormField
+              control={form.control}
+              name="redraw"
+              render={({ field }) => (
+                <FormItem className="flex space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Is this a redraw?</FormLabel>
+                  </div>
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="reason"
