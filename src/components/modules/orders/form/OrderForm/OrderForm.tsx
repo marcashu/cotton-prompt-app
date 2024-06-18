@@ -132,9 +132,14 @@ export default function OrderForm({
           <ConceptTextarea control={form.control} />
           <ImageReferenceUrls control={form.control} />
         </div>
-        <Button type="submit" loading={loading}>
-          Submit
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => router.back()}>
+            Cancel
+          </Button>
+          <Button type="submit" loading={loading}>
+            Submit
+          </Button>
+        </div>
       </form>
     </Form>
   )
