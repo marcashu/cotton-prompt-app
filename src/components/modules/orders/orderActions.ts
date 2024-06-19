@@ -164,3 +164,12 @@ export const redrawOrder = async (value: OrderFormValues, changeRequestOrderId: 
     }),
   })
 }
+
+export const toggleOrderRedrawMark = async (id: number) => {
+  await mutate(`${baseUrl}/${id}/toggle-redraw-mark`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }, [`orderId:${id}`])
+}
