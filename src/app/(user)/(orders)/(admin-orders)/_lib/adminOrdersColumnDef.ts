@@ -65,13 +65,7 @@ const reasonColumn: ColumnDef<GetOrdersModel> = {
 const redrawColumn: ColumnDef<GetOrdersModel> = {
   id: "redraw",
   accessorFn: (order) => order.isReportRedraw ? 'Yes' : 'No',
-  header: "Redraw",
-}
-
-const designSubmittedColumn: ColumnDef<GetOrdersModel> = {
-  id: "designSubmitted",
-  accessorFn: (order) => order.isReportDesignSubmitted ? 'Yes' : 'No',
-  header: "Design Submitted",
+  header: "Redraw Request",
 }
 
 const getDateHeader = (adminStatus: AdminStatus) => {

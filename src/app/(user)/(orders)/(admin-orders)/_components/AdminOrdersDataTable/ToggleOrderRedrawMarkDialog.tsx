@@ -40,7 +40,7 @@ export default function ToggleOrderRedrawMarkDialog({
       title={`Are you sure you want to mark this report as ${
         isRedraw ? "redraw" : "non-redraw"
       }?`}
-      description={`This action will change the redraw column value from ${
+      description={`This action will change the 'Redraw Request' column value from ${
         isRedraw ? "'Yes'" : "'No'"
       } to ${isRedraw ? "'No'" : "'Yes'"}.`}
       confirmButtonCaption="Continue"
