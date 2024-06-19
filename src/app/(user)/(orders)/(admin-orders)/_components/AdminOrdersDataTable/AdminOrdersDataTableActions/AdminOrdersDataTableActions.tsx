@@ -17,6 +17,7 @@ import AdminStatus from "@/enums/adminStatus"
 import ResolveOrderAction from "./ResolveOrderAction"
 import SendForPrintingOrderAction from "./SendForPrintingOrderAction"
 import RedrawOrderAction from "./RedrawOrderAction"
+import ToggleOrderRedrawMarkAction from "./ToggleOrderRedrawMarkAction"
 
 export default function AdminOrdersDataTableActions({
   adminStatus,
@@ -25,6 +26,7 @@ export default function AdminOrdersDataTableActions({
   onResend,
   onResolve,
   onSendForPrinting,
+  onToggleRedrawMark,
 }: {
   adminStatus: AdminStatus
   order: GetOrdersModel
@@ -32,6 +34,7 @@ export default function AdminOrdersDataTableActions({
   onResend: (id: number) => void
   onResolve: (id: number) => void
   onSendForPrinting: (id: number) => void
+  onToggleRedrawMark: (id: number) => void
 }) {
   return (
     <DropdownMenu modal={false}>
@@ -89,11 +92,18 @@ export default function AdminOrdersDataTableActions({
           <RedrawOrderAction id={order.id} />
         )}
         {adminStatus === AdminStatus.Reported && (
-          <ResolveOrderAction
-            id={order.id}
-            isRedraw={!!order.isReportRedraw}
-            onResolve={onResolve}
-          />
+          <>
+            <ResolveOrderAction
+              id={order.id}
+              isRedraw={!!order.isReportRedraw}
+              onResolve={onResolve}
+            />
+            <ToggleOrderRedrawMarkAction
+              id={order.id}
+              isRedraw={!!order.isReportRedraw}
+              onToggleRedrawMark={onToggleRedrawMark}
+            />
+          </>
         )}
         {adminStatus === AdminStatus.Completed && (
           <SendForPrintingOrderAction

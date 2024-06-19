@@ -14,6 +14,7 @@ import AdminStatus from "@/enums/adminStatus"
 import ResolveOrderDialog from "./ResolveOrderDialog"
 import SendOrderForPrintingDialog from "./SendOrderForPrintingDialog"
 import OrderFiltersModel from "@/types/orderFiltersModel"
+import ToggleOrderRedrawMarkDialog from "./ToggleOrderRedrawMarkDialog"
 
 export default function AdminOrdersDataTable({
   adminStatus,
@@ -27,6 +28,8 @@ export default function AdminOrdersDataTable({
   const [openResendDialog, setOpenResendDialog] = useState(false)
   const [openResolveDialog, setOpenResolveDialog] = useState(false)
   const [openSendForPrintingDialog, setOpenSendForPrintingDialog] =
+    useState(false)
+  const [openToggleRedrawMarkDialog, setOpenToggleRedrawMarkDialog] =
     useState(false)
   const [selectedOrder, setSelectedOrder] = useState<GetOrdersModel>()
 
@@ -68,6 +71,12 @@ export default function AdminOrdersDataTable({
     setOpenSendForPrintingDialog(true)
   }
 
+  const handleToggleRedrawMark = (id: number) => {
+    const order = data?.find((o) => o.id === id)
+    setSelectedOrder(order)
+    setOpenToggleRedrawMarkDialog(true)
+  }
+
   const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
     const order = row.original
     return (
@@ -78,6 +87,7 @@ export default function AdminOrdersDataTable({
         onResend={handleResend}
         onResolve={handleResolve}
         onSendForPrinting={handleSendForPrinting}
+        onToggleRedrawMark={handleToggleRedrawMark}
       />
     )
   }
@@ -113,6 +123,13 @@ export default function AdminOrdersDataTable({
             open={openSendForPrintingDialog}
             mutate={mutate}
             handleClose={() => setOpenSendForPrintingDialog(false)}
+          />
+          <ToggleOrderRedrawMarkDialog
+            id={selectedOrder.id}
+            isRedraw={!!selectedOrder.isReportRedraw}
+            open={openToggleRedrawMarkDialog}
+            mutate={mutate}
+            handleClose={() => setOpenToggleRedrawMarkDialog(false)}
           />
         </>
       )}
