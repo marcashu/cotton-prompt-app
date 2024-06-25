@@ -12,7 +12,9 @@ export default function UserGroupSelect({
   control: Control<OrderFormValues>
   className?: string
 }) {
-  const { data, isLoading } = useSWR<GetUserGroupsModel[]>("/api/UserGroups")
+  const { data, isLoading } = useSWR<GetUserGroupsModel[]>(
+    "/api/UserGroups/artist-groups"
+  )
 
   return (
     <Select
