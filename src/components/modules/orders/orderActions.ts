@@ -89,8 +89,12 @@ export const deleteOrder = async (id: number) => {
   })
 }
 
-export const acceptOrder = async (id: number) => {
-  await mutate(`${baseUrl}/${id}/accept`, {
+export const acceptOrder = async (id: number, userId?: string) => {
+  let url = `${baseUrl}/${id}/accept`
+
+  if (userId) url += `?userId=${userId}`
+
+  await mutate(url, {
     method: "POST",
   }, [`orderId:${id}`])
 }
