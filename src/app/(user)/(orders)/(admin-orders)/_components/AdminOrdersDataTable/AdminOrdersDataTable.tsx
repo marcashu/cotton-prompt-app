@@ -15,6 +15,7 @@ import ResolveOrderDialog from "./ResolveOrderDialog"
 import SendOrderForPrintingDialog from "./SendOrderForPrintingDialog"
 import OrderFiltersModel from "@/types/orderFiltersModel"
 import ToggleOrderRedrawMarkDialog from "./ToggleOrderRedrawMarkDialog"
+import CompleteOrderDialog from "./CompleteOrderDialog"
 
 export default function AdminOrdersDataTable({
   adminStatus,
@@ -31,6 +32,7 @@ export default function AdminOrdersDataTable({
     useState(false)
   const [openToggleRedrawMarkDialog, setOpenToggleRedrawMarkDialog] =
     useState(false)
+  const [openCompleteDialog, setOpenCompleteDialog] = useState(false)
   const [selectedOrder, setSelectedOrder] = useState<GetOrdersModel>()
 
   const handleSearch = (orderFilters: OrderFiltersModel) => {
@@ -77,6 +79,12 @@ export default function AdminOrdersDataTable({
     setOpenToggleRedrawMarkDialog(true)
   }
 
+  const handleComplete = (id: number) => {
+    const order = data?.find((o) => o.id === id)
+    setSelectedOrder(order)
+    setOpenCompleteDialog(true)
+  }
+
   const actionCell = ({ row }: CellContext<GetOrdersModel, unknown>) => {
     const order = row.original
     return (
@@ -88,6 +96,7 @@ export default function AdminOrdersDataTable({
         onResolve={handleResolve}
         onSendForPrinting={handleSendForPrinting}
         onToggleRedrawMark={handleToggleRedrawMark}
+        onComplete={handleComplete}
       />
     )
   }
@@ -130,6 +139,12 @@ export default function AdminOrdersDataTable({
             open={openToggleRedrawMarkDialog}
             mutate={mutate}
             handleClose={() => setOpenToggleRedrawMarkDialog(false)}
+          />
+          <CompleteOrderDialog
+            id={selectedOrder.id}
+            open={openCompleteDialog}
+            mutate={mutate}
+            handleClose={() => setOpenCompleteDialog(false)}
           />
         </>
       )}
