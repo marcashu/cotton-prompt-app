@@ -1,67 +1,69 @@
-# Overview of the Basic Tab template
+## How to Setup
 
-This template showcases how Microsoft Teams supports the ability to run web-based UI inside "custom tabs" that users can install either for just themselves (personal tabs) or within a team or group chat context.
+### Prerequisites
 
-## Get started with the Basic Tab template
+- Download **appPackage.local.zip** from the email
+- Download **.env** file from the email and paste it on the root folder of the app
+- Install [Node.js](https://nodejs.org/en) v18 or above
 
-> **Prerequisites**
->
-> To run the basic tab template in your local dev machine, you will need:
->
-> - [Node.js](https://nodejs.org/), supported versions: 16, 18
-> - A [Microsoft 365 account for development](https://docs.microsoft.com/microsoftteams/platform/toolkit/accounts)
-> - [Set up your dev environment for extending Teams apps across Microsoft 365](https://aka.ms/teamsfx-m365-apps-prerequisites)
-> Please note that after you enrolled your developer tenant in Office 365 Target Release, it may take couple days for the enrollment to take effect.
-> - [Teams Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version 5.0.0 and higher or [Teams Toolkit CLI](https://aka.ms/teamsfx-cli)
+### Install the app in MS Teams
 
-1. First, select the Teams Toolkit icon on the left in the VS Code toolbar.
-2. In the Account section, sign in with your [Microsoft 365 account](https://docs.microsoft.com/microsoftteams/platform/toolkit/accounts) if you haven't already.
-3. Press F5 to start debugging which launches your app in Teams using a web browser. Select `Debug (Edge)` or `Debug (Chrome)`.
-4. When Teams launches in the browser, select the Add button in the dialog to install your app to Teams.
+(This needs to be done once only)
 
-**Congratulations**! You are running an application that can now show a basic web page in Teams, Outlook and the Microsoft 365 app.
+1. In MS Teams, click on **Apps**
+2. Then click on **Manage your apps**
+3. Then click on **Upload an app**
+4. Then click on **Upload a custom app**
+5. Select the **appPackage.local.zip**
+6. Wait for the app details to load, then click on **Add**
 
-![Basic Tab](https://github.com/OfficeDev/TeamsFx/assets/11220663/ad7bd534-cdb2-4c18-a71b-b206b6387b4c)
+### Install the app dependencies
 
-## What's included in the template
+(This needs to be done once only)
 
-| Folder       | Contents                                            |
-| - | - |
-| `.vscode`    | VSCode files for debugging                          |
-| `appPackage` | Templates for the Teams application manifest        |
-| `env`        | Environment files                                   |
-| `infra`      | Templates for provisioning Azure resources          |
-| `src`        | The source code for the Teams application |
+1. Open a terminal on the root folder of the app
+2. Run the command `npm install`
 
-The following files can be customized and demonstrate an example implementation to get you started.
+### Run the app
 
-| File                                 | Contents                                           |
-| - | - |
-|`src/static/scripts/teamsapp.js`|A script that calls `teamsjs` SDK to get the context of on which Microsoft 365 application your app is running.|
-|`src/static/styles/custom.css`|css file for the app.|
-|`src/static/views/hello.html`|html file for the app.|
-|`src/app.ts`|Starting a restify server.|
+(This needs to be done everytime)
 
-The following are Teams Toolkit specific project files. You can [visit a complete guide on Github](https://github.com/OfficeDev/TeamsFx/wiki/Teams-Toolkit-Visual-Studio-Code-v5-Guide#overview) to understand how Teams Toolkit works.
+1. Run the Backend API (follow the README file from the other repository)
+2. Open a terminal on the root folder of the app
+3. Run the command `git checkout dev` to switch to the `dev` branch
+4. Run the command `npm run dev` to start the app
+5. Go to MS Teams, and click the app **CP Order Platform - local**
 
-| File                                 | Contents                                           |
-| - | - |
-|`teamsapp.yml`|This is the main Teams Toolkit project file. The project file defines two primary things:  Properties and configuration Stage definitions.|
-|`teamsapp.local.yml`|This overrides `teamsapp.yml` with actions that enable local execution and debugging.|
+## How to deploy changes to production
 
-## Extend the Basic Tab template
+1. Run the command `git checkout master` to switch to the `master` (production) branch
+2. Run the command `git merge dev` to merge the changes from `dev` to `master` branch
+3. Run the command `git push` to push the changes to the `master` branch.
 
-Following documentation will help you to extend the Basic Tab template.
+This will trigger a GitHub Action that will automatically deploy the changes to the cloud. The progress of the GitHub Action can be monitored on the **Actions** tab in the GitHub repo.
 
-- [Add or manage the environment](https://learn.microsoft.com/microsoftteams/platform/toolkit/teamsfx-multi-env)
-- [Create multi-capability app](https://learn.microsoft.com/microsoftteams/platform/toolkit/add-capability)
-- [Add single sign on to your app](https://learn.microsoft.com/microsoftteams/platform/toolkit/add-single-sign-on)
-- [Access data in Microsoft Graph](https://learn.microsoft.com/microsoftteams/platform/toolkit/teamsfx-sdk#microsoft-graph-scenarios)
-- [Use an existing Microsoft Entra application](https://learn.microsoft.com/microsoftteams/platform/toolkit/use-existing-aad-app)
-- [Customize the Teams app manifest](https://learn.microsoft.com/microsoftteams/platform/toolkit/teamsfx-preview-and-customize-app-manifest)
-- Host your app in Azure by [provision cloud resources](https://learn.microsoft.com/microsoftteams/platform/toolkit/provision) and [deploy the code to cloud](https://learn.microsoft.com/microsoftteams/platform/toolkit/deploy)
-- [Collaborate on app development](https://learn.microsoft.com/microsoftteams/platform/toolkit/teamsfx-collaboration)
-- [Set up the CI/CD pipeline](https://learn.microsoft.com/microsoftteams/platform/toolkit/use-cicd-template)
-- [Publish the app to your organization or the Microsoft Teams app store](https://learn.microsoft.com/microsoftteams/platform/toolkit/publish)
-- [Enable the app for multi-tenant](https://github.com/OfficeDev/TeamsFx/wiki/Multi-tenancy-Support-for-Azure-AD-app)
-- [Preview the app on mobile clients](https://github.com/OfficeDev/TeamsFx/wiki/Run-and-debug-your-Teams-application-on-iOS-or-Android-client)
+If the GitHub Action job fails, the usual suspect is there's not enough storage in the App Service file system. To fix this:
+
+1. Go to the [azure portal](https://portal.azure.com/).
+2. Login using your Cotton Prompt account
+3. Go to **App Services**
+4. Click on **cottonpromptapp-prod**
+5. Under **Development Tools**, click on **SSH**
+6. Click on **Go ->**
+7. This will open a new tab, wait for the terminal to load
+8. Run the command `cd site/wwwroot/.next/cache`
+9. Then run the command `rm -rf images`, this will clear up the cached images
+10. Wait for the command to finish
+11. Then go back to the **Actions** tab in the GitHub repo, and rerun the failed job
+
+### Updating the Database
+
+If the update contains database changes, you can get the Production database connection string/credentials here:
+
+1. Go to the [azure portal](https://portal.azure.com/).
+2. Login using your Cotton Prompt account
+3. Go to **App Services**
+4. Click on **cottonpromptapi-prod**
+5. Under **Settings**, click on **Environment variables**
+6. Then click on the **Connection strings** tab
+7. Then click on **Show value** button in the **DefaultConnection**
