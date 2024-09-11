@@ -12,9 +12,8 @@ export default function AvailableOrderAsArtistDataTables({
   userId: string
 }) {
   const { session } = useSession()
-  const { data: canClaim, isLoading } = useSWR<CanDoModel>(
-    `/api/artists/${userId}/can-claim`
-  )
+  const canClaimMutateKey = `/api/artists/${userId}/can-claim`
+  const { data: canClaim, isLoading } = useSWR<CanDoModel>(canClaimMutateKey)
   const { data: canClaimChangeRequestOrders } = useSWR<CanDoModel>(
     `/api/artists/${session?.userId}/can-claim-change-request`
   )
@@ -25,9 +24,21 @@ export default function AvailableOrderAsArtistDataTables({
 
   if (isLoading || !canClaim) return <></>
 
-  const crActionCell = getArtistActionCell(canClaim, changeRequestKey)
-  const priorityActionCell = getArtistActionCell(canClaim, priorityKey)
-  const normalActionCell = getArtistActionCell(canClaim, normalKey)
+  const crActionCell = getArtistActionCell(
+    canClaim,
+    changeRequestKey,
+    canClaimMutateKey
+  )
+  const priorityActionCell = getArtistActionCell(
+    canClaim,
+    priorityKey,
+    canClaimMutateKey
+  )
+  const normalActionCell = getArtistActionCell(
+    canClaim,
+    normalKey,
+    canClaimMutateKey
+  )
 
   return (
     <>

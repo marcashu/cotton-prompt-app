@@ -14,11 +14,13 @@ export default function ClaimOrderButton({
   mutateKey,
   canClaim,
   role,
+  canClaimMutateKey,
 }: {
   id: number
   mutateKey: string
   canClaim: CanDoModel
   role: Role
+  canClaimMutateKey?: string
 }) {
   const { session } = useSession()
   const { mutate } = useSWRConfig()
@@ -43,6 +45,10 @@ export default function ClaimOrderButton({
             title: "Order has been claimed successfully",
             description: new Date().toLocaleString(),
           })
+
+          if (canClaimMutateKey) {
+            mutate(canClaimMutateKey)
+          }
         } else {
           toast({
             variant: "warning",

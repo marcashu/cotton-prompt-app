@@ -4,7 +4,7 @@ import GetOrdersModel from "@/types/getOrdersModel"
 import ClaimOrderButton from "./OrdersDataTableActions/ClaimOrderButton"
 import CanDoModel from "@/types/canDoModel"
 
-export const getArtistActionCell = (canClaim: CanDoModel, mutateKey: string) => {
+export const getArtistActionCell = (canClaim: CanDoModel, mutateKey: string, canClaimMutateKey: string) => {
   return ({ row }: CellContext<GetOrdersModel, unknown>) => {
     const order = row.original
     return (
@@ -13,6 +13,7 @@ export const getArtistActionCell = (canClaim: CanDoModel, mutateKey: string) => 
         mutateKey,
         canClaim,
         role: Role.Artist,
+        canClaimMutateKey
       })
     )
   }
