@@ -23,6 +23,8 @@ const buttonVariants = cva(
           "bg-[#007a80] rounded-[25px] font-bold text-primary-foreground hover:bg-[#00494d]",
         orderProofOutline:
           "text-[#3A3A3A] rounded-[25px] font-bold border border-input bg-background hover:bg-accent",
+        blueButton:
+          "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500",
       },
       size: {
         default: "h-10 px-4 py-2",

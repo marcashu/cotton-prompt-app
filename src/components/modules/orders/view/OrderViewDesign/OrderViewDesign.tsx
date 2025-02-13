@@ -17,6 +17,7 @@ import CheckerStatus from "@/enums/checkerStatus"
 import { KeyedMutator } from "swr"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Role from "@/enums/role"
 
 export default function OrderViewDesign({
   order,
@@ -84,6 +85,18 @@ export default function OrderViewDesign({
               checkerStatus={order.checkerStatus}
               mutate={mutate}
             />
+          )}
+          {session.selectedRole === Role.Admin ||
+          session.selectedRole === Role.SuperAdmin ? (
+            <OrderViewDesignComment
+              id={currentDesign.id}
+              orderId={order.id}
+              checkerStatus={order.checkerStatus!}
+              mutate={mutate}
+              isAdmin
+            />
+          ) : (
+            <></>
           )}
         </>
       )}

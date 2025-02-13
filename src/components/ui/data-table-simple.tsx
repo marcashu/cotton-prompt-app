@@ -29,7 +29,6 @@ interface DataTableProps<TData, TValue> {
   isSortByStartDate?: boolean
   setInvoicesFiltered?: (data: TData[]) => void
   originalData?: TData[]
-  isColorCoding?: boolean
 }
 
 export const getColorCodeForStatus = (status: string) => {
@@ -58,16 +57,14 @@ export const getColorCodeForStatus = (status: string) => {
   }
 }
 
-export function DataTable<TData, TValue>({
+export function DataTableSimple<TData, TValue>({
   columns,
   data,
   isLoading = false,
   isSortByStartDate = false,
   setInvoicesFiltered,
   originalData,
-  isColorCoding = false,
 }: DataTableProps<TData, TValue>) {
-  const [currentPage, setCurrentPage] = useState(1)
   const [isSortByStartDateState, setIsSortByStartDateState] = useState(false)
 
   const table = useReactTable({
@@ -144,46 +141,21 @@ export function DataTable<TData, TValue>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows && table.getRowModel().rows?.length ? (
-            table
-              .getRowModel()
-              .rows.slice((currentPage - 1) * 8, currentPage * 8)
-              .map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className={
-                    isColorCoding
-                      ? `${getColorCodeForStatus(
-                          (row.original as any).customerStatus
-                            ? (row.original as any).customerStatus
-                            : (row.original as any).checkerStatus
-                            ? (row.original as any).checkerStatus
-                            : (row.original as any).artistStatus
-                            ? (row.original as any).artistStatus
-                            : ""
-                        )} hover:${getColorCodeForStatus(
-                          (row.original as any).customerStatus
-                            ? (row.original as any).customerStatus
-                            : (row.original as any).checkerStatus
-                            ? (row.original as any).checkerStatus
-                            : (row.original as any).artistStatus
-                            ? (row.original as any).artistStatus
-                            : ""
-                        )}
-                          `
-                      : ""
-                  }
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+                className={`${(row.original as any).color} hover:${
+                  (row.original as any).color
+                }`}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
           ) : !isLoading ? (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
@@ -199,32 +171,6 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-
-      <div className="flex justify-between p-4">
-        <Button
-          variant="outline"
-          onClick={() => {
-            setCurrentPage(currentPage - 1)
-          }}
-          disabled={currentPage === 1 || data.length === 0 || isLoading}
-        >
-          Previous
-        </Button>
-
-        <Button
-          variant="outline"
-          onClick={() => {
-            setCurrentPage(currentPage + 1)
-          }}
-          disabled={
-            currentPage === Math.ceil(data.length / 8) ||
-            data.length === 0 ||
-            isLoading
-          }
-        >
-          Next
-        </Button>
-      </div>
     </div>
   )
 }
