@@ -5,6 +5,7 @@ type GetInvoicesModel = {
   user: string
   amount: number
   status: string
+  paymentLink: string
 }
 
 export default GetInvoicesModel

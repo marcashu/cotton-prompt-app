@@ -157,6 +157,7 @@ export default function AdminOrdersDataTable({
         columns={getAdminOrdersColumnDef(adminStatus, actionCell)}
         data={data ?? []}
         isLoading={isLoading}
+        isColorCoding
       />
     </>
   )

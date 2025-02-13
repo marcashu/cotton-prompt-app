@@ -14,11 +14,13 @@ export default function OrderViewDesignComment({
   orderId,
   checkerStatus,
   mutate,
+  isAdmin = false,
 }: {
   id: number
   orderId: number
   checkerStatus: string
   mutate: KeyedMutator<GetOrderModel>
+  isAdmin?: boolean
 }) {
   const [comment, setComment] = useState("")
   const [loading, setLoading] = useState(false)
@@ -36,7 +38,12 @@ export default function OrderViewDesignComment({
     if (!comment) return
 
     setLoading(true)
-    postComment(id, comment, session.userId, orderId)
+    postComment(
+      id,
+      comment,
+      isAdmin ? "00000000-0000-0000-0000-000000000000" : session.userId,
+      orderId
+    )
       .then(() => {
         mutate()
         if (checkerStatus === CheckerStatus.ForReview) {
@@ -57,10 +64,12 @@ export default function OrderViewDesignComment({
 
   return (
     <>
-      <TypographySmall className="font-normal">
-        Note: Only add a comment if the design requires changes, otherwise click
-        &quot;Approve&quot;
-      </TypographySmall>
+      {!isAdmin && (
+        <TypographySmall className="font-normal">
+          Note: Only add a comment if the design requires changes, otherwise
+          click &quot;Approve&quot;
+        </TypographySmall>
+      )}
       <form className="flex w-full gap-2" onSubmit={handleSend}>
         <Input
           type="text"

@@ -24,6 +24,7 @@ export default function TeamsSessionProvider({
                 userRoles: user.roles,
                 selectedRole: user.roles[0],
                 name: user.name,
+                paymentLink: user.paymentLink,
               })
             )
             .catch(({ message }: { message: string }) => {

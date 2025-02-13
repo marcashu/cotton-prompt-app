@@ -45,6 +45,10 @@ const artistNavItems = (userId: string): NavItem[] => [
     name: "Invoices",
     href: "/invoices",
   },
+  {
+    name: "Payments",
+    href: "/payments",
+  },
 ]
 
 const checkerNavItems = (userId: string): NavItem[] => [
@@ -59,6 +63,10 @@ const checkerNavItems = (userId: string): NavItem[] => [
   {
     name: "Invoices",
     href: "/invoices",
+  },
+  {
+    name: "Payments",
+    href: "/payments",
   },
 ]
 
