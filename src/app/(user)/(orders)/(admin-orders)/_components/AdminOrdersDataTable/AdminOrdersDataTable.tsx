@@ -17,6 +17,13 @@ import OrderFiltersModel from "@/types/orderFiltersModel"
 import ToggleOrderRedrawMarkDialog from "./ToggleOrderRedrawMarkDialog"
 import CompleteOrderDialog from "./CompleteOrderDialog"
 
+const sortOrdersByStatus = (a: GetOrdersModel, b: GetOrdersModel) => {
+  if (!a.customerStatus && !a.checkerStatus && !a.artistStatus) return -1
+  if (!b.customerStatus && !b.checkerStatus && !b.artistStatus) return 1
+
+  return 0
+}
+
 export default function AdminOrdersDataTable({
   adminStatus,
 }: {
@@ -155,7 +162,7 @@ export default function AdminOrdersDataTable({
       />
       <DataTable
         columns={getAdminOrdersColumnDef(adminStatus, actionCell)}
-        data={data ?? []}
+        data={data ? data?.sort(sortOrdersByStatus) : []}
         isLoading={isLoading}
         isColorCoding
       />
