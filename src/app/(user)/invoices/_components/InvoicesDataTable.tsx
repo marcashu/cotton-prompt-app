@@ -117,11 +117,11 @@ function getDateRangeCategory(startDateStr: string, endDateStr: string) {
 
   if (startDate >= startOfWeek) {
     return "bg-blue-200"
-  } else if (endDate >= startOfPreviousWeek && startDate < startOfWeek) {
-    return "bg-yellow-200"
-  } else {
-    return "bg-red-200"
   }
+  if (startDate >= startOfPreviousWeek && endDate <= endOfPreviousWeek) {
+    return "bg-yellow-200"
+  }
+  return "bg-red-200"
 }
 
 const groupInvoicesByDate = (invoicesFiltered: GetInvoicesModel[]) => {
