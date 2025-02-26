@@ -26,8 +26,10 @@ const sortOrdersByStatus = (a: GetOrdersModel, b: GetOrdersModel) => {
 
 export default function AdminOrdersDataTable({
   adminStatus,
+  hasPagination = false,
 }: {
   adminStatus: AdminStatus
+  hasPagination?: boolean
 }) {
   const baseUrl = `/api/orders/${adminStatus}`
   const [url, setUrl] = useState(baseUrl)
@@ -165,6 +167,7 @@ export default function AdminOrdersDataTable({
         data={data ? data?.sort(sortOrdersByStatus) : []}
         isLoading={isLoading}
         isColorCoding
+        hasPagination={hasPagination}
       />
     </>
   )

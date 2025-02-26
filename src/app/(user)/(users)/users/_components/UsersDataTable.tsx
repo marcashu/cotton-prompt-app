@@ -10,8 +10,12 @@ import Role, { isAdmin, trimAdmin } from "@/enums/role"
 import { TypographySmall } from "@/components/ui/typography"
 import { Badge } from "@/components/ui/badge"
 import useSession from "@/hooks/useSession"
+import GetUserGroupsModel from "@/types/getUserGroupsModel"
 
-const getColumnDef = (isSuperAdmin: boolean) => {
+const getColumnDef = (
+  isSuperAdmin: boolean,
+  userGroups: GetUserGroupsModel[]
+) => {
   const columnDef: ColumnDef<GetUsersModel>[] = [
     {
       header: "Name",
@@ -28,6 +32,15 @@ const getColumnDef = (isSuperAdmin: boolean) => {
     {
       accessorKey: "email",
       header: "Email",
+    },
+    {
+      header: "User Group",
+      cell: ({ row }) => {
+        const user = row.original
+        if (!user.groups) return "-"
+        const userGroup = userGroups.find((ug) => `${ug.id}` === user.groups[0])
+        return userGroup ? userGroup.name : "-"
+      },
     },
     {
       header: "Roles",
@@ -83,13 +96,19 @@ const getColumnDef = (isSuperAdmin: boolean) => {
   return columnDef
 }
 
-export default function UsersDataTable({ data }: { data: GetUsersModel[] }) {
+export default function UsersDataTable({
+  data,
+  userGroups,
+}: {
+  data: GetUsersModel[]
+  userGroups: GetUserGroupsModel[]
+}) {
   const { session } = useSession()
 
   if (!session) return <></>
 
   const isSuperAdmin = session.selectedRole === Role.SuperAdmin
-  const columnDef = getColumnDef(isSuperAdmin)
+  const columnDef = getColumnDef(isSuperAdmin, userGroups)
 
   return <DataTable columns={columnDef} data={data} />
 }
