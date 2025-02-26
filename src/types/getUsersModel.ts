@@ -5,6 +5,7 @@ type GetUsersModel = {
   name: string
   email: string
   roles: Role[]
+  groups: string[]
   paymentLink: string
 }
 
