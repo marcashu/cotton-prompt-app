@@ -100,9 +100,8 @@ const getColumnDef = (role?: Role) => {
   return columnDef
 }
 
-function getDateRangeCategory(startDateStr: string, endDateStr: string) {
+function getDateRangeCategory(startDateStr: string) {
   const startDate = new Date(startDateStr)
-  const endDate = new Date(endDateStr)
 
   const now = new Date()
   const startOfWeek = new Date(now)
@@ -118,10 +117,10 @@ function getDateRangeCategory(startDateStr: string, endDateStr: string) {
   if (startDate >= startOfWeek) {
     return "bg-blue-200"
   }
-  if (startDate >= startOfPreviousWeek && endDate <= endOfPreviousWeek) {
-    return "bg-yellow-200"
+  if (startDate >= startOfPreviousWeek) {
+    return "bg-red-200"
   }
-  return "bg-red-200"
+  return "bg-gray-200"
 }
 
 const groupInvoicesByDate = (invoicesFiltered: GetInvoicesModel[]) => {
@@ -137,13 +136,13 @@ const groupInvoicesByDate = (invoicesFiltered: GetInvoicesModel[]) => {
     if (existingGroup) {
       existingGroup.push({
         ...invoice,
-        color: getDateRangeCategory(invoice.startDate, invoice.endDate),
+        color: getDateRangeCategory(invoice.startDate),
       })
     } else {
       groupedInvoices.push([
         {
           ...invoice,
-          color: getDateRangeCategory(invoice.startDate, invoice.endDate),
+          color: getDateRangeCategory(invoice.startDate),
         },
       ])
     }
