@@ -7,6 +7,7 @@ import Link from "next/link"
 import { TypographyH2 } from "@/components/ui/typography"
 import useSession from "@/hooks/useSession"
 import { isAdmin } from "@/enums/role"
+import GlobalOrderSearch from "./_components/GlobalOrderSearch"
 
 export default function OrdersLayout({
   children,
@@ -16,11 +17,14 @@ export default function OrdersLayout({
   const { session } = useSession()
 
   const title = (
-    <div className="flex justify-between border-b pb-2">
-      <TypographyH2>Orders</TypographyH2>
-      <Button asChild>
-        <Link href="/create-order">Create Order</Link>
-      </Button>
+    <div className="flex flex-col gap-3 border-b pb-2">
+      <div className="flex justify-between items-center">
+        <TypographyH2>Orders</TypographyH2>
+        <Button asChild>
+          <Link href="/create-order">Create Order</Link>
+        </Button>
+      </div>
+      <GlobalOrderSearch />
     </div>
   )
 

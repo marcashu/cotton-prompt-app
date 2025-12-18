@@ -1,8 +1,6 @@
 import { deleteOrder } from "../../orderActions"
-import { KeyedMutator } from "swr"
 import { useToast } from "@/components/ui/use-toast"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
-import GetOrdersModel from "@/types/getOrdersModel"
 
 export default function DeleteOrderDialog({
   id,
@@ -12,7 +10,7 @@ export default function DeleteOrderDialog({
 }: {
   id: number
   open: boolean
-  mutate: KeyedMutator<GetOrdersModel[]>
+  mutate: () => void
   handleClose: () => void
 }) {
   const { toast } = useToast()

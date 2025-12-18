@@ -15,6 +15,9 @@ export default function FullscreenableImage({
   const [fullscreen, setFullscreen] = useState(false)
   const imageRef = createRef<HTMLImageElement>()
 
+  // Check if URL is external (blob storage) - skip Next.js optimization for these
+  const isExternalUrl = src.startsWith("http://") || src.startsWith("https://")
+
   const handleImageClick = () => {
     if (!fullscreen) {
       imageRef.current?.requestFullscreen()
@@ -45,6 +48,7 @@ export default function FullscreenableImage({
       className="object-contain cursor-pointer"
       ref={imageRef}
       onClick={handleImageClick}
+      unoptimized={isExternalUrl}
       {...(onError && { onError })}
     />
   )

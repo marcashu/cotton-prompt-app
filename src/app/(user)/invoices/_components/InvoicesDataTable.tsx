@@ -16,6 +16,12 @@ import { useEffect, useState } from "react"
 import { toast } from "@/components/ui/use-toast"
 import { DataTableSimple } from "@/components/ui/data-table-simple"
 
+const ensureHttps = (url: string) => {
+  if (!url) return url
+  if (url.startsWith("http://") || url.startsWith("https://")) return url
+  return `https://${url}`
+}
+
 const getColumnDef = (role?: Role) => {
   const columnDef: ColumnDef<GetInvoicesModel>[] = [
     {
@@ -73,10 +79,10 @@ const getColumnDef = (role?: Role) => {
             {isAdmin(role) && invoice.paymentLink && (
               <Button asChild className="float-right" variant="blueButton">
                 <a
-                  href={invoice.paymentLink}
+                  href={ensureHttps(invoice.paymentLink)}
                   target="_blank"
                   onClick={() => {
-                    navigator.clipboard.writeText(invoice.paymentLink)
+                    navigator.clipboard.writeText(ensureHttps(invoice.paymentLink))
 
                     toast({
                       variant: "default",

@@ -1,15 +1,5 @@
-import { TypographyH2 } from "@/components/ui/typography"
-import AdminOrdersDataTable from "../_components/AdminOrdersDataTable"
-import AdminStatus from "@/enums/adminStatus"
+import SentForPrintingContent from "./SentForPrintingContent"
 
-export default function CompletedOrdersPage() {
-  return (
-    <div className="flex flex-col gap-4">
-      <TypographyH2 withSeparator>Sent for Printing Orders</TypographyH2>
-      <AdminOrdersDataTable
-        adminStatus={AdminStatus.SentForPrinting}
-        hasPagination
-      />
-    </div>
-  )
+export default function SentForPrintingOrdersPage() {
+  return <SentForPrintingContent />
 }

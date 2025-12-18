@@ -20,6 +20,8 @@ import { useState } from "react"
 import OutputSizeSelect from "./OutputSizeSelect"
 import CustomerEmailInput from "./CustomerEmailInput"
 import UserGroupSelect from "./UserGroupSelect"
+import AuthorSelect from "./AuthorSelect"
+import Role from "@/enums/role"
 
 export default function OrderForm({
   order,
@@ -29,6 +31,10 @@ export default function OrderForm({
   isRedraw?: boolean
 }) {
   const { session } = useSession()
+  const isAdmin =
+    session?.selectedRole === Role.Admin ||
+    session?.selectedRole === Role.SuperAdmin
+
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
@@ -44,6 +50,7 @@ export default function OrderForm({
       outputSizeId: order?.outputSize.id.toString() ?? "",
       userGroupId: order && !isRedraw ? order.userGroupId.toString() : "",
       customerEmail: order?.customerEmail ?? "",
+      authorId: order?.authorId ?? "",
       imageReferences:
         order?.imageReferences.map((ir) => ({
           type: ir.type,
@@ -128,6 +135,7 @@ export default function OrderForm({
             <OutputSizeSelect control={form.control} className="flex-1" />
           </div>
           <UserGroupSelect control={form.control} />
+          {isAdmin && <AuthorSelect control={form.control} />}
           <CustomerEmailInput control={form.control} />
           <ConceptTextarea control={form.control} />
           <ImageReferenceUrls control={form.control} />

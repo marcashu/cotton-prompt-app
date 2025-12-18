@@ -9,6 +9,8 @@ type GetOrdersModel = {
   artistName?: string
   checkerId?: string
   checkerName?: string
+  changeRequestArtistId?: string
+  changeRequestArtistName?: string
   customerStatus: string
   customerName: string
   originalOrderId?: number
@@ -20,6 +22,7 @@ type GetOrdersModel = {
   isReportDesignSubmitted?: boolean
   isReportRedraw?: boolean
   updatedOn?: string
+  checkerRemovedOn?: string
 }
 
 export default GetOrdersModel

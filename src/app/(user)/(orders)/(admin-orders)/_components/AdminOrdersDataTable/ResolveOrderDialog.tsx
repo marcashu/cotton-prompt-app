@@ -1,8 +1,6 @@
 import { resolveOrder } from "@/components/modules/orders/orderActions"
-import { KeyedMutator } from "swr"
 import { useToast } from "@/components/ui/use-toast"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
-import GetOrdersModel from "@/types/getOrdersModel"
 import useSession from "@/hooks/useSession"
 
 export default function ResolveOrderDialog({
@@ -19,7 +17,7 @@ export default function ResolveOrderDialog({
   isRedraw: boolean
   isChangeRequest: boolean
   open: boolean
-  mutate: KeyedMutator<GetOrdersModel[]>
+  mutate: () => void
   handleClose: () => void
 }) {
   const { toast } = useToast()

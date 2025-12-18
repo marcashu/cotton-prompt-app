@@ -10,7 +10,7 @@ export default function Main({
 }) {
   return (
     <div className={cn("pb-4", className)}>
-      <Card className="container py-6 shadow">{children}</Card>
+      <Card className="container max-w-[95rem] py-6 shadow">{children}</Card>
     </div>
   )
 }

@@ -39,8 +39,8 @@ export default async function OrderProofPage({
           Order {order.orderNumber}
         </TypographyH2>
       </div>
-      <div className="grow flex flex-col">
-        <div className="grow relative">
+      <div className="grow flex flex-col min-h-0">
+        <div className="grow relative min-h-[200px]">
           <FullscreenableImage
             src={
               order.customerStatus === CustomerStatus.ForReview

@@ -12,6 +12,7 @@ import CustomerFilter from "./CustomerFilter"
 import StatusFilter from "./StatusFilter"
 import { TypographySmall } from "@/components/ui/typography"
 import UserGroupFilter from "./UserGroupFilter"
+import PaginatedResult from "@/types/paginatedResult"
 
 export default function AdminOrderFilters({
   count,
@@ -22,7 +23,8 @@ export default function AdminOrderFilters({
   adminStatus: AdminStatus
   onSearch: (orderFilters: OrderFiltersModel) => void
 }) {
-  const { data } = useSWR<GetOrdersModel[]>(`/api/orders/${adminStatus}`)
+  const { data: paginatedData } = useSWR<PaginatedResult<GetOrdersModel>>(`/api/orders/${adminStatus}`)
+  const data = paginatedData?.items ?? []
   const [orderFilters, dispatch] = useReducer(orderFiltersReducer, {
     orderNumbers: [],
     priorities: [],

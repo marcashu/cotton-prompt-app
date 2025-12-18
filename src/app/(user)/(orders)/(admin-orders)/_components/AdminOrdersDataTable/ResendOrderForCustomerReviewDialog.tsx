@@ -1,8 +1,6 @@
 import { resendOrderForCustomerReview } from "@/components/modules/orders/orderActions"
-import { KeyedMutator } from "swr"
 import { useToast } from "@/components/ui/use-toast"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
-import GetOrdersModel from "@/types/getOrdersModel"
 import AdminStatus from "@/enums/adminStatus"
 
 export default function ResendOrderForCustomerReviewDialog({
@@ -14,7 +12,7 @@ export default function ResendOrderForCustomerReviewDialog({
 }: {
   id: number
   open: boolean
-  mutate: KeyedMutator<GetOrdersModel[]>
+  mutate: () => void
   handleClose: () => void
   adminStatus: AdminStatus
 }) {
