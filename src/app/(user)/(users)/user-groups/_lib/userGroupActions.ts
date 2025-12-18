@@ -40,3 +40,12 @@ export const removeUser = async (id: number, userId: string) => {
     },
   }, ['userGroups', `userGroup:${id}`])
 }
+
+export const deleteUserGroup = async (id: number) => {
+  await mutate(`${baseUrl}/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }, ['userGroups'])
+}

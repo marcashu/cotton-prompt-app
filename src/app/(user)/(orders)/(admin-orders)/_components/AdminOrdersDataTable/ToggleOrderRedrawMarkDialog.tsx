@@ -1,8 +1,6 @@
 import { toggleOrderRedrawMark } from "@/components/modules/orders/orderActions"
-import { KeyedMutator } from "swr"
 import { useToast } from "@/components/ui/use-toast"
 import ConfirmAlertDialog from "@/components/ui/confirm-alert-dialog"
-import GetOrdersModel from "@/types/getOrdersModel"
 
 export default function ToggleOrderRedrawMarkDialog({
   id,
@@ -14,7 +12,7 @@ export default function ToggleOrderRedrawMarkDialog({
   id: number
   isRedraw: boolean
   open: boolean
-  mutate: KeyedMutator<GetOrdersModel[]>
+  mutate: () => void
   handleClose: () => void
 }) {
   const { toast } = useToast()

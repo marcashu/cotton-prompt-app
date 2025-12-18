@@ -9,9 +9,13 @@ import GetOrderModel from "@/types/getOrderModel"
 export default function OrderViewDesignApproveButton({
   id,
   mutate,
+  isAdminApproval,
+  approvedBy,
 }: {
   id: number
   mutate: KeyedMutator<GetOrderModel>
+  isAdminApproval?: boolean
+  approvedBy?: string
 }) {
   const [loading, setLoading] = useState(false)
   const { toast } = useToast()
@@ -19,10 +23,10 @@ export default function OrderViewDesignApproveButton({
 
   const handleApprove = () => {
     setLoading(true)
-    approveOrder(id).then(() => {
+    approveOrder(id, approvedBy, isAdminApproval ?? false).then(() => {
       mutate()
       toast({
-        title: "Order has been approved!",
+        title: isAdminApproval ? "Order approved by admin!" : "Order has been approved!",
         description: new Date().toLocaleString(),
       })
       router.back()
@@ -31,7 +35,7 @@ export default function OrderViewDesignApproveButton({
 
   return (
     <Button type="button" loading={loading} onClick={handleApprove}>
-      Approve
+      {isAdminApproval ? "Approve as Admin" : "Approve"}
     </Button>
   )
 }

@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import QualityControlRateInput from "./QualityControlRateInput"
 import ChangeRequestRateInput from "./ChangeRequestRateInput"
+import ConceptAuthorRateInput from "./ConceptAuthorRateInput"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import useSession from "@/hooks/useSession"
@@ -22,6 +23,7 @@ export default function RatesForm({ rates }: { rates: RatesModel }) {
     defaultValues: {
       qualityControlRate: rates.qualityControlRate,
       changeRequestRate: rates.changeRequestRate,
+      conceptAuthorRate: rates.conceptAuthorRate,
     },
   })
 
@@ -54,6 +56,7 @@ export default function RatesForm({ rates }: { rates: RatesModel }) {
         <div className="flex flex-col gap-4">
           <QualityControlRateInput control={form.control} />
           <ChangeRequestRateInput control={form.control} />
+          <ConceptAuthorRateInput control={form.control} />
         </div>
         <Button type="submit" loading={loading}>
           Submit

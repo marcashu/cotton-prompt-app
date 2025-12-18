@@ -11,7 +11,11 @@ const artistColumn: ColumnDef<GetOrdersModel> = {
   header: "Artist",
   cell: ({ row }) => {
     const order = row.original
-    const result = UserInfoCell({ name: order.artistName, status: order.artistStatus })
+    const result = UserInfoCell({
+      name: order.artistName,
+      status: order.artistStatus,
+      crArtistName: order.changeRequestArtistName,
+    })
     return result
   }
 }
@@ -21,7 +25,9 @@ const checkerColumn: ColumnDef<GetOrdersModel> = {
   header: "Checker",
   cell: ({ row }) => {
     const order = row.original
-    const result = UserInfoCell({ name: order.checkerName, status: order.checkerStatus })
+    const isRemoved = !!order.checkerRemovedOn
+    const isApproved = order.checkerStatus === "Approved"
+    const result = UserInfoCell({ name: order.checkerName, status: order.checkerStatus, isRemoved, isApproved })
     return result
   }
 }
@@ -39,7 +45,7 @@ const customerColumn: ColumnDef<GetOrdersModel> = {
 const priorityColumn: ColumnDef<GetOrdersModel> = {
   id: "priority",
   accessorFn: (order) => order.priority ? 'Yes' : 'No',
-  header: "Priority",
+  header: "Prio",
 }
 
 const reporterColumn: ColumnDef<GetOrdersModel> = {
@@ -68,6 +74,15 @@ const redrawColumn: ColumnDef<GetOrdersModel> = {
   header: "Redraw Request",
 }
 
+const userGroupColumn: ColumnDef<GetOrdersModel> = {
+  id: "userGroup",
+  header: "Group",
+  cell: ({ row }) => {
+    const order = row.original
+    return TypographySmall({ children: order.userGroupName, className: 'text-xs whitespace-nowrap' })
+  }
+}
+
 const getDateHeader = (adminStatus: AdminStatus) => {
   if (adminStatus === AdminStatus.Ongoing) return 'Date Created'
 
@@ -80,7 +95,7 @@ const getDateHeader = (adminStatus: AdminStatus) => {
 const getAdminOrdersColumnDef = (adminStatus: AdminStatus, actionCell: ({ row }: CellContext<GetOrdersModel, unknown>) => JSX.Element): ColumnDef<GetOrdersModel>[] => [
   {
     accessorKey: "orderNumber",
-    header: "Order Number",
+    header: "Order #",
     cell: (({ row }) => OrdersDataTableOrderNumber({ row, canView: true }))
   },
   {
@@ -88,6 +103,7 @@ const getAdminOrdersColumnDef = (adminStatus: AdminStatus, actionCell: ({ row }:
     accessorFn: (order) => formatDateToYYYYMMDD(order.date),
     header: getDateHeader(adminStatus),
   },
+  userGroupColumn,
   ...(adminStatus !== AdminStatus.Reported ? [priorityColumn, artistColumn, checkerColumn, customerColumn] : [reporterColumn, redrawColumn, reasonColumn]),
   {
     id: "actions",

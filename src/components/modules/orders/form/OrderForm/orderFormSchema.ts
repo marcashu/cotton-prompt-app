@@ -14,6 +14,7 @@ const orderFormSchema = z.object({
   outputSizeId: z.string().min(1, "Please select an output size."),
   userGroupId: z.string().min(1, "Please select a user group."),
   customerEmail: z.string().email("Please enter a valid email."),
+  authorId: z.string().optional(),
   imageReferences: z
     .array(
       z

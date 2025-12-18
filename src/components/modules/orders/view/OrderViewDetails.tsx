@@ -1,3 +1,5 @@
+"use client"
+
 import Tiptap from "@/components/custom/Tiptap"
 import { Card } from "@/components/ui/card"
 import {
@@ -5,9 +7,17 @@ import {
   TypographyMuted,
   TypographySmall,
 } from "@/components/ui/typography"
+import Role from "@/enums/role"
+import useSession from "@/hooks/useSession"
 import GetOrderModel from "@/types/getOrderModel"
 
 export default function OrderViewDetails({ order }: { order: GetOrderModel }) {
+  const { session } = useSession()
+
+  const isAdmin =
+    session?.selectedRole === Role.Admin ||
+    session?.selectedRole === Role.SuperAdmin
+
   return (
     <Card className="py-6 container shadow flex flex-col gap-4">
       <TypographyH3>Details</TypographyH3>
@@ -32,6 +42,12 @@ export default function OrderViewDetails({ order }: { order: GetOrderModel }) {
           <TypographySmall>Output Size</TypographySmall>
           <TypographyMuted>{order.outputSize.value}</TypographyMuted>
         </div>
+        {isAdmin && order.authorName && (
+          <div>
+            <TypographySmall>Author</TypographySmall>
+            <TypographyMuted>{order.authorName}</TypographyMuted>
+          </div>
+        )}
       </div>
       <div>
         <TypographySmall>Concept</TypographySmall>

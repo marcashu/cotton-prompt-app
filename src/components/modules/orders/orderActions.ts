@@ -50,13 +50,21 @@ export const submitOrderDesign = async (id: number, design: string, fileName: st
   }, [`orderId:${id}`, `canClaim:${artistId}`])
 }
 
-export const approveOrder = async (id: number) => {
+export const approveOrder = async (id: number, approvedBy?: string, isAdminApproval: boolean = false) => {
   await mutate(`${baseUrl}/${id}/approve`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      approvedBy,
+      isAdminApproval,
+    }),
   }, [`orderId:${id}`])
 }
 
 export const updateOrder = async (value: OrderFormValues, updatedBy: string, id: number) => {
+  const authorId = value.authorId === "none" || value.authorId === "" ? null : value.authorId
   await mutate(baseUrl, {
     method: "PUT",
     headers: {
@@ -65,12 +73,14 @@ export const updateOrder = async (value: OrderFormValues, updatedBy: string, id:
     body: JSON.stringify({
       id,
       ...value,
+      authorId,
       updatedBy,
     }),
   }, [`orderId:${id}`])
 }
 
 export const createOrder = async (value: OrderFormValues, createdBy: string) => {
+  const authorId = value.authorId === "none" || value.authorId === "" ? null : value.authorId
   await mutate(baseUrl, {
     method: "POST",
     headers: {
@@ -78,6 +88,7 @@ export const createOrder = async (value: OrderFormValues, createdBy: string) => 
     },
     body: JSON.stringify({
       ...value,
+      authorId,
       createdBy,
     }),
   })
@@ -157,6 +168,7 @@ export const sendOrderForPrinting = async (id: number, userId: string) => {
 }
 
 export const redrawOrder = async (value: OrderFormValues, changeRequestOrderId: number, createdBy: string) => {
+  const authorId = value.authorId === "none" || value.authorId === "" ? null : value.authorId
   await mutate(`${baseUrl}/${changeRequestOrderId}/redraw`, {
     method: "POST",
     headers: {
@@ -164,6 +176,7 @@ export const redrawOrder = async (value: OrderFormValues, changeRequestOrderId: 
     },
     body: JSON.stringify({
       ...value,
+      authorId,
       createdBy,
     }),
   })
@@ -176,4 +189,13 @@ export const toggleOrderRedrawMark = async (id: number) => {
       "Content-Type": "application/json",
     },
   }, [`orderId:${id}`])
+}
+
+export const cleanupOldOrders = async (olderThanDays: number = 30): Promise<number> => {
+  const response = await fetch(`${baseUrl}/cleanup-old?olderThanDays=${olderThanDays}`, {
+    method: "DELETE",
+    cache: 'no-store',
+  })
+  const deletedCount = await response.json()
+  return deletedCount
 }
