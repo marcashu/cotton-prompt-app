@@ -2,6 +2,10 @@ import NavItem from "@/types/navItem"
 
 const ordersSideNavItems: NavItem[] = [
   {
+    name: "All Orders",
+    href: "/all-orders",
+  },
+  {
     name: "Ongoing Orders",
     href: "/ongoing-orders",
   },

@@ -1,4 +1,5 @@
 enum AdminStatus {
+  All = "All",
   Ongoing = "Ongoing",
   Rejected = "Rejected",
   Completed = "Completed",
