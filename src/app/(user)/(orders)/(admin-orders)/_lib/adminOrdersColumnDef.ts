@@ -76,8 +76,11 @@ const redrawColumn: ColumnDef<GetOrdersModel> = {
 
 const userGroupColumn: ColumnDef<GetOrdersModel> = {
   id: "userGroup",
-  accessorKey: "userGroupName",
-  header: "User Group",
+  header: "Group",
+  cell: ({ row }) => {
+    const order = row.original
+    return TypographySmall({ children: order.userGroupName, className: 'text-xs whitespace-nowrap' })
+  }
 }
 
 const getDateHeader = (adminStatus: AdminStatus) => {
