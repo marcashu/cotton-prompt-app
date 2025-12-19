@@ -19,7 +19,6 @@ import CompleteOrderDialog from "./CompleteOrderDialog"
 import PaginatedResult from "@/types/paginatedResult"
 import { Button } from "@/components/ui/button"
 import { TypographySmall } from "@/components/ui/typography"
-import { toast } from "@/components/ui/use-toast"
 
 const sortOrdersByStatus = (a: GetOrdersModel, b: GetOrdersModel) => {
   if (!a.customerStatus && !a.checkerStatus && !a.artistStatus) return -1
@@ -28,11 +27,15 @@ const sortOrdersByStatus = (a: GetOrdersModel, b: GetOrdersModel) => {
   return 0
 }
 
+// Pages that use pagination
+const paginatedStatuses = [AdminStatus.SentForPrinting, AdminStatus.Rejected]
+
 export default function AdminOrdersDataTable({
   adminStatus,
 }: {
   adminStatus: AdminStatus
 }) {
+  const hasPagination = paginatedStatuses.includes(adminStatus)
   const [currentPage, setCurrentPage] = useState(1)
   const [filters, setFilters] = useState<OrderFiltersModel>({
     orderNumbers: [],
@@ -60,11 +63,15 @@ export default function AdminOrdersDataTable({
     queryParams.append("status", filters.status.join(","))
   if (filters.userGroups.length)
     queryParams.append("userGroups", filters.userGroups.join(","))
-  queryParams.append("page", currentPage.toString())
-  queryParams.append("pageSize", "10")
+  if (hasPagination) {
+    queryParams.append("page", currentPage.toString())
+    queryParams.append("pageSize", "10")
+  }
   const apiUrl = `/api/orders/${adminStatus}?${queryParams.toString()}`
 
-  const { data, isLoading, mutate } = useSWR<PaginatedResult<GetOrdersModel>>(
+  // For paginated endpoints, data is PaginatedResult<GetOrdersModel>
+  // For non-paginated endpoints, data is GetOrdersModel[]
+  const { data, isLoading, mutate } = useSWR<PaginatedResult<GetOrdersModel> | GetOrdersModel[]>(
     apiUrl,
     { keepPreviousData: true }
   )
@@ -79,43 +86,54 @@ export default function AdminOrdersDataTable({
   const [openCompleteDialog, setOpenCompleteDialog] = useState(false)
   const [selectedOrder, setSelectedOrder] = useState<GetOrdersModel>()
 
+  // Helper to get orders array from either response type
+  const orders = hasPagination
+    ? (data as PaginatedResult<GetOrdersModel>)?.items ?? []
+    : (data as GetOrdersModel[]) ?? []
+  const totalCount = hasPagination
+    ? (data as PaginatedResult<GetOrdersModel>)?.totalCount ?? 0
+    : orders.length
+  const totalPages = hasPagination
+    ? (data as PaginatedResult<GetOrdersModel>)?.totalPages ?? 1
+    : 1
+
   const handleSearch = useCallback((orderFilters: OrderFiltersModel) => {
     setFilters(orderFilters)
     setCurrentPage(1) // Reset to first page when filters change
   }, [])
 
   const handleDelete = (id: number) => {
-    const order = data?.items?.find((o) => o.id === id)
+    const order = orders.find((o) => o.id === id)
     setSelectedOrder(order)
     setOpenDeleteDialog(true)
   }
 
   const handleResend = (id: number) => {
-    const order = data?.items?.find((o) => o.id === id)
+    const order = orders.find((o) => o.id === id)
     setSelectedOrder(order)
     setOpenResendDialog(true)
   }
 
   const handleResolve = (id: number) => {
-    const order = data?.items?.find((o) => o.id === id)
+    const order = orders.find((o) => o.id === id)
     setSelectedOrder(order)
     setOpenResolveDialog(true)
   }
 
   const handleSendForPrinting = (id: number) => {
-    const order = data?.items?.find((o) => o.id === id)
+    const order = orders.find((o) => o.id === id)
     setSelectedOrder(order)
     setOpenSendForPrintingDialog(true)
   }
 
   const handleToggleRedrawMark = (id: number) => {
-    const order = data?.items?.find((o) => o.id === id)
+    const order = orders.find((o) => o.id === id)
     setSelectedOrder(order)
     setOpenToggleRedrawMarkDialog(true)
   }
 
   const handleComplete = (id: number) => {
-    const order = data?.items?.find((o) => o.id === id)
+    const order = orders.find((o) => o.id === id)
     setSelectedOrder(order)
     setOpenCompleteDialog(true)
   }
@@ -135,10 +153,6 @@ export default function AdminOrdersDataTable({
       />
     )
   }
-
-  const orders = data?.items ?? []
-  const totalCount = data?.totalCount ?? 0
-  const totalPages = data?.totalPages ?? 1
 
   return (
     <>
@@ -199,30 +213,32 @@ export default function AdminOrdersDataTable({
         isColorCoding
       />
 
-      {/* Server-side Pagination Controls */}
-      <div className="flex justify-between items-center p-4 border-t">
-        <TypographySmall className="text-muted-foreground">
-          Page {currentPage} of {totalPages} ({totalCount} total orders)
-        </TypographySmall>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1 || isLoading}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => {
-              setCurrentPage((p) => p + 1)
-            }}
-            disabled={currentPage >= totalPages || isLoading}
-          >
-            Next
-          </Button>
+      {/* Server-side Pagination Controls - only show for paginated pages */}
+      {hasPagination && (
+        <div className="flex justify-between items-center p-4 border-t">
+          <TypographySmall className="text-muted-foreground">
+            Page {currentPage} of {totalPages} ({totalCount} total orders)
+          </TypographySmall>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1 || isLoading}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setCurrentPage((p) => p + 1)
+              }}
+              disabled={currentPage >= totalPages || isLoading}
+            >
+              Next
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }

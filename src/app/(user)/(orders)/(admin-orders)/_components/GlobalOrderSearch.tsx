@@ -105,7 +105,9 @@ export default function GlobalOrderSearch() {
                         {order.orderNumber}
                       </TypographySmall>
                       <TypographyMuted className="text-xs">
-                        {order.userGroupName} {order.artistName && `- ${order.artistName}`}
+                        {order.userGroupName}
+                        {order.artistName && ` | Artist: ${order.artistName}`}
+                        {order.checkerName && ` | Checker: ${order.checkerName}`}
                       </TypographyMuted>
                     </div>
                     <TypographyMuted className="text-xs">

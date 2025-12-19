@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react"
+import { useEffect, useReducer, useMemo } from "react"
 import OrderNumberFilter from "./OrderNumberFilter"
 import GetOrdersModel from "@/types/getOrdersModel"
 import OrderFiltersModel from "@/types/orderFiltersModel"
@@ -14,6 +14,9 @@ import { TypographySmall } from "@/components/ui/typography"
 import UserGroupFilter from "./UserGroupFilter"
 import PaginatedResult from "@/types/paginatedResult"
 
+// Pages that use pagination and need special handling for filter options
+const paginatedStatuses = [AdminStatus.SentForPrinting, AdminStatus.Rejected]
+
 export default function AdminOrderFilters({
   count,
   adminStatus,
@@ -23,8 +26,22 @@ export default function AdminOrderFilters({
   adminStatus: AdminStatus
   onSearch: (orderFilters: OrderFiltersModel) => void
 }) {
-  const { data: paginatedData } = useSWR<PaginatedResult<GetOrdersModel>>(`/api/orders/${adminStatus}`)
-  const data = paginatedData?.items ?? []
+  const hasPagination = paginatedStatuses.includes(adminStatus)
+
+  // For paginated pages, fetch ALL data (without pagination) to populate filter dropdowns
+  // For non-paginated pages, use the regular endpoint
+  const filterOptionsUrl = hasPagination
+    ? `/api/orders/${adminStatus}-filter-options`
+    : `/api/orders/${adminStatus}`
+
+  const { data: responseData } = useSWR<PaginatedResult<GetOrdersModel> | GetOrdersModel[]>(filterOptionsUrl)
+
+  // Handle both paginated and non-paginated response formats
+  const data = useMemo(() => {
+    if (!responseData) return []
+    if (Array.isArray(responseData)) return responseData
+    return responseData.items ?? []
+  }, [responseData])
   const [orderFilters, dispatch] = useReducer(orderFiltersReducer, {
     orderNumbers: [],
     priorities: [],
