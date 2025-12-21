@@ -9,7 +9,6 @@ export default function AllOrdersPage() {
         <TypographyH2 withSeparator>All Orders</TypographyH2>
         <div className="flex gap-4 flex-wrap">
           <p className="text-sm">🟠 Orange - In Review</p>
-          <p className="text-sm">🟡 Yellow - Checker Approved</p>
           <p className="text-sm">🟢 Green - Customer Accepted</p>
           <p className="text-sm">🔴 Red - Change Requested</p>
           <p className="text-sm">🔵 Blue - Not Taken</p>
