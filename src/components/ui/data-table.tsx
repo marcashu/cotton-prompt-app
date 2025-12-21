@@ -45,10 +45,10 @@ export const getColorCodeForStatus = (status: string) => {
       return "bg-orange-200"
     case CheckerStatus.ReuploadRequested:
       return "bg-red-200"
-    case CheckerStatus.Approved:
-      return "bg-yellow-200" // Approved by checker, awaiting customer - NOT green
     case CustomerStatus.Accepted:
       return "bg-green-200" // Only green when customer accepts
+    case CheckerStatus.Approved:
+      return "bg-yellow-200" // Approved by checker, awaiting customer - NOT green
     case CustomerStatus.ChangeRequested:
       return "bg-red-200"
     case ArtistStatus.Completed:
